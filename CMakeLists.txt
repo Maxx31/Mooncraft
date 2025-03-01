@@ -1,55 +1,50 @@
-#https://github.com/meemknight/cmakeSetup
+cmake_minimum_required(VERSION 3.21)
+project(glCraft)
 
-cmake_minimum_required(VERSION 3.16)
+set(CMAKE_CXX_STANDARD 23)
 
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebug$<$<CONFIG:Debug>:Debug>") #we want to use the static runtime
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
+file(GLOB_RECURSE main_sources src/*.cpp)
+add_executable(main ${main_sources})
+target_compile_options(main PRIVATE /EHs)
+target_precompile_headers(main PRIVATE src/glCraft.h)
 
-project(mygame)
+# glfw
+add_subdirectory(third_party/glfw EXCLUDE_FROM_ALL)
 
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
-add_subdirectory(thirdparty/glfw-3.3.2)			#window oppener
-add_subdirectory(thirdparty/glad)				#opengl loader
-add_subdirectory(thirdparty/stb_image)			#loading immaged
-add_subdirectory(thirdparty/stb_truetype)		#loading ttf files
-add_subdirectory(thirdparty/glm)				#math
-add_subdirectory(thirdparty/imgui-docking)		#ui
+# GLAD
+add_subdirectory(third_party/GLAD EXCLUDE_FROM_ALL)
 
+# glm
+add_subdirectory(third_party/glm EXCLUDE_FROM_ALL)
 
-# Define MY_SOURCES to be a list of all the source files for my game 
-file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+# imgui
+add_library(
+        imgui EXCLUDE_FROM_ALL
+        third_party/imgui/imgui.cpp
+        third_party/imgui/imgui.h
+        third_party/imgui/imgui_demo.cpp
+        third_party/imgui/imgui_draw.cpp
+        third_party/imgui/imgui_internal.h
+        third_party/imgui/imgui_widgets.cpp
+        third_party/imgui/imstb_rectpack.h
+        third_party/imgui/imstb_textedit.h
+        third_party/imgui/imstb_truetype.h
+        third_party/imgui/imconfig.h
+        third_party/imgui/imgui_tables.cpp
+        third_party/imgui/backends/imgui_impl_glfw.h
+        third_party/imgui/backends/imgui_impl_glfw.cpp
+        third_party/imgui/backends/imgui_impl_opengl3.h
+        third_party/imgui/backends/imgui_impl_opengl3.cpp
+)
+include_directories(imgui third_party/imgui third_party/imgui/backends)
 
+# link glfw to imgui and link everything to the main app
+target_link_libraries(imgui PRIVATE glfw)
+target_link_libraries(main PRIVATE glfw glm glad imgui)
 
-add_executable("${CMAKE_PROJECT_NAME}")
-
-set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY CXX_STANDARD 17)
-
-target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/resources/") # This is useful to get an ASSETS_PATH in your IDE during development but you should comment this if you compile a release version and uncomment the next line
-#target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="./resources/") # Uncomment this line to setup the ASSETS_PATH macro to the final assets directory when you share the game
-
-
-target_sources("${CMAKE_PROJECT_NAME}" PRIVATE ${MY_SOURCES} )
-
-
-if(MSVC) # If using the VS compiler...
-
-	target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC _CRT_SECURE_NO_WARNINGS)
-
-	#remove console
-	#set_target_properties("${CMAKE_PROJECT_NAME}" PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
-	
-	set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreadedDebug<$<CONFIG:Debug>:Debug>")
-	set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
-
-endif()
-
-
-target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
-
-
-target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE glm glfw 
-	glad stb_image stb_truetype imgui)
-
+# set a symlink to the assets dir
+add_custom_command(
+    TARGET main PRE_BUILD COMMAND
+    ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets ${CMAKE_CURRENT_BINARY_DIR}/assets
+)

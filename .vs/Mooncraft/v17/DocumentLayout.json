@@ -1,18 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\Projects\\\u0421\u002B\u002B\\Mooncraft\\",
+  "WorkspaceRootPath": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\\u0421\u002B\u002B\\Mooncraft\\src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\\u0421\u002B\u002B\\Mooncraft\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\\u0421\u002B\u002B\\Mooncraft\\src\\openglDebug.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\openglDebug.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\glCraft.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\glCraft.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\third_party\\glm\\glm\\gtx\\transform.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:third_party\\glm\\glm\\gtx\\transform.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,40 +35,53 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "openglDebug.cpp",
-              "DocumentMoniker": "E:\\Projects\\\u0421\u002B\u002B\\Mooncraft\\src\\openglDebug.cpp",
-              "RelativeDocumentMoniker": "src\\openglDebug.cpp",
-              "ToolTip": "E:\\Projects\\\u0421\u002B\u002B\\Mooncraft\\src\\openglDebug.cpp",
-              "RelativeToolTip": "src\\openglDebug.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-01T08:24:30.388Z",
+              "Title": "glCraft.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\glCraft.h",
+              "RelativeDocumentMoniker": "src\\glCraft.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\glCraft.h",
+              "RelativeToolTip": "src\\glCraft.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T09:39:30.173Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CMakeLists.txt",
-              "DocumentMoniker": "E:\\Projects\\\u0421\u002B\u002B\\Mooncraft\\CMakeLists.txt",
-              "RelativeDocumentMoniker": "CMakeLists.txt",
-              "ToolTip": "E:\\Projects\\\u0421\u002B\u002B\\Mooncraft\\CMakeLists.txt",
-              "RelativeToolTip": "CMakeLists.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA5AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-03-01T08:00:02.064Z",
+              "DocumentIndex": 3,
+              "Title": "transform.hpp",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\third_party\\glm\\glm\\gtx\\transform.hpp",
+              "RelativeDocumentMoniker": "third_party\\glm\\glm\\gtx\\transform.hpp",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\third_party\\glm\\glm\\gtx\\transform.hpp",
+              "RelativeToolTip": "third_party\\glm\\glm\\gtx\\transform.hpp",
+              "ViewState": "AgIAAAMAAAAAAAAAAAApwBYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T09:38:41.651Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "main.cpp",
-              "DocumentMoniker": "E:\\Projects\\\u0421\u002B\u002B\\Mooncraft\\src\\main.cpp",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\main.cpp",
               "RelativeDocumentMoniker": "src\\main.cpp",
-              "ToolTip": "E:\\Projects\\\u0421\u002B\u002B\\Mooncraft\\src\\main.cpp",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\main.cpp",
               "RelativeToolTip": "src\\main.cpp",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAcwB0AAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-01T07:59:20.115Z",
+              "WhenOpened": "2025-03-01T09:38:26.523Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CMakeLists.txt",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\CMakeLists.txt",
+              "RelativeDocumentMoniker": "CMakeLists.txt",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\CMakeLists.txt",
+              "RelativeToolTip": "CMakeLists.txt",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAADEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-03-01T09:38:15.871Z",
               "EditorCaption": ""
             }
           ]
