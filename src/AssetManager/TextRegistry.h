@@ -2,7 +2,7 @@
 #include "AssetRegistry.h"
 
 class TextRegistry : public AssetRegistry<std::string> {
-  Ref<const std::string> loadAsset(const std::string &name) override {
+  SharedRef<const std::string> loadAsset(const std::string &name) override {
     try {
       std::ifstream file;
 

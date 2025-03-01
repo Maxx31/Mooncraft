@@ -1,5 +1,5 @@
 #pragma once
-#include "../glCraft.h"
+#include "../MCraft.h"
 
 class Entity {
 public:

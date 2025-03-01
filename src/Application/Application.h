@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Scene/Scene.h"
-#include "../glCraft.h"
+#include "../MCraft.h"
 #include "Gui.h"
 #include "Window.h"
 

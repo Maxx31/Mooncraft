@@ -27,7 +27,7 @@ struct VertexAttribute {
 class VertexArray {
   class VertexBuffer : public Buffer {
   public:
-    static Ref<VertexBuffer> createRef() { return std::make_shared<VertexBuffer>(); }
+    static SharedRef<VertexBuffer> createRef() { return std::make_shared<VertexBuffer>(); }
 
     void bind() { glBindBuffer(GL_ARRAY_BUFFER, id); };
 
@@ -54,7 +54,7 @@ class VertexArray {
     uint32_t type = 0;
 
   public:
-    static Ref<IndexBuffer> createRef() { return std::make_shared<IndexBuffer>(); }
+    static SharedRef<IndexBuffer> createRef() { return std::make_shared<IndexBuffer>(); }
 
     void bind() { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id); };
 
@@ -89,8 +89,8 @@ class VertexArray {
   };
 
   uint32_t id = 0;
-  Ref<VertexBuffer> vertexBuffer;
-  Ref<IndexBuffer> indexBuffer;
+  SharedRef<VertexBuffer> vertexBuffer;
+  SharedRef<IndexBuffer> indexBuffer;
 
 public:
   template<typename VertexT, typename IndexT>

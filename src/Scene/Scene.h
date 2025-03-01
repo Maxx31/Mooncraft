@@ -1,7 +1,7 @@
 #pragma once
 #include <utility>
 
-#include "../glCraft.h"
+#include "../MCraft.h"
 #include "Entity.h"
 #include "../Rendering/ShaderProgram.h"
 #include "../Rendering/VertexArray.h"
@@ -10,8 +10,8 @@ class Scene {
   std::vector<Entity> entities;
   bool initialized = false;
 
-  Ref<VertexArray> vao;
-  Ref<const ShaderProgram> defaultShader;
+  SharedRef<VertexArray> vao;
+  SharedRef<const ShaderProgram> defaultShader;
 
 public:
   Scene() = default;

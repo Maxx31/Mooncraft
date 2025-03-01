@@ -1,5 +1,5 @@
 #pragma once
-#include "../glCraft.h"
+#include "../MCraft.h"
 
 class Shader {
   uint32_t id;

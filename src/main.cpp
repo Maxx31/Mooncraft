@@ -3,7 +3,8 @@
 #include "Application/Application.h"
 
 int main() {
-  std::cout << "Hello World from glCraft!" << std::endl;
+
+  std::cout << "Hello World from MCraft!" << std::endl;
 
   Application &app = Application::instance();
   Scene scene = Scene();

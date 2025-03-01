@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.21)
-project(glCraft)
+project(MCraft)
 
 set(CMAKE_CXX_STANDARD 23)
 
 file(GLOB_RECURSE main_sources src/*.cpp)
 add_executable(main ${main_sources})
 target_compile_options(main PRIVATE /EHs)
-target_precompile_headers(main PRIVATE src/glCraft.h)
+target_precompile_headers(main PRIVATE src/MCraft.h)
 
 # glfw
 add_subdirectory(third_party/glfw EXCLUDE_FROM_ALL)

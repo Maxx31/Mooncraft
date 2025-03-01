@@ -22,13 +22,13 @@ int Application::run() {
 }
 
 void Application::onKeyEvent(int32_t key, int32_t scancode, int32_t action, int32_t mode) {
-  std::cout << "onKeyEvent" << std::endl;
+  std::cout << "Key pressed" << std::endl;
 }
 
 void Application::onMouseButtonEvent(int32_t button, int32_t action, int32_t mods) {
-  std::cout << "onMouseButtonEvent" << std::endl;
+  std::cout << "Mouse button pressed" << std::endl;
 }
 
 void Application::onResized(int32_t width, int32_t height) {
-  std::cout << "onResized" << std::endl;
+  std::cout << "Resize" << std::endl;
 }

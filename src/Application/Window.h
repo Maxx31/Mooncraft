@@ -1,7 +1,8 @@
 #pragma once
 
 class Window {
-  const char *name = "glCraft";
+
+  const char *name = "MoonCraft";
   int windowWidth = 800;
   int windowHeight = 600;
   GLFWwindow *window = nullptr;

@@ -4,7 +4,7 @@
 
 Shader::Shader(const std::string &name, uint32_t type) {
   id = glCreateShader(type);
-  Ref<const std::string> vertexShaderSource = AssetManager::instance().loadText(name);
+  SharedRef<const std::string> vertexShaderSource = AssetManager::instance().loadText(name);
   const char *vertexShaderSourceStr = vertexShaderSource->c_str();
   glShaderSource(id, 1, &vertexShaderSourceStr, nullptr);
   glCompileShader(id);

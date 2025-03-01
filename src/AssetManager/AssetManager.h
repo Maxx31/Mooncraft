@@ -1,6 +1,6 @@
 #pragma once
 #include "../Rendering/ShaderProgram.h"
-#include "../glCraft.h"
+#include "../MCraft.h"
 #include "AssetRegistry.h"
 #include "ShaderProgramRegistry.h"
 #include "TextRegistry.h"
@@ -20,6 +20,6 @@ public:
     static AssetManager manager;
     return manager;
   };
-  Ref<const std::string> loadText(const std::string &name) { return textRegistry.get(name); };
-  Ref<const ShaderProgram> loadShader(const std::string &name) { return shaderProgramRegistry.get(name); };
+  SharedRef<const std::string> loadText(const std::string &name) { return textRegistry.get(name); };
+  SharedRef<const ShaderProgram> loadShader(const std::string &name) { return shaderProgramRegistry.get(name); };
 };

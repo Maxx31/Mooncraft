@@ -3,20 +3,84 @@
   "WorkspaceRootPath": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Scene\\Scene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Scene\\Scene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Scene\\Scene.h||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Scene\\Scene.h||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Scene\\Entity.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Scene\\Entity.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Scene\\Entity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Scene\\Entity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\AssetManager\\AssetRegistry.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\AssetManager\\AssetRegistry.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\AssetManager\\TextRegistry.h||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\AssetManager\\TextRegistry.h||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\AssetManager\\AssetManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\AssetManager\\AssetManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Window.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Application\\Window.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Gui.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Application\\Gui.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Application.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Application\\Application.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Application.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Application\\Application.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Gui.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Application\\Gui.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Rendering\\Buffer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Rendering\\Buffer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Rendering\\VertexArray.h||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Rendering\\VertexArray.h||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Rendering\\VertexArray.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Rendering\\VertexArray.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Window.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Application\\Window.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\MCraft.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\MCraft.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\glCraft.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\glCraft.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\third_party\\glm\\glm\\gtx\\transform.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:third_party\\glm\\glm\\gtx\\transform.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Rendering\\Shader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Rendering\\Shader.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,62 +90,274 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "glCraft.h",
-              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\glCraft.h",
-              "RelativeDocumentMoniker": "src\\glCraft.h",
-              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\glCraft.h",
-              "RelativeToolTip": "src\\glCraft.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-01T09:39:30.173Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "transform.hpp",
-              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\third_party\\glm\\glm\\gtx\\transform.hpp",
-              "RelativeDocumentMoniker": "third_party\\glm\\glm\\gtx\\transform.hpp",
-              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\third_party\\glm\\glm\\gtx\\transform.hpp",
-              "RelativeToolTip": "third_party\\glm\\glm\\gtx\\transform.hpp",
-              "ViewState": "AgIAAAMAAAAAAAAAAAApwBYAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "TextRegistry.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\AssetManager\\TextRegistry.h",
+              "RelativeDocumentMoniker": "src\\AssetManager\\TextRegistry.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\AssetManager\\TextRegistry.h",
+              "RelativeToolTip": "src\\AssetManager\\TextRegistry.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-01T09:38:41.651Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "main.cpp",
-              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\main.cpp",
-              "RelativeDocumentMoniker": "src\\main.cpp",
-              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\main.cpp",
-              "RelativeToolTip": "src\\main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-01T09:38:26.523Z",
+              "WhenOpened": "2025-03-01T10:40:36.643Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Scene.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Scene\\Scene.h",
+              "RelativeDocumentMoniker": "src\\Scene\\Scene.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Scene\\Scene.h",
+              "RelativeToolTip": "src\\Scene\\Scene.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T10:40:36.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Scene.cpp",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Scene\\Scene.cpp",
+              "RelativeDocumentMoniker": "src\\Scene\\Scene.cpp",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Scene\\Scene.cpp",
+              "RelativeToolTip": "src\\Scene\\Scene.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-01T10:47:29.816Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Window.cpp",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Window.cpp",
+              "RelativeDocumentMoniker": "src\\Application\\Window.cpp",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Window.cpp",
+              "RelativeToolTip": "src\\Application\\Window.cpp",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAFQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-01T10:31:08.134Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Window.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Window.h",
+              "RelativeDocumentMoniker": "src\\Application\\Window.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Window.h",
+              "RelativeToolTip": "src\\Application\\Window.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T10:19:18.001Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Gui.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Gui.h",
+              "RelativeDocumentMoniker": "src\\Application\\Gui.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Gui.h",
+              "RelativeToolTip": "src\\Application\\Gui.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T10:15:59.478Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "main.cpp",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\main.cpp",
+              "RelativeDocumentMoniker": "src\\main.cpp",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\main.cpp",
+              "RelativeToolTip": "src\\main.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-01T10:12:50.952Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Application.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Application.h",
+              "RelativeDocumentMoniker": "src\\Application\\Application.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Application.h",
+              "RelativeToolTip": "src\\Application\\Application.h",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABkAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T10:14:37.74Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Application.cpp",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Application.cpp",
+              "RelativeDocumentMoniker": "src\\Application\\Application.cpp",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Application.cpp",
+              "RelativeToolTip": "src\\Application\\Application.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-01T10:14:21.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AssetRegistry.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\AssetManager\\AssetRegistry.h",
+              "RelativeDocumentMoniker": "src\\AssetManager\\AssetRegistry.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\AssetManager\\AssetRegistry.h",
+              "RelativeToolTip": "src\\AssetManager\\AssetRegistry.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T10:36:13.54Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Gui.cpp",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Gui.cpp",
+              "RelativeDocumentMoniker": "src\\Application\\Gui.cpp",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Application\\Gui.cpp",
+              "RelativeToolTip": "src\\Application\\Gui.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-01T10:30:30.483Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Entity.cpp",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Scene\\Entity.cpp",
+              "RelativeDocumentMoniker": "src\\Scene\\Entity.cpp",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Scene\\Entity.cpp",
+              "RelativeToolTip": "src\\Scene\\Entity.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-01T10:47:13.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Entity.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Scene\\Entity.h",
+              "RelativeDocumentMoniker": "src\\Scene\\Entity.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Scene\\Entity.h",
+              "RelativeToolTip": "src\\Scene\\Entity.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T10:47:14.677Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "VertexArray.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Rendering\\VertexArray.h",
+              "RelativeDocumentMoniker": "src\\Rendering\\VertexArray.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Rendering\\VertexArray.h",
+              "RelativeToolTip": "src\\Rendering\\VertexArray.h",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABsAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T10:40:36.687Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "VertexArray.cpp",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Rendering\\VertexArray.cpp",
+              "RelativeDocumentMoniker": "src\\Rendering\\VertexArray.cpp",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Rendering\\VertexArray.cpp",
+              "RelativeToolTip": "src\\Rendering\\VertexArray.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-01T10:47:05.413Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AssetManager.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\AssetManager\\AssetManager.h",
+              "RelativeDocumentMoniker": "src\\AssetManager\\AssetManager.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\AssetManager\\AssetManager.h",
+              "RelativeToolTip": "src\\AssetManager\\AssetManager.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T10:13:11.333Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Buffer.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Rendering\\Buffer.h",
+              "RelativeDocumentMoniker": "src\\Rendering\\Buffer.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Rendering\\Buffer.h",
+              "RelativeToolTip": "src\\Rendering\\Buffer.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T10:51:24.583Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "MCraft.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\MCraft.h",
+              "RelativeDocumentMoniker": "src\\MCraft.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\MCraft.h",
+              "RelativeToolTip": "src\\MCraft.h",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAQwB4AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T10:39:59.998Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Shader.h",
+              "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Rendering\\Shader.h",
+              "RelativeDocumentMoniker": "src\\Rendering\\Shader.h",
+              "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\src\\Rendering\\Shader.h",
+              "RelativeToolTip": "src\\Rendering\\Shader.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T10:13:02.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
               "Title": "CMakeLists.txt",
               "DocumentMoniker": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\CMakeLists.txt",
               "RelativeDocumentMoniker": "CMakeLists.txt",
               "ToolTip": "E:\\Projects\\C\u002B\u002B\\Mooncraft\\CMakeLists.txt",
               "RelativeToolTip": "CMakeLists.txt",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAADEAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-03-01T09:38:15.871Z",
+              "WhenOpened": "2025-03-01T10:12:25.66Z",
               "EditorCaption": ""
             }
           ]
