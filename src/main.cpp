@@ -1,9 +1,9 @@
-#include <iostream>
 
 #include "Application/Application.h"
+#include "MCraft.h"
 
-int main() {
-
+int main() 
+{
   std::cout << "Hello World from MCraft!" << std::endl;
 
   Application &app = Application::instance();

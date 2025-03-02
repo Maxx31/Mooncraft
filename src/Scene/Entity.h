@@ -1,7 +1,8 @@
 #pragma once
 #include "../MCraft.h"
 
-class Entity {
+class Entity 
+{
 public:
   void init();
   void update(float deltaTime);

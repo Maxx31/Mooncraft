@@ -7,7 +7,8 @@
 
 #include <chrono>
 
-class Application {
+class Application 
+{
 private:
   Window &window = Window::instance();
   Gui &gui;
@@ -25,13 +26,17 @@ public:
   Application(Application &) = delete;
   Application(Application &&) = delete;
 
-  static Application &instance() {
+  static Application &instance() 
+  {
     static Application app;
     return app;
   };
 
   void setScene(Scene &newScene) { scene = &newScene; };
 
-  Window &getWindow() { return window; };
+  Window& getWindow() { return window; };
   int run();
+
+  int32_t getWindowWidth();
+  int32_t getWindowHeight();
 };

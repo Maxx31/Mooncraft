@@ -2,19 +2,21 @@
 
 Application::Application() : gui(Gui::instance()) {}
 
-int Application::run() {
+int Application::run() 
+{
 
   using TimePoint = std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>;
+  using Clock = std::chrono::steady_clock;
 
   if (!scene) return -1;
   if (!window.isValid()) return -1;
 
-  TimePoint lastTick = std::chrono::steady_clock::now();
+  TimePoint lastTick = Clock::now();
   scene->init();
 
   while (!window.shouldClose()) {
 
-    TimePoint now = std::chrono::steady_clock::now();
+    TimePoint now = Clock::now();
     float deltaTime = static_cast<float>((now - lastTick).count()) / 1000000000.0f;
     lastTick = now;
 
@@ -31,14 +33,28 @@ int Application::run() {
   return 0;
 }
 
-void Application::onKeyEvent(int32_t key, int32_t scancode, int32_t action, int32_t mode) {
+int32_t Application::getWindowWidth()
+{
+  return window.getWindowWidth();
+}
+
+int32_t Application::getWindowHeight()
+{
+  return window.getWindowHeight();
+}
+
+void Application::onKeyEvent(int32_t key, int32_t scancode, int32_t action, int32_t mode)
+{
   std::cout << "Key pressed" << std::endl;
 }
 
-void Application::onMouseButtonEvent(int32_t button, int32_t action, int32_t mods) {
+void Application::onMouseButtonEvent(int32_t button, int32_t action, int32_t mods) 
+{
   std::cout << "Mouse button pressed" << std::endl;
 }
 
-void Application::onResized(int32_t width, int32_t height) {
+void Application::onResized(int32_t width, int32_t height) 
+{
+  scene->onResized(width, height);
   std::cout << "Resize" << std::endl;
 }

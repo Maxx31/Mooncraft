@@ -6,7 +6,7 @@ class Window {
   int windowWidth = 800;
   int windowHeight = 600;
   GLFWwindow *window = nullptr;
-  glm::vec4 clearColor = {0, 0, 0, 1};
+  glm::vec4 clearColor = {0.25f, 0.62f, 0.78f, 1};
 
   Window();
 

@@ -2,7 +2,8 @@
 
 #include "Application.h"
 
-Window::Window() {
+Window::Window() 
+{
   std::cout << "initialized the window" << std::endl;
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -39,13 +40,15 @@ void GLAPIENTRY Window::onOpenGlMessage(GLenum source,
             << ", severity = " << severity << ", message = " << message << std::endl;
 }
 
-void Window::onKeyEvent(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mode) {
+void Window::onKeyEvent(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mode)
+{
   Application::instance().onKeyEvent(key, scancode, action, mode);
   //  std::cout << key << std::endl;
   //  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) glfwSetWindowShouldClose(window, GL_TRUE);
 }
 
-void Window::onResized(GLFWwindow *_, int32_t width, int32_t height) {
+void Window::onResized(GLFWwindow *_, int32_t width, int32_t height)
+{
   Application &app = Application::instance();
   Window &window = app.getWindow();
   window.setWindowHeight(height);
@@ -54,12 +57,14 @@ void Window::onResized(GLFWwindow *_, int32_t width, int32_t height) {
   app.onResized(width, height);
 }
 
-void Window::onMouseButtonEvent(GLFWwindow *window, int32_t button, int32_t action, int32_t mods) {
+void Window::onMouseButtonEvent(GLFWwindow *window, int32_t button, int32_t action, int32_t mods) 
+{
   Application::instance().onMouseButtonEvent(button, action, mods);
   //  std::cout << button << " " << action << " " << mods << std::endl;
 }
 
-void Window::setupCallbacks(GLFWwindow *window) {
+void Window::setupCallbacks(GLFWwindow *window) 
+{
   glfwSetKeyCallback(window, onKeyEvent);
   glfwSetMouseButtonCallback(window, onMouseButtonEvent);
   glfwSetFramebufferSizeCallback(window, onResized);
@@ -68,27 +73,36 @@ void Window::setupCallbacks(GLFWwindow *window) {
   glDebugMessageCallback(onOpenGlMessage, nullptr);
 }
 
-bool Window::setupGlad() {
-  if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+bool Window::setupGlad() 
+{
+  if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
+  {
     std::cout << "Failed to initialize OpenGL context" << std::endl;
     return false;
   }
+
+  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_CULL_FACE);
+
   return true;
 }
 
-void Window::update() {
+void Window::update() 
+{
   glfwPollEvents();
   glViewport(0, 0, windowWidth, windowHeight);
   glClearColor(clearColor.x * clearColor.w, clearColor.y * clearColor.w, clearColor.z * clearColor.w, clearColor.w);
-  glClear(GL_COLOR_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Window::finalizeFrame() {
+void Window::finalizeFrame() 
+{
   glfwSwapBuffers(window);
 }
 
 
-Window::~Window() {
+Window::~Window() 
+{
   std::cout << "window destroyed" << std::endl;
   glfwTerminate();
 }
