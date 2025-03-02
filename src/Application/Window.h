@@ -44,7 +44,7 @@ public:
   bool isValid() { return window != nullptr; };
   [[nodiscard]] bool shouldClose() const { return glfwWindowShouldClose(window); };
   void update();
-  void swapBuffers();
+  void finalizeFrame();
 
   ~Window();
 

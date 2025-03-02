@@ -1,18 +1,20 @@
 #include "ShaderProgram.h"
 
+#include "../AssetManager/AssetManager.h"
 #include "Shader.h"
 
 ShaderProgram::ShaderProgram(const std::string &name) {
-  Shader vertexShader(name + ".vert", GL_VERTEX_SHADER);
-  if (!vertexShader.isValid()) return;
 
-  Shader fragmentShader(name + ".frag", GL_FRAGMENT_SHADER);
-  if (!fragmentShader.isValid()) return;
+  SharedRef<const Shader> vertexShader = AssetManager::instance().loadShader(name + ".vert");
+  if (!vertexShader->isValid()) throw std::exception("Invalid Shader");
+
+  SharedRef<const Shader> fragmentShader = AssetManager::instance().loadShader(name + ".frag");
+  if (!fragmentShader->isValid()) throw std::exception("Invalid Shader");
 
   shaderProgram = glCreateProgram();
 
-  glAttachShader(shaderProgram, fragmentShader.getId());
-  glAttachShader(shaderProgram, vertexShader.getId());
+  glAttachShader(shaderProgram, fragmentShader->getId());
+  glAttachShader(shaderProgram, vertexShader->getId());
 
   glLinkProgram(shaderProgram);
 }
@@ -42,5 +44,5 @@ void ShaderProgram::setMat4(const std::string &location, const glm::mat4 &value)
 }
 
 ShaderProgram::~ShaderProgram() {
-  if (isValid()) { glDeleteShader(shaderProgram); }
+  if (isValid()) { glDeleteProgram(shaderProgram); }
 }

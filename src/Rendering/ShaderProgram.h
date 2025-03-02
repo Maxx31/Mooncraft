@@ -1,6 +1,8 @@
 #pragma once
 #include "../MCraft.h"
 
+#include "Shader.h"
+
 class ShaderProgram {
   uint32_t shaderProgram = 0;
 

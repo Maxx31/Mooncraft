@@ -4,9 +4,13 @@
 #include "AssetRegistry.h"
 #include "ShaderProgramRegistry.h"
 #include "TextRegistry.h"
+#include "../Rendering/Shader.h"
+#include "ShaderRegistry.h"
 
 class AssetManager {
+
   TextRegistry textRegistry;
+  ShaderRegistry shaderRegistry;
   ShaderProgramRegistry shaderProgramRegistry;
 
   AssetManager() = default;
@@ -21,5 +25,7 @@ public:
     return manager;
   };
   SharedRef<const std::string> loadText(const std::string &name) { return textRegistry.get(name); };
-  SharedRef<const ShaderProgram> loadShader(const std::string &name) { return shaderProgramRegistry.get(name); };
+
+  SharedRef<const Shader> loadShader(const std::string &name) { return shaderRegistry.get(name); };
+  SharedRef<const ShaderProgram> loadShaderProgram(const std::string &name) { return shaderProgramRegistry.get(name); };
 };

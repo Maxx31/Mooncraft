@@ -15,8 +15,8 @@ int Application::run() {
     scene->render();
     scene->renderGui();
 
-    gui.render();
-    window.swapBuffers();
+    gui.finalizeFrame();
+    window.finalizeFrame();
   }
   return 0;
 }
