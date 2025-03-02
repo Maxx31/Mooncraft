@@ -3,15 +3,25 @@
 Application::Application() : gui(Gui::instance()) {}
 
 int Application::run() {
+
+  using TimePoint = std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>;
+
   if (!scene) return -1;
   if (!window.isValid()) return -1;
 
+  TimePoint lastTick = std::chrono::steady_clock::now();
   scene->init();
+
   while (!window.shouldClose()) {
+
+    TimePoint now = std::chrono::steady_clock::now();
+    float deltaTime = static_cast<float>((now - lastTick).count()) / 1000000000.0f;
+    lastTick = now;
+
     window.update();
     gui.update();
 
-    scene->update();
+    scene->update(deltaTime);
     scene->render();
     scene->renderGui();
 

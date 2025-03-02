@@ -5,6 +5,8 @@
 #include "Gui.h"
 #include "Window.h"
 
+#include <chrono>
+
 class Application {
 private:
   Window &window = Window::instance();

@@ -2,7 +2,9 @@
 #include <utility>
 
 #include "../MCraft.h"
+//#include "Camera.h"
 #include "Entity.h"
+
 #include "../Rendering/ShaderProgram.h"
 #include "../Rendering/VertexArray.h"
 
@@ -21,7 +23,7 @@ public:
   void addEntity(const Entity &entity) { entities.emplace_back(entity); };
 
   void init();
-  void update();
+  void update(float deltaTime);
   void render();
   void renderGui();
 };

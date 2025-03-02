@@ -50,17 +50,18 @@ public:
   VertexArray(const std::vector<VertexT> &vertices,
               const std::vector<VertexAttribute> &vertexAttributes,
               const std::vector<IndexT> &indices)
-      : VertexArray(vertices, indices) {
+      : VertexArray(vertices, indices) 
+  {
 
     bind();
 
     for (size_t i = 0; i < vertexAttributes.size(); i++)
     {
-      const auto &[componentCount, type, shouldBeNormalized, vertexSize, offset] = vertexAttributes[i];
-      const auto normalize = shouldBeNormalized ? GL_TRUE : GL_FALSE;
-      const auto stride = vertexSize ? vertexSize : sizeof(VertexT);
+      const auto &[componentCountL, typeL, shouldBeNormalizedL, vertexSizeL, offsetL] = vertexAttributes[i];
+      const auto normalize = shouldBeNormalizedL ? GL_TRUE : GL_FALSE;
+      const auto stride = vertexSizeL ? vertexSizeL : sizeof(VertexT);
 
-      glVertexAttribPointer(i, componentCount, type, normalize, stride, reinterpret_cast<void *>(offset));
+      glVertexAttribPointer(i, componentCountL, typeL, normalize, stride, reinterpret_cast<void*>(offsetL));
       glEnableVertexAttribArray(i);
     }
 
