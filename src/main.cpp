@@ -7,7 +7,7 @@ int main()
   std::cout << "Hello World from MCraft!" << std::endl;
 
   Application &app = Application::instance();
-  Scene scene = Scene();
+  SharedRef<Scene> scene = std::make_shared<Scene>();
   app.setScene(scene);
 
   return app.run();

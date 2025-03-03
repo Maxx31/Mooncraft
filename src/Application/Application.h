@@ -5,14 +5,12 @@
 #include "Gui.h"
 #include "Window.h"
 
-#include <chrono>
-
 class Application 
 {
 private:
   Window &window = Window::instance();
   Gui &gui;
-  Scene *scene = nullptr;
+  SharedRef<Scene> scene;
   friend Window;
 
   Application();
@@ -32,11 +30,11 @@ public:
     return app;
   };
 
-  void setScene(Scene &newScene) { scene = &newScene; };
-
-  Window& getWindow() { return window; };
-  int run();
+  void setScene(SharedRef<Scene> &newScene) { scene = newScene; };
 
   int32_t getWindowWidth();
   int32_t getWindowHeight();
+
+  Window &getWindow() { return window; };
+  int run();
 };
