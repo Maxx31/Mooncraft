@@ -13,7 +13,13 @@ public:
     return !registry.at(name).expired();
   };
 
-  SharedRef<const T> get(const std::string &name) {
+  void remove(const std::string &name) 
+  {
+    if (hasAsset(name)) { registry[name] = std::shared_ptr<T>(); }
+  }
+
+  SharedRef<const T> get(const std::string &name) 
+  {
     if (hasAsset(name)) {
       WeakRef<const T> ref = registry.at(name);
       return ref.lock();

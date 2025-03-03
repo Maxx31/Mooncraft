@@ -2,6 +2,7 @@
 #include "../MCraft.h"
 
 #include "Shader.h"
+#include "Texture.h"
 
 class ShaderProgram {
   uint32_t shaderProgram = 0;
@@ -22,6 +23,8 @@ public:
   void setFloat(const std::string &location, float value) const;
   void setVec3(const std::string &location, const glm::vec3 &value) const;
   void setMat4(const std::string &location, const glm::mat4 &value) const;
+
+ void setTexture(const std::string &location, const SharedRef<const Texture> &texture, int32_t slot) const;
 
   ~ShaderProgram();
 };

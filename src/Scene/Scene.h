@@ -6,6 +6,7 @@
 #include "Entity.h"
 
 #include "../Rendering/ShaderProgram.h"
+#include "../Rendering/Texture.h"
 #include "../Rendering/VertexArray.h"
 
 class Scene 
@@ -14,6 +15,7 @@ class Scene
   bool initialized = false;
 
   SharedRef<VertexArray> vao;
+  SharedRef<const Texture> textureAtlas;
   SharedRef<const ShaderProgram> defaultShader;
 
   Camera camera;

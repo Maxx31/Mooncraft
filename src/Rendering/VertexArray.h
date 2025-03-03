@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "Buffer.h"
 
 struct VertexAttribute {
@@ -13,7 +14,7 @@ struct VertexAttribute {
   uint8_t componentCount;
   ComponentType type;
   bool shouldBeNormalized = false;
-  uint32_t vertexSize;
+  int32_t vertexSize;
   uint32_t offset;
 
   VertexAttribute(uint8_t componentCount, ComponentType type, uint32_t offset)
@@ -31,20 +32,35 @@ class VertexArray {
 
 public:
 
-  template<typename VertexT, typename IndexT>
-  VertexArray(const std::vector<VertexT> &vertices, const std::vector<IndexT> &indices) 
-  {
-    glGenVertexArrays(1, &id);
-    bind();
+  template<typename VertexT>
+  explicit VertexArray(const std::vector<VertexT> &vertices)
+    {
+      glGenVertexArrays(1, &id);
+      bind();
 
-    vertexBuffer = VertexBuffer::createRef();
-    vertexBuffer->bufferStaticVertexData<VertexT>(vertices);
+      vertexBuffer = VertexBuffer::createRef();
+      vertexBuffer->bufferStaticVertexData<VertexT>(vertices);
 
-    indexBuffer = IndexBuffer::createRef();
-    indexBuffer->bufferStaticIndexData<IndexT>(indices);
+      unbind();
+    };
 
-    unbind();
-  };
+    template<typename VertexT, typename IndexT>
+    VertexArray(const std::vector<VertexT> &vertices, const std::vector<IndexT> &indices) : VertexArray(vertices) {
+      bind();
+      indexBuffer = IndexBuffer::createRef();
+      indexBuffer->bufferStaticIndexData<IndexT>(indices);
+
+      unbind();
+    };
+
+    template<typename VertexT>
+    explicit VertexArray(const std::vector<VertexT> &vertices, const std::vector<VertexAttribute> &vertexAttributes)
+        : VertexArray(vertices) 
+    {
+      addVertexAttributes(vertexAttributes, sizeof(VertexT));
+    };
+
+
 
   template<typename VertexT, typename IndexT>
   VertexArray(const std::vector<VertexT> &vertices,
@@ -52,19 +68,7 @@ public:
               const std::vector<IndexT> &indices)
       : VertexArray(vertices, indices) 
   {
-
-    bind();
-
-    for (size_t i = 0; i < vertexAttributes.size(); i++)
-    {
-      const auto &[componentCountL, typeL, shouldBeNormalizedL, vertexSizeL, offsetL] = vertexAttributes[i];
-      const auto normalize = shouldBeNormalizedL ? GL_TRUE : GL_FALSE;
-      const auto stride = vertexSizeL ? vertexSizeL : sizeof(VertexT);
-
-      glVertexAttribPointer(i, componentCountL, typeL, normalize, stride, reinterpret_cast<void*>(offsetL));
-      glEnableVertexAttribArray(i);
-    }
-
+    addVertexAttributes(vertexAttributes, sizeof(VertexT));
     unbind();
   };
 
@@ -73,7 +77,9 @@ public:
   VertexArray(VertexArray &&) = delete;
 
   void bind();
-  void render();
+  void addVertexAttributes(const std::vector<VertexAttribute> &vector, int32_t defaultVertexSize);
+  void renderIndexed();
+  void renderVertexStream();
   void unbind();
 
   [[nodiscard]] bool isValid() const { return id != 0; };
