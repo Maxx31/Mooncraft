@@ -2,10 +2,11 @@
 
 #include "Window.h"
 
-Gui::Gui() {
+Gui::Gui() 
+{
   const auto context = Window::instance().getContext();
   if (context == nullptr) return;
-  std::cout << "initialized the gui" << std::endl;
+
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
   ImGui::StyleColorsDark();
@@ -13,19 +14,21 @@ Gui::Gui() {
   ImGui_ImplOpenGL3_Init("#version 450 core");
 }
 
-void Gui::update() {
+void Gui::update() 
+{
   ImGui_ImplOpenGL3_NewFrame();
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 }
 
-void Gui::finalizeFrame() {
+void Gui::finalizeFrame() 
+{
   ImGui::Render();
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-Gui::~Gui() {
-  std::cout << "gui destroyed" << std::endl;
+Gui::~Gui() 
+{
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
   ImGui::DestroyContext();
