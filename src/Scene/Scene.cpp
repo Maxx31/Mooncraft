@@ -82,6 +82,6 @@ void Scene::renderGui()
 
 void Scene::onResized(int32_t width, int32_t height)
 {
-  float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+  float aspectRatio = width == 0 || height == 0 ? 0 : static_cast<float>(width) / static_cast<float>(height);
   projectionMatrix = glm::perspective<float>(glm::half_pi<float>(), aspectRatio, .1f, 100.0f);
 }

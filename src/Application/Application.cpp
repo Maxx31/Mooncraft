@@ -4,34 +4,37 @@ Application::Application() : gui(Gui::instance()) {}
 
 int Application::run() 
 {
-
-  using TimePoint = std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>;
-  using Clock = std::chrono::steady_clock;
-
   if (!scene) return -1;
   if (!window.isValid()) return -1;
 
-  TimePoint lastTick = Clock::now();
   scene->init();
+  lastTick = Clock::now();
 
   while (!window.shouldClose()) {
-
-    TimePoint now = Clock::now();
-    float deltaTime = static_cast<float>((now - lastTick).count()) / 1000000000.0f;
-    lastTick = now;
-
-    window.update();
-    gui.update();
-
-    scene->update(deltaTime);
-    scene->render();
-    scene->renderGui();
-
-    gui.finalizeFrame();
-    window.finalizeFrame();
+    window.pollEvents();
+    updateAndRender();
   }
+
   return 0;
 }
+
+void Application::updateAndRender() 
+{
+  TimePoint now = Clock::now();
+  float deltaTime = static_cast<float>((now - lastTick).count()) / 1000000000.0f;
+  lastTick = now;
+
+  window.update();
+  gui.update();
+
+  scene->update(deltaTime);
+  scene->render();
+  scene->renderGui();
+
+  gui.finalizeFrame();
+  window.finalizeFrame();
+}
+
 
 int32_t Application::getWindowWidth()
 {
@@ -57,4 +60,9 @@ void Application::onResized(int32_t width, int32_t height)
 {
   scene->onResized(width, height);
   std::cout << "Resize" << std::endl;
+}
+
+void Application::onRefreshWindow() 
+{
+  updateAndRender();
 }
