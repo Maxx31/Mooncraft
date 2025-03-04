@@ -3,6 +3,7 @@
 
 #include "../MCraft.h"
 #include "Camera.h"
+#include "Chunk.h"
 #include "Entity.h"
 
 #include "../Rendering/ShaderProgram.h"
@@ -14,7 +15,7 @@ class Scene
   std::vector<Entity> entities;
   bool initialized = false;
 
-  SharedRef<VertexArray> vao;
+  SharedRef<Chunk> chunk;
   SharedRef<const Texture> textureAtlas;
   SharedRef<const ShaderProgram> defaultShader;
 

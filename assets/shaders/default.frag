@@ -9,5 +9,5 @@ uniform sampler2D atlas;
 
 void main() 
 {
-     color = texture(atlas, vert_uv);
+     color = texture(atlas, vert_uv / 16);
 }

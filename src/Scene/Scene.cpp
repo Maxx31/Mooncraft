@@ -2,7 +2,9 @@
 
 #include "../Application/Application.h"
 #include "../AssetManager/AssetManager.h"
-#include "../Rendering/MCraftVertex.h"
+#include "../Rendering/BlockVertex.h"
+
+#include "Chunk.h"
 
 Scene::Scene() 
 {
@@ -20,56 +22,42 @@ void Scene::init() {
 
   for (auto &entity: entities) { entity.init(); }
 
-  std::vector<MCraftVertex> vertices = 
-  {
-     //+y axis
-     {{-1, 1, 1}, {1, 0}},
-     {{1, 1, 1}, {1, 1}},
-     {{-1, 1, -1}, {0, 0}},
-     {{1, 1, 1}, {1, 1}},
-     {{1, 1, -1}, {0, 1}},
-     {{-1, 1, -1}, {0, 0}},
-     // +x axis
-     {{1, 1, -1}, {0, 0}},
-     {{1, -1, 1}, {1, 1}},
-     {{1, -1, -1}, {0, 1}},
-     {{1, -1, 1}, {1, 1}},
-     {{1, 1, -1}, {0, 0}},
-     {{1, 1, 1}, {1, 0}},
-     //-x axis
-     {{-1, -1, -1}, {1, 1}},
-     {{-1, 1, 1}, {0, 0}},
-     {{-1, 1, -1}, {1, 0}},
-     {{-1, 1, 1}, {0, 0}},
-     {{-1, -1, -1}, {1, 1}},
-     {{-1, -1, 1}, {0, 1}},
-     //-z axis
-     {{1, -1, -1}, {1, 1}},
-     {{-1, -1, -1}, {0, 1}},
-     {{1, 1, -1}, {1, 0}},
-     {{-1, -1, -1}, {0, 1}},
-     {{-1, 1, -1}, {0, 0}},
-     {{1, 1, -1}, {1, 0}},
-     // +z axis
-     {{-1, 1, 1}, {1, 0}},
-     {{-1, -1, 1}, {1, 1}},
-     {{1, 1, 1}, {0, 0}},
-     {{1, -1, 1}, {0, 1}},
-     {{1, 1, 1}, {0, 0}},
-     {{-1, -1, 1}, {1, 1}},
-     //-y axis
-     {{1, -1, -1}, {0, 0}},
-     {{1, -1, 1}, {1, 0}},
-     {{-1, -1, 1}, {1, 1}},
-     {{-1, -1, -1}, {0, 1}},
-     {{1, -1, -1}, {0, 0}},
-     {{-1, -1, 1}, {1, 1}},
-  };
+  chunk = std::make_shared<Chunk>(glm::ivec2(0, 0));
 
-  vao = std::make_shared<VertexArray>(vertices, MCraftVertex::vertexAttributes());
+  chunk->placeBlock(BlockData::BlockType::grass, {0, 2, 0});
+  chunk->placeBlock(BlockData::BlockType::dirt, {0, 1, 0});
+  chunk->placeBlock(BlockData::BlockType::stone, {0, 0, 0});
+  chunk->placeBlock(BlockData::BlockType::grass, {1, 2, 0});
+  chunk->placeBlock(BlockData::BlockType::dirt, {1, 1, 0});
+  chunk->placeBlock(BlockData::BlockType::stone, {1, 0, 0});
+  chunk->placeBlock(BlockData::BlockType::grass, {2, 2, 0});
+  chunk->placeBlock(BlockData::BlockType::dirt, {2, 1, 0});
+  chunk->placeBlock(BlockData::BlockType::stone, {2, 0, 0});
 
-  defaultShader = AssetManager::instance().loadShaderProgram("assets/default");
-  textureAtlas = AssetManager::instance().loadTexture("assets/default_texture.png");
+  chunk->placeBlock(BlockData::BlockType::grass, {0, 2, 1});
+  chunk->placeBlock(BlockData::BlockType::dirt, {0, 1, 1});
+  chunk->placeBlock(BlockData::BlockType::stone, {0, 0, 1});
+  chunk->placeBlock(BlockData::BlockType::grass, {1, 2, 1});
+  chunk->placeBlock(BlockData::BlockType::dirt, {1, 1, 1});
+  chunk->placeBlock(BlockData::BlockType::stone, {1, 0, 1});
+  chunk->placeBlock(BlockData::BlockType::grass, {2, 2, 1});
+  chunk->placeBlock(BlockData::BlockType::dirt, {2, 1, 1});
+  chunk->placeBlock(BlockData::BlockType::stone, {2, 0, 1});
+
+  chunk->placeBlock(BlockData::BlockType::grass, {0, 2, 2});
+  chunk->placeBlock(BlockData::BlockType::dirt, {0, 1, 2});
+  chunk->placeBlock(BlockData::BlockType::stone, {0, 0, 2});
+  chunk->placeBlock(BlockData::BlockType::grass, {1, 2, 2});
+  chunk->placeBlock(BlockData::BlockType::dirt, {1, 1, 2});
+  chunk->placeBlock(BlockData::BlockType::stone, {1, 0, 2});
+  chunk->placeBlock(BlockData::BlockType::grass, {2, 2, 2});
+  chunk->placeBlock(BlockData::BlockType::dirt, {2, 1, 2});
+  chunk->placeBlock(BlockData::BlockType::stone, {2, 0, 2});
+
+
+  defaultShader = AssetManager::instance().loadShaderProgram("assets/shaders/default");
+  textureAtlas = AssetManager::instance().loadTexture("assets/textures/default_texture.png");
+
   defaultShader->setTexture("atlas", textureAtlas, 0);
 }
 
@@ -80,15 +68,18 @@ void Scene::update(float deltaTime)
 
   for (auto &entity: entities) { entity.update(deltaTime); }
 
-  camera.setPosition({glm::sin(animationProgress) * 5, glm::sin(animationProgress / 2) * 2, glm::cos(animationProgress) * 5});
+  camera.setPosition({
+     glm::sin(animationProgress) * 5,
+     3,
+     glm::cos(animationProgress) * 5,
+  });
 }
 
 void Scene::render() 
 {
   glm::mat4 camMatrix = projectionMatrix * camera.getViewMatrix();
-  defaultShader->bind();
-  defaultShader->setMat4("CamMatrix", camMatrix);
-  vao->renderVertexStream();
+
+  chunk->render(camMatrix);
 }
 
 void Scene::renderGui() 

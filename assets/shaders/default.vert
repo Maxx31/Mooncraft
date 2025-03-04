@@ -3,10 +3,10 @@
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec2 uv;
 
+uniform mat4 CamMatrix = mat4(1);
+
 out vec3 vert_pos;
 out vec2 vert_uv;
-
-uniform mat4 CamMatrix = mat4(1);
 
 void main()
 {

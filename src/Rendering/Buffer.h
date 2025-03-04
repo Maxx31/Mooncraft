@@ -38,8 +38,8 @@ public:
   }
 };
 
-class IndexBuffer : public Buffer {
-  int elementCount = 0;
+class IndexBuffer : public Buffer 
+{
   uint32_t type = 0;
 
 public:

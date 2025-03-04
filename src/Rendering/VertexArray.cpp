@@ -13,7 +13,6 @@ void VertexArray::unbind() {
 
 void VertexArray::renderIndexed()
 {
-
   if (indexBuffer == nullptr) throw std::exception("Index buffer is not assigned");
 
   bind();
@@ -23,11 +22,16 @@ void VertexArray::renderIndexed()
 
 void VertexArray::renderVertexStream()
 {
+  renderVertexSubStream(vertexBuffer->getSize());
+}
+
+void VertexArray::renderVertexSubStream(int32_t size = -1) 
+{
   if (!isValid()) return;
   if (indexBuffer != nullptr) throw std::exception("Cannot draw indexed vertex stream");
 
   bind();
-  glDrawArrays(GL_TRIANGLES, 0, vertexBuffer->getSize());
+  glDrawArrays(GL_TRIANGLES, 0, size);
   unbind();
 }
 
