@@ -64,7 +64,8 @@ bool Chunk::isInBounds(int32_t x, int32_t y, int32_t z) {
   return x >= 0 && x < HorizontalSize && y >= 0 && y < VerticalSize && z >= 0 && z < HorizontalSize;
 }
 
-void Chunk::render(const glm::mat4& transform) {
+void Chunk::render(const glm::mat4& transform) 
+{
   if (!mesh || renderState != RenderState::ready) {
     mesh = createMesh();
     renderState = RenderState::ready;
