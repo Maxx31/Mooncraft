@@ -1,9 +1,9 @@
 #include "Chunk.h"
 
 #include "../AssetManager/AssetManager.h"
+#include "../Util/Math.h"
 
 Chunk::Chunk(const glm::ivec2& worldPosition) : worldPosition(worldPosition) {}
-
 
 void Chunk::render(const glm::mat4& transform) 
 {
@@ -44,6 +44,7 @@ SharedRef<VertexArray> Chunk::createMesh()
       {
         const BlockData::BlockType type = data[x][y][z].type;
         const bool transparent = BlockData::isTransparent(type);
+
         if (type == BlockData::BlockType::air) continue;
 
         for (const auto& [ox, oy, oz]: offsetsToCheck) 
@@ -103,5 +104,6 @@ bool Chunk::isValidPosition(glm::ivec3 position) {
 
 glm::ivec3 Chunk::toChunkCoordinates(const glm::ivec3& globalPosition) 
 {
-  return {glm::abs(globalPosition.x % HorizontalSize), globalPosition.y, glm::abs(globalPosition.z % HorizontalSize)};
+  return {Math::positiveMod(globalPosition.x, HorizontalSize), globalPosition.y,
+          Math::positiveMod(globalPosition.z, HorizontalSize)};
 }

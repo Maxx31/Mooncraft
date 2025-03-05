@@ -17,19 +17,22 @@ Ray::Ray(glm::vec3 position, glm::vec3 direction, World& world, float reach = 10
 
   while (!successful && planes[0].getHitDistance() <= reach) 
   {
-    glm::ivec3 blockPosition = AxisPlane::rayHitsToBlockPosition(planes[0].getHitPosition(), prevClosestHit);
+    // todo check the distance between the two hit positions
+    std::optional<glm::ivec3> maybeBlockPosition = AxisPlane::rayHitsToBlockPosition(planes[0].getHitPosition(), prevClosestHit);
     prevClosestHit = planes[0].getHitPosition();
 
-    if (!World::isValidBlockPosition(blockPosition)) 
+    if (!maybeBlockPosition.has_value() || !World::isValidBlockPosition(maybeBlockPosition.value())) 
     {
       planes[0].advanceOffset();
       std::sort(planes.begin(), planes.end());
       continue;
     }
 
+    glm::vec3 blockPosition = maybeBlockPosition.value();
     BlockData block = world.getBlockAt(blockPosition);
 
-    if (block.type == BlockData::BlockType::air) {
+    if (block.type == BlockData::BlockType::air) 
+    {
       planes[0].advanceOffset();
       std::sort(planes.begin(), planes.end());
     } else {

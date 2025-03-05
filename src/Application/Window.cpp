@@ -213,6 +213,13 @@ void GLAPIENTRY Window::onOpenGlMessage(GLenum source,
   std::cerr << std::endl;
 }
 
+glm::dvec2 Window::getCursorPosition() 
+{
+  glm::dvec2 pos;
+  glfwGetCursorPos(window, &pos.x, &pos.y);
+  return pos;
+}
+
 Window::~Window() 
 {
   glfwTerminate();
