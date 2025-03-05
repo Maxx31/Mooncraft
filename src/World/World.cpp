@@ -1,5 +1,7 @@
 #include "World.h"
 
+#include "../Util/Math.h"
+
 World::World() 
 {
   defaultShader = AssetManager::instance().loadShaderProgram("assets/shaders/default");
@@ -38,7 +40,8 @@ bool World::placeBlock(BlockData block, glm::ivec3 position)
 }
 
 glm::ivec2 World::getChunkIndex(glm::ivec3 position) {
-  return {position.x - (position.x % Chunk::HorizontalSize), position.z - (position.z % Chunk::HorizontalSize)};
+  return {position.x - Math::positiveMod(position.x, Chunk::HorizontalSize),
+          position.z - Math::positiveMod(position.z, Chunk::HorizontalSize)};
 }
 
 SharedRef<Chunk> World::getChunk(glm::ivec2 position) {

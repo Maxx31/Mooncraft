@@ -94,9 +94,9 @@ public:
 
   void bind();
   void addVertexAttributes(const std::vector<VertexAttribute> &vector, int32_t defaultVertexSize);
-  void renderIndexed();
-  void renderVertexSubStream(int32_t size);
-  void renderVertexStream();
+  void renderIndexed(int32_t type = GL_TRIANGLES);
+  void renderVertexSubStream(int32_t size, int32_t type = GL_TRIANGLES);
+  void renderVertexStream(int32_t type = GL_TRIANGLES);
   void unbind();
 
   SharedRef<VertexBuffer> getVertexBuffer() { return vertexBuffer; };

@@ -7,6 +7,9 @@
 #define GLM_ENABLE_EXPERIMENTAL
 
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/integer.hpp>
+#include <glm/gtx/transform.hpp>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
@@ -15,8 +18,6 @@
 #include <algorithm>
 #include <chrono>
 #include <fstream>
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
 #include <iostream>
 #include <iterator>
 #include <memory>

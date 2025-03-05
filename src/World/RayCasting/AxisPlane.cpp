@@ -5,7 +5,7 @@ AxisPlane::AxisPlane(glm::vec3 planeNormal, glm::vec3 rayPosition, glm::vec3 ray
       rayPosition(rayPosition),
       rayDirection(rayDirection) 
 {
-  offsetDirection = calculateOffsetDirection(rayDirection);
+  offsetDirection = calculateOffsetDirection(rayDirection); //Does our ray point in the same direction as normal
   planeOffset = calculateStartOffset(rayPosition, rayDirection);
   hitPosition = calculateHitPosition();
   hitDistance = calculateHitDistanceToPosition();
@@ -20,7 +20,8 @@ glm::vec3 AxisPlane::calculateHitPosition() const {
   return rayPosition + t * rayDirection;
 }
 
-float AxisPlane::intersect() const {
+float AxisPlane::intersect() const 
+{
   float d = glm::dot(planeNormal, rayDirection);
   if (d == 0) return -std::numeric_limits<float>::infinity();  // the plane and the ray are parallel
 
@@ -31,12 +32,12 @@ float AxisPlane::intersect() const {
 
 float AxisPlane::calculateOffsetDirection(const glm::vec3& direction) const 
 {
-  return glm::dot(planeNormal, direction) < 0 ? -1.0f : 1.0f;
+  return glm::dot(planeNormal, direction) < 0 ? -1.0f : 1.0f; //Check if our ray moving in same direction with normal (>0) or in different direction (-1)
 }
 
 float AxisPlane::calculateStartOffset(const glm::vec3& position, const glm::vec3& direction) const 
 {
-  return std::floor(glm::dot(planeNormal, position)) + (glm::dot(planeNormal, direction) > 0 ? 1.0f : 0.0f);
+  return std::floor(glm::dot(planeNormal, position)) + (glm::dot(planeNormal, direction) > 0 ? 1.0f : 0.0f); //Check if we hit a plane or no
 }
 
 void AxisPlane::advanceOffset() 

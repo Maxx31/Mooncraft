@@ -18,6 +18,12 @@ void Scene::init() {
   updateMouse();
 
   outlinedBlockShader = AssetManager::instance().loadShaderProgram("assets/shaders/outline");
+  crosshairShader = AssetManager::instance().loadShaderProgram("assets/shaders/crosshair");
+
+  crosshairVertexArray =
+     std::make_shared<VertexArray>(std::vector<glm::vec3>{{0, .01, 0}, {0, -.01, 0}, {.01, 0, 0}, {-.01, 0, 0}},
+                                   std::vector<VertexAttribute>{{3, VertexAttribute::Float, 0}});
+
   std::vector<BlockVertex> vertices;
 
   vertices.resize(6 * 6);
@@ -95,14 +101,18 @@ void Scene::render()
 
   Ray ray(player.getPosition(), player.getLookDirection(), *world, 10.0f);
 
-  if (ray.hasHit()) {
+  if (ray.hasHit()) 
+  {
     auto blockHit = ray.getHitTarget().position;
-    std::cout << "hit pos: " << blockHit.x << " " << blockHit.y << " " << blockHit.z << std::endl;
+   // std::cout << "hit pos: " << blockHit.x << " " << blockHit.y << " " << blockHit.z << std::endl;
 
     outlinedBlockShader->setMat4("CamMatrix", camMatrix * glm::translate(blockHit));
     outlinedBlockShader->bind();
     outlinedBlockVertexArray->renderVertexStream();
   }
+
+  crosshairShader->bind();
+  crosshairVertexArray->renderVertexStream(GL_LINES);
 }
 
 void Scene::renderGui() 

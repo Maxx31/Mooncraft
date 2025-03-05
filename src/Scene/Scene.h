@@ -21,6 +21,9 @@ class Scene
   SharedRef<const ShaderProgram> outlinedBlockShader;
   SharedRef<VertexArray> outlinedBlockVertexArray;
 
+  SharedRef<const ShaderProgram> crosshairShader;
+  SharedRef<VertexArray> crosshairVertexArray;
+
   Player player;
   glm::mat4 projectionMatrix;
 

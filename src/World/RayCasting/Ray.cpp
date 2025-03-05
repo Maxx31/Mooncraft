@@ -12,6 +12,7 @@ Ray::Ray(glm::vec3 position, glm::vec3 direction, World& world, float reach = 10
   }};
 
   std::sort(planes.begin(), planes.end());
+
   glm::vec3 prevClosestHit = position;  // the player might be inside a block
 
   while (!successful && planes[0].getHitDistance() <= reach) 
