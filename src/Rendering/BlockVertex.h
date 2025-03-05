@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Scene/BlockData.h"
+#include "../World/BlockData.h"
 #include "../MCraft.h"
 #include "VertexArray.h"
 
@@ -8,9 +8,6 @@ struct BlockVertex
 {
   glm::vec3 position;
   glm::vec2 uvCoords;
-  //  uint8_t yPosition;
-  //  uint8_t xzPosition;
-  //  uint8_t uvCoordsAndTexture; // todo one vertex should take up less than 32 bits of space
 
   void offset(int32_t x, int32_t y, int32_t z) { position += glm::vec3(x, y, z); }
 

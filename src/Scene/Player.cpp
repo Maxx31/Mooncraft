@@ -57,6 +57,7 @@ void Player::onKeyEvent(int32_t key, int32_t scancode, int32_t action, int32_t m
 
 void Player::onMouseButtonEvent(int32_t button, int32_t action, int32_t mods) 
 {
+
 }
 
 void Player::onCursorPositionEvent(double x, double y)
@@ -97,4 +98,14 @@ void Player::updatePlayerOrientation()
 glm::mat4 Player::calcView() 
 {
   return glm::lookAt(position, position + lookDirection, up);
+}
+
+glm::vec3 Player::getPosition() 
+{
+  return position;
+}
+
+glm::vec3 Player::getLookDirection() 
+{
+  return lookDirection;
 }

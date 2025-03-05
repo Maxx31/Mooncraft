@@ -29,12 +29,33 @@ public:
   void bind() { glBindBuffer(GL_ARRAY_BUFFER, id); };
 
   template<typename T>
-  void bufferStaticVertexData(const std::vector<T> &data) {
+  void bufferStaticVertexData(const std::vector<T> &data)
+  {
     if (!isValid()) throw std::exception("Cannot write data to an invalid buffer");
 
     bind();
     size = data.size();
     glBufferData(GL_ARRAY_BUFFER, sizeof(T) * size, &data[0], GL_STATIC_DRAW);
+  }
+
+  template<typename T>
+  void bufferDynamicVertexData(const std::vector<T> &data) 
+  {
+    if (!isValid()) throw std::exception("Cannot write data to an invalid buffer");
+
+    bind();
+    size = data.size();
+    glBufferData(GL_ARRAY_BUFFER, sizeof(T) * size, &data[0], GL_DYNAMIC_DRAW);
+  }
+
+  template<typename T>
+  void bufferDynamicVertexSubData(const std::vector<T> &data, int32_t offset = 0)
+  {
+    if (!isValid()) throw std::exception("Cannot write data to an invalid buffer");
+
+    bind();
+    size = data.size();
+    glBufferSubData(GL_ARRAY_BUFFER, offset, sizeof(T) * size, &data[0]);
   }
 };
 
@@ -50,28 +71,59 @@ public:
   [[nodiscard]] uint32_t getType() const { return type; }
 
   template<typename T>
+  int32_t getSizeType() 
+  {
+    switch (sizeof(T)) {
+      case 1:
+        return GL_UNSIGNED_BYTE;
+      case 2:
+        return GL_UNSIGNED_SHORT;
+      case 4:
+        return GL_UNSIGNED_INT;
+    }
+  }
+
+  template<typename T>
   void bufferStaticIndexData(const std::vector<T> &data) {
     static_assert(std::is_same<T, unsigned char>::value || std::is_same<T, unsigned short>::value ||
                      std::is_same<T, unsigned int>::value,
                   "The given type must be either unsigned char, unsigned short or unsigned int");
 
     if (!isValid()) throw std::exception("Cannot write data to an invalid buffer");
+    type = getSizeType<T>();
 
-    switch (sizeof(T)) {
-      case 1:
-        type = GL_UNSIGNED_BYTE;
-        break;
-      case 2:
-        type = GL_UNSIGNED_SHORT;
-        break;
-      case 4:
-        type = GL_UNSIGNED_INT;
-        break;
-    }
+    bind();
+    size = data.size();
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(T) * size, &data[0], GL_STATIC_DRAW);
+  }
 
+  template<typename T>
+  void bufferDynamicIndexData(const std::vector<T> &data) 
+  {
+    static_assert(std::is_same<T, unsigned char>::value || std::is_same<T, unsigned short>::value ||
+                     std::is_same<T, unsigned int>::value,
+                  "The given type must be either unsigned char, unsigned short or unsigned int");
+
+    if (!isValid()) throw std::exception("Cannot write data to an invalid buffer");
+    type = getSizeType<T>();
     bind();
 
     size = data.size();
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(T) * size, &data[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(T) * size, &data[0], GL_DYNAMIC_DRAW);
+  }
+
+  template<typename T>
+  void bufferDynamicIndexSubData(const std::vector<T> &data, int32_t offset = 0) 
+  {
+    static_assert(std::is_same<T, unsigned char>::value || std::is_same<T, unsigned short>::value ||
+                     std::is_same<T, unsigned int>::value,
+                  "The given type must be either unsigned char, unsigned short or unsigned int");
+
+    if (!isValid()) throw std::exception("Cannot write data to an invalid buffer");
+    type = getSizeType<T>();
+
+    bind();
+    size = data.size();
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, sizeof(T) * size, &data[0]);
   }
 };

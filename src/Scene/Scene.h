@@ -2,7 +2,8 @@
 #include <utility>
 
 #include "../MCraft.h"
-#include "Chunk.h"
+
+#include "../World/World.h"
 
 #include "../Rendering/ShaderProgram.h"
 #include "../Rendering/Texture.h"
@@ -15,9 +16,10 @@ class Scene
   bool initialized = false;
   bool isMenuOpen = false;
 
-  SharedRef<Chunk> chunk;
-  SharedRef<const Texture> textureAtlas;
-  SharedRef<const ShaderProgram> defaultShader;
+  SharedRef<World> world;
+
+  SharedRef<const ShaderProgram> outlinedBlockShader;
+  SharedRef<VertexArray> outlinedBlockVertexArray;
 
   Player player;
   glm::mat4 projectionMatrix;
