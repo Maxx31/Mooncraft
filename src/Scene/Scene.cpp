@@ -36,8 +36,6 @@ void Scene::init() {
   }
   outlinedBlockVertexArray = std::make_shared<VertexArray>(vertices, BlockVertex::vertexAttributes());
 
-  world = std::make_shared<World>();
-
     for (int x = -25; x < 25; ++x) {
     for (int z = -25; z < 25; ++z) {
       world->placeBlock(BlockData::BlockType::grass, {x, 3, z});
@@ -76,15 +74,11 @@ void Scene::updateMouse()
 void Scene::render() 
 {
   glm::mat4 camMatrix = projectionMatrix * player.getViewMatrix();
-
   world->render(player.getPosition(), camMatrix);
 
-  Ray ray(player.getPosition(), player.getLookDirection(), *world, 10.0f);
-
-  if (ray.hasHit()) 
+  if (Ray ray{player.getPosition(), player.getLookDirection(), *world, Player::reach})
   {
     auto blockHit = ray.getHitTarget().position;
-   // std::cout << "hit pos: " << blockHit.x << " " << blockHit.y << " " << blockHit.z << std::endl;
 
     outlinedBlockShader->setMat4("CamMatrix", camMatrix * glm::translate(blockHit));
     outlinedBlockShader->bind();

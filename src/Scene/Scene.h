@@ -16,7 +16,7 @@ class Scene
   bool initialized = false;
   bool isMenuOpen = false;
 
-  SharedRef<World> world;
+  SharedRef<World> world = std::make_shared<World>();
 
   SharedRef<const ShaderProgram> outlinedBlockShader;
   SharedRef<VertexArray> outlinedBlockVertexArray;
@@ -24,7 +24,7 @@ class Scene
   SharedRef<const ShaderProgram> crosshairShader;
   SharedRef<VertexArray> crosshairVertexArray;
 
-  Player player;
+  Player player{world};
   glm::mat4 projectionMatrix;
 
   void toggleMenu();

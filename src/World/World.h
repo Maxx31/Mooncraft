@@ -35,6 +35,7 @@ public:
   bool placeBlock(BlockData block, glm::ivec3 position);
 
    void render(glm::vec3 playerPos, glm::mat4 transform);
+  int GetChunksAmmount() { return chunks.size(); }
 
    static bool isValidBlockPosition(glm::ivec3 position);
 };

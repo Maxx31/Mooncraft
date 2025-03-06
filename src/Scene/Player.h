@@ -2,6 +2,8 @@
 
 #include "../MCraft.h"
 
+#include "../World/World.h"
+
 struct MovementDirection 
 {
   bool isMoving = false;
@@ -10,6 +12,9 @@ struct MovementDirection
 
 class Player 
 {
+  SharedRef<World> world;
+  BlockData::BlockType blockToPlace = BlockData::BlockType::grass;
+
   glm::vec3 position = {5, 5, 5};
   glm::vec3 up = {0, 1, 0};
 
@@ -43,6 +48,10 @@ class Player
   void updatePlayerOrientation();
 
 public:
+  constexpr static float reach = 4.5f;
+
+  Player(const SharedRef<World>& world) : world(world) {}
+
   const glm::mat4& setPosition(glm::vec3 eye);
   const glm::mat4& lookAt(glm::vec3 eye, glm::vec3 center);
 
