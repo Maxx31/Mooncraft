@@ -1,5 +1,6 @@
 #pragma once
 // this is to force the formatter to keep the order
+
 #if 1
 #include <glad/glad.h>
 #endif

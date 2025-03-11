@@ -1,10 +1,8 @@
 #include "Scene.h"
 
 #include "../Application/Application.h"
-#include "../AssetManager/AssetManager.h"
 
 #include "../World/RayCasting/Ray.h"
-#include "../World/World.h"
 
 Scene::Scene() 
 {
@@ -18,11 +16,6 @@ void Scene::init() {
   updateMouse();
 
   outlinedBlockShader = AssetManager::instance().loadShaderProgram("assets/shaders/outline");
-  crosshairShader = AssetManager::instance().loadShaderProgram("assets/shaders/crosshair");
-
-  crosshairVertexArray =
-     std::make_shared<VertexArray>(std::vector<glm::vec3>{{0, .01, 0}, {0, -.01, 0}, {.01, 0, 0}, {-.01, 0, 0}},
-                                   std::vector<VertexAttribute>{{3, VertexAttribute::Float, 0}});
 
   std::vector<BlockVertex> vertices;
 
@@ -38,10 +31,10 @@ void Scene::init() {
 
     for (int x = -25; x < 25; ++x) {
     for (int z = -25; z < 25; ++z) {
-      world->placeBlock(BlockData::BlockType::grass, {x, 3, z});
-      world->placeBlock(BlockData::BlockType::dirt, {x, 2, z});
-      world->placeBlock(BlockData::BlockType::glass, {x, 1, z});
-      world->placeBlock(BlockData::BlockType::stone, {x, 0, z});
+        world->placeBlock(BlockData::BlockType::grass, {x, 3, z});
+        world->placeBlock(BlockData::BlockType::dirt, {x, 2, z});
+        world->placeBlock(BlockData::BlockType::dirt, {x, 1, z});
+        world->placeBlock(BlockData::BlockType::stone, {x, 0, z});
     }
   }
 }
@@ -49,6 +42,7 @@ void Scene::init() {
 void Scene::update(float deltaTime) 
 {
   player.update(deltaTime);
+  skybox.update(projectionMatrix, player.getViewMatrix());
 }
 
 
@@ -73,10 +67,12 @@ void Scene::updateMouse()
 
 void Scene::render() 
 {
+  skybox.render();
+
   glm::mat4 camMatrix = projectionMatrix * player.getViewMatrix();
   world->render(player.getPosition(), camMatrix);
 
-  if (Ray ray{player.getPosition(), player.getLookDirection(), *world, Player::reach})
+  if (Ray ray{player.getPosition(), player.getLookDirection(), *world, Player::reach}) 
   {
     auto blockHit = ray.getHitTarget().position;
 
@@ -85,8 +81,7 @@ void Scene::render()
     outlinedBlockVertexArray->renderVertexStream();
   }
 
-  crosshairShader->bind();
-  crosshairVertexArray->renderVertexStream(GL_LINES);
+  crosshair.render();
 }
 
 void Scene::renderGui() 
@@ -100,13 +95,6 @@ void Scene::renderGui()
   {
     world->placeBlock(BlockData::BlockType::cobble_stone, {coords[0], coords[1], coords[2]});
   }
-
-   ImGui::Text("Player position: x:%f, y:%f, z:%f", player.getPosition().x, player.getPosition().y,
-              player.getPosition().z);
-
-  ImGui::Text("Player direction: x:%f, y:%f, z:%f", player.getLookDirection().x, player.getLookDirection().y,
-              player.getLookDirection().z);
-
   ImGui::End();
 }
 
@@ -114,6 +102,8 @@ void Scene::onResized(int32_t width, int32_t height)
 {
   float aspectRatio = width == 0 || height == 0 ? 0 : static_cast<float>(width) / static_cast<float>(height);
   projectionMatrix = glm::perspective<float>(glm::half_pi<float>(), aspectRatio, .1f, 250.0f);
+
+  crosshair.update(aspectRatio);
 }
 
 void Scene::onKeyEvent(int32_t key, int32_t scancode, int32_t action, int32_t mode)

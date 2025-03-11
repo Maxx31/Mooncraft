@@ -9,7 +9,9 @@
 #include "../Rendering/Texture.h"
 #include "../Rendering/VertexArray.h"
 
+#include "Crosshair.h"
 #include "Player.h"
+#include "Skybox.h"
 
 class Scene 
 {
@@ -21,11 +23,12 @@ class Scene
   SharedRef<const ShaderProgram> outlinedBlockShader;
   SharedRef<VertexArray> outlinedBlockVertexArray;
 
-  SharedRef<const ShaderProgram> crosshairShader;
-  SharedRef<VertexArray> crosshairVertexArray;
+  Skybox skybox;
 
   Player player{world};
   glm::mat4 projectionMatrix;
+
+  Crosshair crosshair;
 
   void toggleMenu();
   void updateMouse();

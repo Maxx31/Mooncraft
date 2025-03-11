@@ -10,11 +10,12 @@ class HashVec2
 {
 public:
   size_t operator()(const glm::ivec2& coord) const noexcept {
-    return std::hash<int>{}(coord.x) | (std::hash<int>{}(coord.y) << sizeof(int) * 8);
+    return std::hash<int>{}(coord.x) | (std::hash<int>{}(coord.y) << sizeof(int) * 8); //First 32 bit for coord X, and second 32 bits for coord y
   };
 };
 
-class World {
+class World 
+{
   std::unordered_map<glm::ivec2, SharedRef<Chunk>, HashVec2> chunks;
   SharedRef<const Texture> textureAtlas;
   SharedRef<const ShaderProgram> defaultShader;
