@@ -13,8 +13,9 @@ public:
     static Gui gui;
     return gui;
   }
-  void update();
-  void finalizeFrame();
+
+  static void update();
+  static void finalizeFrame();
 
   ~Gui();
 };

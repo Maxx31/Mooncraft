@@ -35,12 +35,12 @@ void Window::onWindowError(int errorCode, const char *description)
   std::cerr << "GLFW: **ERROR** error=" << errorCode << " description=" << description << std::endl;
 }
 
-void Window::onKeyEvent(GLFWwindow *window, int32_t key, int32_t scancode, int32_t action, int32_t mode)
+void Window::onKeyEvent(GLFWwindow *, int32_t key, int32_t scancode, int32_t action, int32_t mode)
 {
   Application::instance().onKeyEvent(key, scancode, action, mode);
 }
 
-void Window::onResized(GLFWwindow *_, int32_t width, int32_t height)
+void Window::onResized(GLFWwindow *, int32_t width, int32_t height)
 {
   Application &app = Application::instance();
   Window &window = app.getWindow();
@@ -50,17 +50,17 @@ void Window::onResized(GLFWwindow *_, int32_t width, int32_t height)
   app.onResized(width, height);
 }
 
-void Window::onMouseButtonEvent(GLFWwindow *window, int32_t button, int32_t action, int32_t mods) 
+void Window::onMouseButtonEvent(GLFWwindow *, int32_t button, int32_t action, int32_t mods) 
 {
   Application::instance().onMouseButtonEvent(button, action, mods);
 }
 
-void Window::onCursorPosition(GLFWwindow *window, double x, double y) 
+void Window::onCursorPosition(GLFWwindow *, double x, double y) 
 {
   Application::instance().onCursorPositionEvent(x, y);
 }
 
-void Window::onRefreshWindow(GLFWwindow *window)
+void Window::onRefreshWindow(GLFWwindow *)
 {
   Application::instance().onRefreshWindow();
 }
@@ -128,9 +128,9 @@ void GLAPIENTRY Window::onOpenGlMessage(GLenum source,
                                         GLenum type,
                                         GLuint id,
                                         GLenum severity,
-                                        GLsizei length,
+                                        GLsizei,
                                         const GLchar *message,
-                                        const void *userParam) {
+                                        const void *) {
   if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
 
   std::cerr << "---------------" << std::endl;

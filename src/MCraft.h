@@ -17,6 +17,7 @@
 #include <lodepng.h>
 
 #include <algorithm>
+#include <cassert>
 #include <chrono>
 #include <fstream>
 #include <iostream>

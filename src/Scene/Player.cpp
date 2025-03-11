@@ -33,6 +33,7 @@ void Player::update(float deltaTime)
 
   if (glm::length(moveDirection) > 0) 
   {
+    float movementSpeed = isRunning ? runningSpeed : walkingSpeed;
     position += glm::normalize(moveDirection) * movementSpeed * deltaTime;
     updateView();
   }
@@ -42,18 +43,33 @@ void Player::onKeyEvent(int32_t key, int32_t scancode, int32_t action, int32_t m
 {
   if (action == 2) return;  // don't respond to repeatedly pressed buttons
 
-  if (key == 87 || key == 265) {
+  if (key == 87 || key == 265) //W
+  {
     directions[0].isMoving = action == 1;
-  } else if (key == 83 || key == 264) {
+  } 
+  else if (key == 83 || key == 264) //S
+  {
     directions[1].isMoving = action == 1;
-  } else if (key == 65 || key == 263) {
+  } 
+  else if (key == 65 || key == 263) //A
+  {
     directions[2].isMoving = action == 1;
-  } else if (key == 68 || key == 262) {
+  } 
+  else if (key == 68 || key == 262) //D
+  {
     directions[3].isMoving = action == 1;
-  } else if (key == 32) {
+  } 
+  else if (key == 32) //Space
+  {
     directions[4].isMoving = action == 1;
-  } else if (key == 340) {
+  } 
+  else if (key == 341)  //CTRL
+  {
     directions[5].isMoving = action == 1;
+  } 
+  else if (key == 340) //Shift
+  {
+    isRunning = action == 1;
   }
 }
 

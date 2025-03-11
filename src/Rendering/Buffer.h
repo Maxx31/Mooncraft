@@ -4,7 +4,7 @@
 class Buffer 
 {
 protected:
-  int32_t size;
+  int32_t size = 0;
   uint32_t id = 0;
   Buffer() { glGenBuffers(1, &id); }
 
@@ -31,7 +31,7 @@ public:
   template<typename T>
   void bufferStaticVertexData(const std::vector<T> &data)
   {
-    if (!isValid()) throw std::exception("Cannot write data to an invalid buffer");
+    assert(isValid() && "Cannot write data to an invalid buffer");
 
     bind();
     size = data.size();
@@ -41,7 +41,7 @@ public:
   template<typename T>
   void bufferDynamicVertexData(const std::vector<T> &data) 
   {
-    if (!isValid()) throw std::exception("Cannot write data to an invalid buffer");
+    assert(isValid() && "Cannot write data to an invalid buffer");
 
     bind();
     size = data.size();
@@ -51,7 +51,7 @@ public:
   template<typename T>
   void bufferDynamicVertexSubData(const std::vector<T> &data, int32_t offset = 0)
   {
-    if (!isValid()) throw std::exception("Cannot write data to an invalid buffer");
+    assert(isValid() && "Cannot write data to an invalid buffer");
 
     bind();
     size = data.size();
@@ -89,7 +89,7 @@ public:
                      std::is_same<T, unsigned int>::value,
                   "The given type must be either unsigned char, unsigned short or unsigned int");
 
-    if (!isValid()) throw std::exception("Cannot write data to an invalid buffer");
+    assert(isValid() && "Cannot write data to an invalid buffer");
     type = getSizeType<T>();
 
     bind();
@@ -104,7 +104,7 @@ public:
                      std::is_same<T, unsigned int>::value,
                   "The given type must be either unsigned char, unsigned short or unsigned int");
 
-    if (!isValid()) throw std::exception("Cannot write data to an invalid buffer");
+    assert(isValid() && "Cannot write data to an invalid buffer");
     type = getSizeType<T>();
     bind();
 
@@ -119,7 +119,7 @@ public:
                      std::is_same<T, unsigned int>::value,
                   "The given type must be either unsigned char, unsigned short or unsigned int");
 
-    if (!isValid()) throw std::exception("Cannot write data to an invalid buffer");
+    assert(isValid() && "Cannot write data to an invalid buffer");
     type = getSizeType<T>();
 
     bind();

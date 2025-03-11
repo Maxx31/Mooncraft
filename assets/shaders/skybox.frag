@@ -5,5 +5,5 @@
  
  void main() 
  {
-      color = mix(vec4(.3, .3, .8, 1), vec4(.33, .33, .8, 1), normalize(vert_pos).y);
+      color = mix(vec4(0.3f, 0.3f, 0.8f, 1), vec4(0.33f, 0.33f, 0.8f, 1), normalize(vert_pos).y);
  }
