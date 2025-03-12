@@ -23,7 +23,6 @@ void Chunk::render(const glm::mat4& transform)
 SharedRef<VertexArray> Chunk::createMesh() 
 {
   static SharedRef<std::vector<BlockVertex>> vertices = std::make_shared<std::vector<BlockVertex>>(VertexCount);
-
   vertexCount = 0;
 
   const std::array<std::tuple<int32_t, int32_t, int32_t>, 6> offsetsToCheck =
@@ -102,4 +101,9 @@ glm::ivec3 Chunk::toChunkCoordinates(const glm::ivec3& globalPosition)
 {
   return {Math::positiveMod(globalPosition.x, HorizontalSize), globalPosition.y,
           Math::positiveMod(globalPosition.z, HorizontalSize)};
+}
+
+glm::ivec2 Chunk::getPosition() 
+{
+  return worldPosition;
 }

@@ -5,7 +5,8 @@
 #include "../MCraft.h"
 #include "Buffer.h"
 
-struct VertexAttribute {
+struct VertexAttribute 
+{
   enum ComponentType {
     UShort = GL_UNSIGNED_SHORT,
     Int = GL_INT,

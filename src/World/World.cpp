@@ -2,7 +2,7 @@
 
 #include "../Util/Math.h"
 
-World::World() 
+World::World(int seed) : generator(seed) 
 {
   defaultShader = AssetManager::instance().loadShaderProgram("assets/shaders/default");
   textureAtlas = AssetManager::instance().loadTexture("assets/textures/default_texture.png");
@@ -11,11 +11,9 @@ World::World()
 
 void World::render(glm::vec3 playerPos, glm::mat4 transform) 
 {
-  // todo sort the chunks before rendering
-
   for (auto& [position, chunk]: chunks) 
   {
-    chunk->render(transform * glm::translate(glm::vec3(position.x, 0, position.y)));
+    chunk->render(transform);
   }
 }
 
@@ -44,8 +42,9 @@ glm::ivec2 World::getChunkIndex(glm::ivec3 position) {
           position.z - Math::positiveMod(position.z, Chunk::HorizontalSize)};
 }
 
-SharedRef<Chunk> World::getChunk(glm::ivec2 position) {
-  if (!chunks.contains(position)) { addChunk(position, generateOrLoadChunk(position)); }
+SharedRef<Chunk> World::getChunk(glm::ivec2 position) 
+{
+  if (!chunks.contains(position)) { addChunk(position, generateOrLoadChunk(position));}
 
   return chunks.at(position);
 }

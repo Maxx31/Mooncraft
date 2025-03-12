@@ -5,6 +5,7 @@
 #include "../Rendering/Texture.h"
 #include "../MCraft.h"
 #include "Chunk.h"
+#include "WorldGenerator.h"
 
 class HashVec2 
 {
@@ -20,13 +21,18 @@ class World
   SharedRef<const Texture> textureAtlas;
   SharedRef<const ShaderProgram> defaultShader;
 
+  WorldGenerator generator;
+
   SharedRef<Chunk> generateOrLoadChunk(glm::ivec2 position) 
   {
-    return std::make_shared<Chunk>(position);
+    SharedRef<Chunk> chunk = std::make_shared<Chunk>(position);
+    generator.populateChunk(chunk);
+
+    return chunk;
   }
 
 public:
-  World();
+  World(int seed = 228);
 
   SharedRef<Chunk> getChunk(glm::ivec2 position);
   void addChunk(glm::ivec2 position, const SharedRef<Chunk>& chunk) { chunks[position] = chunk; };

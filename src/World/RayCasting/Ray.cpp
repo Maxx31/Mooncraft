@@ -29,7 +29,6 @@ Ray::Ray(glm::vec3 position, glm::vec3 direction, World& world, float reach = 10
       glm::vec3 blockPosition = maybeBlockPosition.value();
       BlockData block = world.getBlockAt(blockPosition);
 
-      std::cout << world.GetChunksAmmount() << std::endl;
       if (block.type != BlockData::BlockType::air) 
       {
         successful = true;

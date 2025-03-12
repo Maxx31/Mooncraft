@@ -15,7 +15,7 @@ class Player
   SharedRef<World> world;
   BlockData::BlockType blockToPlace = BlockData::BlockType::grass;
 
-  glm::vec3 position = {5, 5, 5};
+  glm::vec3 position = {5, 90, 5};
   glm::vec3 up = {0, 1, 0};
 
   float yaw = 0;
