@@ -23,13 +23,8 @@ class World
 
   WorldGenerator generator;
 
-  SharedRef<Chunk> generateOrLoadChunk(glm::ivec2 position) 
-  {
-    SharedRef<Chunk> chunk = std::make_shared<Chunk>(position);
-    generator.populateChunk(chunk);
-
-    return chunk;
-  }
+  int viewDistance = 5;
+  SharedRef<Chunk> generateOrLoadChunk(glm::ivec2 position);
 
 public:
   World(int seed = 228);
@@ -41,8 +36,8 @@ public:
   [[nodiscard]] BlockData getBlockAt(glm::ivec3 position);
   bool placeBlock(BlockData block, glm::ivec3 position);
 
-   void render(glm::vec3 playerPos, glm::mat4 transform);
-  int GetChunksAmmount() { return chunks.size(); }
+  void update(const glm::vec3& playerPosition);
+  void render(glm::vec3 playerPos, glm::mat4 transform);
 
    static bool isValidBlockPosition(glm::ivec3 position);
 };

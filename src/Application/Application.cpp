@@ -4,8 +4,7 @@ Application::Application() : gui(Gui::instance()) {}
 
 int Application::run() 
 {
-  if (!scene) return -1;
-  if (!window.isValid()) return -1;
+  if (!scene || !window.isValid()) { return -1; }
 
   scene->init();
   lastTick = Clock::now();

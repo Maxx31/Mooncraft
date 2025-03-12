@@ -28,15 +28,12 @@ void Scene::init() {
     }
   }
   outlinedBlockVertexArray = std::make_shared<VertexArray>(vertices, BlockVertex::vertexAttributes());
-
-    for (int x = -10; x < 10; ++x) {
-    for (int z = -10; z < 10; ++z) { world->placeBlock(BlockData::BlockType::air, {x * 16, 255, z * 16}); }
-  }
 }
 
 void Scene::update(float deltaTime) 
 {
   player.update(deltaTime);
+  world->update(player.getPosition());
   skybox.update(projectionMatrix, player.getViewMatrix());
 }
 
@@ -81,16 +78,7 @@ void Scene::render()
 
 void Scene::renderGui() 
 {
-  //if (!isMenuOpen) return;
-
-  ImGui::Begin("Place Block");
-  static float coords[] = {0, 0, 0};
-  
-  if (ImGui::SliderFloat3("Block Coordinate: ", &coords[0], -20, 20))
-  {
-    world->placeBlock(BlockData::BlockType::cobble_stone, {coords[0], coords[1], coords[2]});
-  }
-  ImGui::End();
+  if (!isMenuOpen) return;
 }
 
 void Scene::onResized(int32_t width, int32_t height)
