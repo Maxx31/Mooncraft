@@ -35,8 +35,11 @@ add_library(
         third_party/imgui/backends/imgui_impl_glfw.cpp
         third_party/imgui/backends/imgui_impl_opengl3.h
         third_party/imgui/backends/imgui_impl_opengl3.cpp
-)
+ )
 include_directories(imgui third_party/imgui third_party/imgui/backends)
+
+# FastNoiseLite
+include_directories(main third_party/FastNoiseLite)
 
 # lodepng
 add_library(lodepng EXCLUDE_FROM_ALL third_party/lodepng/lodepng.h third_party/lodepng/lodepng.cpp)

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+
+#include "../MCraft.h"
 #include "Buffer.h"
 
 struct VertexAttribute {

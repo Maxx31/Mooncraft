@@ -7,6 +7,7 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 
+#include <FastNoiseLite.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/integer.hpp>

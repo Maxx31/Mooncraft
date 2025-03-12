@@ -1,4 +1,7 @@
 #pragma once
+
+#include "../MCraft.h"
+
 #include "type_traits"
 
 class Buffer 
