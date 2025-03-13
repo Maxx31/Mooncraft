@@ -68,6 +68,8 @@ SharedRef<const Texture> Texture::loadTexture2D(const std::string& name)
 {
   SharedRef<const Image> image = AssetManager::instance().loadImage(name);
 
+   if (image == nullptr) return nullptr;
+
   SharedRef<Texture> texture = std::make_shared<Texture>(GL_TEXTURE_2D);
   texture->buffer2DRGBAData(*image);
   return texture;

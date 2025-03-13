@@ -5,8 +5,7 @@
 World::World(int32_t seed) : generator(seed)
 {
   defaultShader = AssetManager::instance().loadShaderProgram("assets/shaders/default");
-  textureAtlas = AssetManager::instance().loadTexture("assets/textures/default_texture.png");
-  defaultShader->setTexture("atlas", textureAtlas, 0);
+  setTextureAtlas(AssetManager::instance().loadTexture("assets/textures/default_texture.png"));
 }
 
 SharedRef<Chunk> World::generateOrLoadChunk(glm::ivec2 position) {
@@ -61,6 +60,12 @@ BlockData World::getBlockAt(glm::ivec3 position) {
 
 bool World::isValidBlockPosition(glm::ivec3 position) {
   return Chunk::isValidPosition(position);
+}
+
+void World::setTextureAtlas(const SharedRef<const Texture>& texture) 
+{
+  textureAtlas = texture;
+  defaultShader->setTexture("atlas", textureAtlas, 0);
 }
 
 bool World::placeBlock(BlockData block, glm::ivec3 position) {

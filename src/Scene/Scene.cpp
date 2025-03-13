@@ -85,10 +85,12 @@ void Scene::renderGui() {
     ImGui::Text("Player direction: x:%f, y:%f, z:%f", lookDirection.x, lookDirection.y, lookDirection.z);
 
     ImGui::Spacing();
+    ImGui::Spacing();
 
     BlockData::BlockType blockToPlace = player.getBlockToPlace();
     ImGui::Text("Selected Block: %s", BlockName::blockTypeToName(blockToPlace));
 
+    ImGui::Spacing();
     ImGui::Spacing();
 
     BlockName::NameArray names = BlockName::getBlockNames();
@@ -103,6 +105,20 @@ void Scene::renderGui() {
     if (ImGui::SliderFloat("Night/Day cycle speed", &speed, 0.1, 10))
     {
       skybox.setRotationSpeed(speed);
+    }
+
+    ImGui::Spacing();
+    ImGui::Spacing();
+
+    static char textureAtlasPath[256] = "";
+    ImGui::InputText("Custom texture atlas path", textureAtlasPath, 256);
+    if (ImGui::Button("Load texture atlas")) 
+    {
+      SharedRef<const Texture> atlas = AssetManager::instance().loadTexture(textureAtlasPath);
+      if (atlas != nullptr) 
+      {
+        world->setTextureAtlas(atlas);
+      }
     }
   }
   ImGui::End();

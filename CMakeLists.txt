@@ -3,6 +3,12 @@ project(MCraft)
 
 set(CMAKE_CXX_STANDARD 23)
 
+if (CMAKE_BUILD_TYPE MATCHES Release)
+     set(CMAKE_CXX_FLAGS "-O3")
+ elseif (CMAKE_BUILD_TYPE MATCHES Debug)
+     set(CMAKE_CXX_FLAGS "-g")
+ endif ()
+
 file(GLOB_RECURSE main_sources src/*.cpp)
 add_executable(main ${main_sources})
 
