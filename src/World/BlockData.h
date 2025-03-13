@@ -1,12 +1,13 @@
 #pragma once
 
 struct BlockData {
-  enum class BlockType {
+  enum class BlockType 
+  {
     grass,
     dirt,
     sand,
     stone,
-    cobble_stone,
+    cobblestone,
     glass,
     oak_wood,
     oak_leaves,

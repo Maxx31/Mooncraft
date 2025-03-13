@@ -1,6 +1,6 @@
 #include "WorldGenerator.h"
 
-WorldGenerator::WorldGenerator(int seed) : seed(seed), noise(seed) 
+WorldGenerator::WorldGenerator(int32_t seed) : seed(seed), noise(seed) 
 {
   noise.SetFractalOctaves(7);
   noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
@@ -19,7 +19,7 @@ void WorldGenerator::populateChunk(const SharedRef<Chunk>& chunkRef)
       float noiseX = (position.x + static_cast<float>(x));
       float noiseY = (position.y + static_cast<float>(z));
       float noiseValue = noise.GetNoise(noiseX, noiseY) / 2.0f + 1.0f;
-      int32_t height = 40 + static_cast<int>(noiseValue * 40);
+      int32_t height = 40 + static_cast<int32_t>(noiseValue * 40);
 
       int32_t worldX = worldPosition.x + x;
       int32_t worldZ = worldPosition.y + z;
@@ -37,13 +37,11 @@ void WorldGenerator::populateChunk(const SharedRef<Chunk>& chunkRef)
         chunk.placeBlock(blockToPlace, glm::ivec3(x, y, z));
       }
 
-      for (int32_t y = 64; y > height; y--) {
-        // todo add water
+      for (int32_t y = 64; y > height; y--) 
+      {
         chunk.placeBlock(BlockData::BlockType::glass, glm::ivec3(x, y, z));
       }
-
-      // todo add bedrock
-      chunk.placeBlock(BlockData::BlockType::cobble_stone, glm::ivec3(x, 0, z));
+      chunk.placeBlock(BlockData::BlockType::cobblestone, glm::ivec3(x, 0, z));
     }
   }
 }

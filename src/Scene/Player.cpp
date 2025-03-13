@@ -1,21 +1,22 @@
 #include "Player.h"
 
+#include "../World/BlockName.h"
 #include "../World/RayCasting/Ray.h"
 
-const glm::mat4& Player::updateView() 
+const glm::mat4& Player::updateView()
 {
   return view = calcView();
 }
 
 
-const glm::mat4& Player::lookAt(glm::vec3 eye, glm::vec3 center)
+const glm::mat4& Player::lookAt(glm::vec3 eye, glm::vec3 center) 
 {
   position = eye;
   updatePlayerDirection(center);
   return updateView();
 }
 
-const glm::mat4& Player::setPosition(glm::vec3 eye)
+const glm::mat4& Player::setPosition(glm::vec3 eye) 
 {
   position = eye;
   return updateView();
@@ -25,85 +26,69 @@ void Player::update(float deltaTime)
 {
   auto moveDirection = glm::vec3(0);
 
-  for (const auto& [isMoving, direction]: directions)
-  {
-    if (!isMoving) continue;
+  for (const auto& [isMoving, direction]: directions) {
+    if (!isMoving) {
+      continue;
+    }
+
     moveDirection += direction;
   }
 
-  if (glm::length(moveDirection) > 0) 
-  {
+  if (glm::length(moveDirection) > 0) {
     float movementSpeed = isRunning ? runningSpeed : walkingSpeed;
     position += glm::normalize(moveDirection) * movementSpeed * deltaTime;
     updateView();
   }
 }
 
-void Player::onKeyEvent(int32_t key, int32_t scancode, int32_t action, int32_t mode) 
-{
-  if (action == 2) return;  // don't respond to repeatedly pressed buttons
 
-  if (key == 87 || key == 265) //W
-  {
+void Player::onKeyEvent(int32_t key, int32_t scancode, int32_t action, int32_t mode) {
+
+  if (action == 2) return; //Don't response if key spam
+
+  if (key == 87 || key == 265) {  // forward
     directions[0].isMoving = action == 1;
-  } 
-  else if (key == 83 || key == 264) //S
-  {
+  } else if (key == 83 || key == 264) {  // backward
     directions[1].isMoving = action == 1;
-  } 
-  else if (key == 65 || key == 263) //A
-  {
+  } else if (key == 65 || key == 263) {  // left
     directions[2].isMoving = action == 1;
-  } 
-  else if (key == 68 || key == 262) //D
-  {
+  } else if (key == 68 || key == 262) {  // right
     directions[3].isMoving = action == 1;
-  } 
-  else if (key == 32) //Space
-  {
+  } else if (key == 32) {  // space
     directions[4].isMoving = action == 1;
-  } 
-  else if (key == 341)  //CTRL
-  {
+  } else if (key == 340) {  // shift
     directions[5].isMoving = action == 1;
-  } 
-  else if (key == 340) //Shift
-  {
+  } else if (key == 341) {  // ctrl
     isRunning = action == 1;
   }
 }
 
 void Player::onMouseButtonEvent(int32_t button, int32_t action, int32_t mods) 
 {
-  if (action != 1) return;  // ignore the input on mouse button release
+  if (action != 1)
+    return;  // ignore the input on mouse button release
 
-  if (button == 0) //LMB
-  { 
-     if (Ray ray{position, lookDirection, *world, reach}) 
-     {
-       world->placeBlock(BlockData::BlockType::air, ray.getHitTarget().position);
-     }
-  } 
-  else if (button == 1) // RMB
-  { 
+  if (button == 0) {  // left click
+    if (Ray ray{position, lookDirection, *world, reach}) {
+      world->placeBlock(BlockData::BlockType::air, ray.getHitTarget().position);
+    }
+  } else if (button == 1) {  // right click
     Ray ray{position, lookDirection, *world, reach};
-      if (ray && ray.getHitTarget().hasNeighbor) {
-        world->placeBlock(blockToPlace, ray.getHitTarget().neighbor);
-      }
-  } 
-  else if (button == 2) //Middle mouse button to select block
-  {  // middle click
-    if (Ray ray{position, lookDirection, *world, reach}) { blockToPlace = ray.getHitTarget().block.type; }
+    if (ray && ray.getHitTarget().hasNeighbor) {
+      world->placeBlock(blockToPlace, ray.getHitTarget().neighbor);
+    }
+  } else if (button == 2) {  // middle click
+    if (Ray ray{position, lookDirection, *world, reach}) {
+      blockToPlace = ray.getHitTarget().block.type;
+    }
   }
 }
 
-void Player::onCursorPositionEvent(double x, double y)
-{
+void Player::onCursorPositionEvent(double x, double y) {
   static double lastX = x;
   static double lastY = y;
 
-   if (resetMouse)
-   {
+  if (resetMouse) {
     resetMouse = false;
     lastX = x;
     lastY = y;
@@ -117,8 +102,7 @@ void Player::onCursorPositionEvent(double x, double y)
   updatePlayerOrientation();
 }
 
-void Player::updatePlayerDirection(glm::vec3 newForward) 
-{
+void Player::updatePlayerDirection(glm::vec3 newForward) {
   lookDirection = newForward;
   newForward.y = 0;
   forward = glm::normalize(newForward);
@@ -139,22 +123,17 @@ void Player::updatePlayerOrientation()
   updateView();
 }
 
-glm::mat4 Player::calcView() 
-{
+glm::mat4 Player::calcView() {
   return glm::lookAt(position, position + lookDirection, up);
 }
 
-glm::vec3 Player::getPosition() 
-{
+glm::vec3 Player::getPosition() {
   return position;
 }
 
-glm::vec3 Player::getLookDirection() 
-{
+glm::vec3 Player::getLookDirection() {
   return lookDirection;
 }
-
-void Player::resetMousePosition() 
-{
+void Player::resetMousePosition() {
   resetMouse = true;
 }

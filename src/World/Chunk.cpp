@@ -7,11 +7,11 @@ Chunk::Chunk(const glm::ivec2& worldPosition) : worldPosition(worldPosition) {}
 
 void Chunk::render(const glm::mat4& transform) 
 {
-  if (!mesh || renderState != RenderState::ready) 
-  {
+  if (!mesh || renderState != RenderState::ready) {
     mesh = createMesh();
     renderState = RenderState::ready;
   }
+
   const auto& shader = AssetManager::instance().loadShaderProgram("assets/shaders/default");
 
   shader->bind();
@@ -23,10 +23,11 @@ void Chunk::render(const glm::mat4& transform)
 SharedRef<VertexArray> Chunk::createMesh() 
 {
   static SharedRef<std::vector<BlockVertex>> vertices = std::make_shared<std::vector<BlockVertex>>(VertexCount);
+
   vertexCount = 0;
 
-  const std::array<std::tuple<int32_t, int32_t, int32_t>, 6> offsetsToCheck =
-  {{
+  // used tuple, because glm::ivec3 cannot be destructured
+  const std::array<std::tuple<int32_t, int32_t, int32_t>, 6> offsetsToCheck = {{
      {1, 0, 0},
      {-1, 0, 0},
      {0, 1, 0},
@@ -35,24 +36,21 @@ SharedRef<VertexArray> Chunk::createMesh()
      {0, 0, -1},
   }};
 
-  for (int x = 0; x < HorizontalSize; x++) 
-  {
-    for (int y = 0; y < VerticalSize; y++) 
-    {
-      for (int z = 0; z < HorizontalSize; z++) 
-      {
+  for (int32_t x = 0; x < HorizontalSize; x++) {
+    for (int32_t y = 0; y < VerticalSize; y++) {
+      for (int32_t z = 0; z < HorizontalSize; z++) {
         const BlockData::BlockType type = data[x][y][z].type;
         const bool transparent = BlockData::isTransparent(type);
+        if (type == BlockData::BlockType::air) {
+          continue;
+        }
 
-        if (type == BlockData::BlockType::air) continue;
-
-        for (const auto& [ox, oy, oz]: offsetsToCheck) 
-        {
-         // if (isInBounds(x + ox, y + oy, z + oz) == false) continue;
+        for (const auto& [ox, oy, oz]: offsetsToCheck) {
+          // todo fix the mesh generation between two loaded chunks
+          // todo fix the mesh generation issue between different transparency types
 
           if (isInBounds(x + ox, y + oy, z + oz) && data[x + ox][y + oy][z + oz].type != BlockData::BlockType::air &&
-             transparent == BlockData::isTransparent(data[x + ox][y + oy][z + oz].type)) 
-          {
+              transparent == BlockData::isTransparent(data[x + ox][y + oy][z + oz].type)) {
             continue;
           }
 
@@ -67,8 +65,7 @@ SharedRef<VertexArray> Chunk::createMesh()
     }
   }
 
-  if (mesh) 
-  {
+  if (mesh) {
     mesh->getVertexBuffer()->bufferDynamicVertexSubData(*vertices);
     return mesh;
   } else {
@@ -81,7 +78,7 @@ bool Chunk::isInBounds(int32_t x, int32_t y, int32_t z)
   return x >= 0 && x < HorizontalSize && y >= 0 && y < VerticalSize && z >= 0 && z < HorizontalSize;
 }
 
-void Chunk::placeBlock(BlockData block, const glm::ivec3& position)
+void Chunk::placeBlock(BlockData block, const glm::ivec3& position) 
 {
   assert(isInBounds(position.x, position.y, position.z));
 
@@ -93,7 +90,8 @@ BlockData Chunk::getBlockAt(const glm::ivec3& position) const {
   return data[position.x][position.y][position.z];
 }
 
-bool Chunk::isValidPosition(glm::ivec3 position) {
+bool Chunk::isValidPosition(glm::ivec3 position) 
+{
   return position.y >= 0 && position.y < VerticalSize;
 }
 

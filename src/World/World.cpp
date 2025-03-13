@@ -2,19 +2,18 @@
 
 #include "../Util/Math.h"
 
-World::World(int seed) : generator(seed) 
+World::World(int32_t seed) : generator(seed)
 {
   defaultShader = AssetManager::instance().loadShaderProgram("assets/shaders/default");
   textureAtlas = AssetManager::instance().loadTexture("assets/textures/default_texture.png");
   defaultShader->setTexture("atlas", textureAtlas, 0);
 }
 
-SharedRef<Chunk> World::generateOrLoadChunk(glm::ivec2 position) 
-{
+SharedRef<Chunk> World::generateOrLoadChunk(glm::ivec2 position) {
   SharedRef<Chunk> chunk = std::make_shared<Chunk>(position);
   generator.populateChunk(chunk);
 
-  return chunk; 
+  return chunk;  // todo make the chunks persistent
 }
 
 void World::update(const glm::vec3& playerPosition) 
@@ -24,34 +23,39 @@ void World::update(const glm::vec3& playerPosition)
   auto chunksCopy = chunks;
   float unloadDistance = static_cast<float>(viewDistance + 1) * 16 + 8.0f;
 
-  for (const auto& [chunkPosition, chunk]: chunksCopy) {
+  for (const auto& [chunkPosition, chunk]: chunksCopy) 
+  {
     if (glm::abs(glm::distance(glm::vec2(chunkPosition), playerChunkPosition)) > unloadDistance) {
       chunks.erase(chunkPosition);
     }
   }
 
   float loadDistance = static_cast<float>(viewDistance) * 16 + 8.0f;
-  for (int32_t i = -viewDistance; i < viewDistance; i++) {
+
+  for (int32_t i = -viewDistance; i < viewDistance; i++) 
+  {
     for (int32_t j = -viewDistance; j < viewDistance; j++) {
       glm::ivec2 position = glm::ivec2(i * 16, j * 16) + glm::ivec2(playerChunkPosition);
-      if (chunks.contains(position)) { continue; }
+      if (chunks.contains(position)) {
+        continue;
+      }
 
       float distance = glm::abs(glm::distance(glm::vec2(position), playerChunkPosition));
-      if (distance <= loadDistance) { chunks[position] = generateOrLoadChunk(position); }
+      if (distance <= loadDistance) {
+        chunks[position] = generateOrLoadChunk(position);
+      }
     }
   }
 }
 
-void World::render(glm::vec3 playerPos, glm::mat4 transform) 
-{
+void World::render(glm::vec3 playerPos, glm::mat4 transform) {
   for (auto& [position, chunk]: chunks) 
   {
     chunk->render(transform);
   }
 }
 
-BlockData World::getBlockAt(glm::ivec3 position) 
-{
+BlockData World::getBlockAt(glm::ivec3 position) {
   return getChunk(getChunkIndex(position))->getBlockAt(Chunk::toChunkCoordinates(position));
 }
 
@@ -59,25 +63,26 @@ bool World::isValidBlockPosition(glm::ivec3 position) {
   return Chunk::isValidPosition(position);
 }
 
-bool World::placeBlock(BlockData block, glm::ivec3 position)
-{
-  if (!Chunk::isValidPosition(position)) { return false; }
+bool World::placeBlock(BlockData block, glm::ivec3 position) {
+  if (!Chunk::isValidPosition(position)) {
+    return false;
+  }
 
-  SharedRef<Chunk> chunk = getChunk(getChunkIndex(position));
-  chunk->placeBlock(block, Chunk::toChunkCoordinates(position));
-  glm::ivec2 localPosition = position % Chunk::HorizontalSize;
-
+  getChunk(getChunkIndex(position))->placeBlock(block, Chunk::toChunkCoordinates(position));
   return true;
 }
-
-glm::ivec2 World::getChunkIndex(glm::ivec3 position) {
+glm::ivec2 World::getChunkIndex(glm::ivec3 position)
+{
   return {position.x - Math::positiveMod(position.x, Chunk::HorizontalSize),
           position.z - Math::positiveMod(position.z, Chunk::HorizontalSize)};
 }
 
+
 SharedRef<Chunk> World::getChunk(glm::ivec2 position) 
 {
-  if (!chunks.contains(position)) { addChunk(position, generateOrLoadChunk(position)); }
+  if (!chunks.contains(position)) {
+    addChunk(position, generateOrLoadChunk(position));
+  }
 
   return chunks.at(position);
 }

@@ -1,17 +1,19 @@
 #pragma once
 
 #include "../MCraft.h"
+#include "Image.h"
 
-class Texture 
+class Texture
 {
   uint32_t id = 0;
+  uint32_t type;
 
 public:
   Texture(const Texture&) = delete;
   Texture(Texture&) = delete;
   Texture(Texture&&) = delete;
 
-  Texture();
+  Texture(uint32_t type);
 
   [[nodiscard]] bool isValid() const { return id != 0; };
 
@@ -19,9 +21,11 @@ public:
   void bindToSlot(uint32_t slot) const;
   void unbind() const;
 
-  void bufferRGBAData(uint32_t width, uint32_t height, const std::vector<uint8_t>& data);
+  void buffer2DRGBAData(const Image& image);
+  void bufferCubeMapRGBAData(const std::array<SharedRef<const Image>, 6>& images);
 
   ~Texture();
 
-  static SharedRef<Texture> createRef();
+  static SharedRef<const Texture> loadTexture2D(const std::string& name);
+  static SharedRef<const Texture> loadCubeMapTexture(const std::string& name);
 };

@@ -1,45 +1,99 @@
 #include "Texture.h"
 
-Texture::Texture()
+#include "../AssetManager/AssetManager.h"
+#include "Image.h"
+
+Texture::Texture(uint32_t image_type) : type(image_type)
 {
+  assert(type == GL_TEXTURE_2D || type == GL_TEXTURE_CUBE_MAP);
   glGenTextures(1, &id);
   bind();
 
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri(type, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+  glTexParameteri(type, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+  if (type == GL_TEXTURE_CUBE_MAP) {
+    glTexParameteri(type, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
+  }
+
+  glTexParameteri(type, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+  glTexParameteri(type, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
   unbind();
 }
 
-void Texture::bufferRGBAData(uint32_t width, uint32_t height, const std::vector<uint8_t>& data) 
-{
+void Texture::buffer2DRGBAData(const Image& image) {
+  assert(type == GL_TEXTURE_2D);
   bind();
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<int32_t>(width), static_cast<int32_t>(height), 0, GL_RGBA,
-               GL_UNSIGNED_BYTE, &data[0]);
-  glGenerateMipmap(GL_TEXTURE_2D);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<int32_t>(image.width), static_cast<int32_t>(image.height), 0,
+               GL_RGBA, GL_UNSIGNED_BYTE, &image.data[0]);
+  glGenerateMipmap(type);
   unbind();
 }
 
-void Texture::bind() const {
-  glBindTexture(GL_TEXTURE_2D, id);
+void Texture::bufferCubeMapRGBAData(const std::array<SharedRef<const Image>, 6>& images) 
+{
+  assert(type == GL_TEXTURE_CUBE_MAP);
+  bind();
+
+  for (size_t i = 0; i < images.size(); i++) {
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, static_cast<int32_t>(images[i]->width),
+                 static_cast<int32_t>(images[i]->height), 0, GL_RGBA, GL_UNSIGNED_BYTE, &images[i]->data[0]);
+  }
+  glGenerateMipmap(type);
+
+  unbind();
 }
 
-void Texture::bindToSlot(uint32_t slot) const {
+void Texture::bind() const 
+{
+  glBindTexture(type, id);
+}
+
+void Texture::bindToSlot(uint32_t slot) const
+{
   glActiveTexture(GL_TEXTURE0 + slot);
   bind();
 }
 
-void Texture::unbind() const 
-{
-  glBindTexture(GL_TEXTURE_2D, 0);
+void Texture::unbind() const {
+  glBindTexture(type, 0);
 }
 
-Texture::~Texture()
-{
-  if (isValid()) { glDeleteTextures(1, &id); }
+Texture::~Texture() {
+  if (isValid()) {
+    glDeleteTextures(1, &id);
+  }
 }
 
-SharedRef<Texture> Texture::createRef() {
-  return std::make_shared<Texture>();
+SharedRef<const Texture> Texture::loadTexture2D(const std::string& name) 
+{
+  SharedRef<const Image> image = AssetManager::instance().loadImage(name);
+
+  SharedRef<Texture> texture = std::make_shared<Texture>(GL_TEXTURE_2D);
+  texture->buffer2DRGBAData(*image);
+  return texture;
+}
+
+SharedRef<const Texture> Texture::loadCubeMapTexture(const std::string& name) {
+  std::stringstream parts(name);
+
+  std::array<SharedRef<const Image>, 6> images{};
+  std::string imageName;
+  AssetManager& assetManager = AssetManager::instance();
+
+  for (int32_t i = 0; i < 6; i++) 
+  {
+    if (!std::getline(parts, imageName, ';')) {
+      std::cerr << "Invalid cube map name format" << std::endl;
+      return nullptr;
+    }
+    images[i] = assetManager.loadImage(imageName);
+
+    if (images[i] == nullptr) {
+      return nullptr;
+    }
+  }
+
+  SharedRef<Texture> texture = std::make_shared<Texture>(GL_TEXTURE_CUBE_MAP);
+  texture->bufferCubeMapRGBAData(images);
+  return texture;
 }
