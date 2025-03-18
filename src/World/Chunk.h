@@ -7,22 +7,25 @@
 #include "../MCraft.h"
 #include "BlockData.h"
 
-class Chunk {
-public:
-  static const int32_t HorizontalSize = 16;
-  static const int32_t VerticalSize = 256;
+class World;
 
-  static const int32_t BlockCount = HorizontalSize * HorizontalSize * VerticalSize;
-  static const int32_t VertexCount = BlockCount * 8;
+class Chunk 
+{
+public:
+  constexpr static int32_t HorizontalSize = 16;
+  constexpr static int32_t VerticalSize = 256;
+
+  constexpr static int32_t BlockCount = HorizontalSize * HorizontalSize * VerticalSize;
+  constexpr static int32_t MaxVertexCount = BlockCount * 8;
 
 private:
-  enum class RenderState 
-  {
+  enum class RenderState {
     initial,
     ready,
     dirty
   };
-  int32_t vertexCount = 0;
+  int32_t solidVertexCount = 0;
+  int32_t semiTransparentVertexCount = 0;
   SharedRef<VertexArray> mesh = nullptr;
   SharedRef<const ShaderProgram> shader;
 
@@ -31,19 +34,42 @@ private:
 
   BlockData data[HorizontalSize][VerticalSize][HorizontalSize];
 
-  [[nodiscard]] static bool isInBounds(int32_t x, int32_t y, int32_t z);
 
-  [[nodiscard]] SharedRef<VertexArray> createMesh();
+  void createMesh(const World& world);
 
 
 public:
   explicit Chunk(const glm::ivec2& worldPosition);
-  void render(const glm::mat4& transform);
-  void placeBlock(BlockData block, const glm::ivec3& position);
+  void render(const glm::mat4& transform, const World& world);
 
-  [[nodiscard]] BlockData getBlockAt(const glm::ivec3& position) const;
+  void setDirty() { renderState = RenderState::dirty; };
 
-  static bool isValidPosition(glm::ivec3 position);
+  void placeBlock(BlockData block, const glm::ivec3& position)
+  {
+    placeBlock(block, position.x, position.y, position.z);
+  }
+
+  void placeBlock(BlockData block, int32_t x, int32_t y, int32_t z) 
+  {
+    assert(isInBounds(x, y, z));
+
+    renderState = RenderState::dirty;
+    data[x][y][z] = block;
+  }
+
+  [[nodiscard]] BlockData getBlockAt(const glm::ivec3& position) const 
+  {
+    return data[position.x][position.y][position.z];
+  }
+
+
+  static bool isInBounds(int32_t x, int32_t y, int32_t z) 
+  {
+    return x >= 0 && x < HorizontalSize && y >= 0 && y < VerticalSize && z >= 0 && z < HorizontalSize;
+  }
+
+  static bool isValidPosition(glm::ivec3 position) { return position.y >= 0 && position.y < VerticalSize; }
   static glm::ivec3 toChunkCoordinates(const glm::ivec3& globalPosition);
-  glm::ivec2 getPosition();
+
+  glm::ivec2 getPosition() { return worldPosition; }
 };

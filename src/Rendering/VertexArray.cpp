@@ -1,11 +1,12 @@
 #include "VertexArray.h"
 
-void VertexArray::bind() 
+void VertexArray::bind()
 {
   glBindVertexArray(id);
-
-  if (vertexBuffer) vertexBuffer->bind();
-  if (indexBuffer) indexBuffer->bind();
+  if (vertexBuffer)
+    vertexBuffer->bind();
+  if (indexBuffer)
+    indexBuffer->bind();
 }
 
 void VertexArray::unbind() 
@@ -22,22 +23,30 @@ void VertexArray::renderIndexed(int32_t type)
   unbind();
 }
 
-void VertexArray::renderVertexStream(int32_t type) 
+VertexArray::~VertexArray() 
 {
-  renderVertexSubStream(vertexBuffer->getSize(), type);
+  if (isValid()) {
+    glDeleteVertexArrays(1, &id);
+  }
 }
 
-void VertexArray::renderVertexSubStream(int32_t size = -1, int32_t type)
-  {
-  if (!isValid()) return;
+void VertexArray::renderVertexStream(int32_t type) 
+{
+  renderVertexSubStream(vertexBuffer->getSize(), 0, type);
+}
+
+void VertexArray::renderVertexSubStream(int32_t size, int32_t startOffset, int32_t type) 
+{
+  if (!isValid())
+    return;
   assert(indexBuffer == nullptr);
 
   bind();
-  glDrawArrays(type, 0, size);
+  glDrawArrays(type, startOffset, size);
   unbind();
 }
 
-void VertexArray::addVertexAttributes(const std::vector<VertexAttribute> &vector, int32_t defaultVertexSize)
+void VertexArray::addVertexAttributes(const std::vector<VertexAttribute> &vector, int32_t defaultVertexSize) 
 {
   bind();
   for (size_t i = 0; i < vector.size(); i++) {
@@ -45,8 +54,7 @@ void VertexArray::addVertexAttributes(const std::vector<VertexAttribute> &vector
     const auto normalize = shouldBeNormalized ? GL_TRUE : GL_FALSE;
     const auto stride = vertexSize ? vertexSize : defaultVertexSize;
 
-     switch (type) 
-     {
+    switch (type) {
       case VertexAttribute::UShort:
       case VertexAttribute::Int:
       case VertexAttribute::UInt:
@@ -55,14 +63,8 @@ void VertexArray::addVertexAttributes(const std::vector<VertexAttribute> &vector
       case VertexAttribute::Float:
         glVertexAttribPointer(i, componentCount, type, normalize, stride, reinterpret_cast<void *>(offset));
         break;
-     }
-
+    }
     glEnableVertexAttribArray(i);
   }
   unbind();
-}
-
-VertexArray::~VertexArray()
-{
-  if (isValid()) { glDeleteVertexArrays(1, &id); }
 }

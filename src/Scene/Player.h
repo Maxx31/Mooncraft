@@ -14,14 +14,14 @@ class Player
   SharedRef<World> world;
   BlockData::BlockType blockToPlace = BlockData::BlockType::grass;
 
-  glm::vec3 position = {0, 64, 0};
+  glm::vec3 position = {14, 100, 17};
   glm::vec3 up = {0, 1, 0};
 
   float yaw = 0;
   float pitch = 0;
 
-  float walkingSpeed = 5;
-  float runningSpeed = 8;
+  float walkingSpeed = 4.317;
+  float runningSpeed = 5.612;
   bool isRunning = false;
   float mouseSensitivity = .5;
 

@@ -3,8 +3,8 @@
 #include "../AssetManager/AssetManager.h"
 #include "Shader.h"
 
-ShaderProgram::ShaderProgram(const std::string &name) {
-
+ShaderProgram::ShaderProgram(const std::string &name) 
+{
   SharedRef<const Shader> vertexShader = AssetManager::instance().loadShader(name + ".vert");
   assert(vertexShader->isValid());
 
@@ -17,9 +17,20 @@ ShaderProgram::ShaderProgram(const std::string &name) {
   glAttachShader(shaderProgram, vertexShader->getId());
 
   glLinkProgram(shaderProgram);
-}
 
-int32_t ShaderProgram::getUniformLocation(const std::string &location) const {
+  int32_t success;
+  glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+  if (!success) 
+  {
+    char infoLog[2048];
+    glGetProgramInfoLog(shaderProgram, sizeof(infoLog) / sizeof(infoLog[0]), nullptr, infoLog);
+    std::cerr << "ERROR::SHADER_PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
+
+    shaderProgram = 0;
+  }
+}
+int32_t ShaderProgram::getUniformLocation(const std::string &location) const 
+{
   return glGetUniformLocation(shaderProgram, location.c_str());
 }
 
@@ -35,6 +46,10 @@ void ShaderProgram::setFloat(const std::string &location, float value) const {
   glProgramUniform1f(shaderProgram, getUniformLocation(location), value);
 }
 
+void ShaderProgram::setVec2(const std::string &location, const glm::vec2 &value) const {
+  glProgramUniform2fv(shaderProgram, getUniformLocation(location), 1, &value.x);
+}
+
 void ShaderProgram::setVec3(const std::string &location, const glm::vec3 &value) const {
   glProgramUniform3fv(shaderProgram, getUniformLocation(location), 1, &value.x);
 }
@@ -43,11 +58,13 @@ void ShaderProgram::setMat4(const std::string &location, const glm::mat4 &value)
   glProgramUniformMatrix4fv(shaderProgram, getUniformLocation(location), 1, GL_FALSE, &value[0][0]);
 }
 
-void ShaderProgram::setTexture(const std::string &location, const SharedRef<const Texture> &texture, int32_t slot) const {
+ShaderProgram::~ShaderProgram() {
+  if (isValid()) {
+    glDeleteProgram(shaderProgram);
+  }
+}
+void ShaderProgram::setTexture(const std::string &location, const SharedRef<const Texture> &texture, int32_t slot) const
+{
   texture->bindToSlot(slot);
   glProgramUniform1i(shaderProgram, getUniformLocation(location), slot);
-}
-
-ShaderProgram::~ShaderProgram() {
-  if (isValid()) { glDeleteProgram(shaderProgram); }
 }

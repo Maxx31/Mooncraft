@@ -2,32 +2,35 @@
 
 #include "../AssetManager/AssetManager.h"
 #include "../Util/Math.h"
+#include "World.h"
 
 Chunk::Chunk(const glm::ivec2& worldPosition) : worldPosition(worldPosition) 
 {
   shader = AssetManager::instance().loadShaderProgram("assets/shaders/default");
 }
 
-void Chunk::render(const glm::mat4& transform) 
+void Chunk::render(const glm::mat4& transform, const World& world)
 {
   if (!mesh || renderState != RenderState::ready) {
-    mesh = createMesh();
+    createMesh(world);
     renderState = RenderState::ready;
   }
-
-  const auto& shader = AssetManager::instance().loadShaderProgram("assets/shaders/default");
 
   shader->bind();
   shader->setMat4("CamMatrix", transform * glm::translate(glm::vec3(worldPosition.x, 0, worldPosition.y)));
 
-  mesh->renderVertexSubStream(vertexCount);
+  mesh->renderVertexSubStream(solidVertexCount, 0);
+  mesh->renderVertexSubStream(semiTransparentVertexCount, solidVertexCount);
 }
 
-SharedRef<VertexArray> Chunk::createMesh() 
+void Chunk::createMesh(const World& world) 
 {
-  static SharedRef<std::vector<BlockVertex>> vertices = std::make_shared<std::vector<BlockVertex>>(VertexCount);
+  static SharedRef<std::vector<BlockVertex>> solidVertices = std::make_shared<std::vector<BlockVertex>>(MaxVertexCount);
+  static SharedRef<std::vector<BlockVertex>> semiTransparentVertices =
+     std::make_shared<std::vector<BlockVertex>>(MaxVertexCount);
 
-  vertexCount = 0;
+  solidVertexCount = 0;
+  semiTransparentVertexCount = 0;
 
   // used tuple, because glm::ivec3 cannot be destructured
   const std::array<std::tuple<int32_t, int32_t, int32_t>, 6> offsetsToCheck = {{
@@ -42,69 +45,68 @@ SharedRef<VertexArray> Chunk::createMesh()
   for (int32_t x = 0; x < HorizontalSize; x++) {
     for (int32_t y = 0; y < VerticalSize; y++) {
       for (int32_t z = 0; z < HorizontalSize; z++) {
-        const BlockData::BlockType type = data[x][y][z].type;
-        const bool transparent = BlockData::isTransparent(type);
-        if (type == BlockData::BlockType::air) {
+        const auto& [type, blockClass] = data[x][y][z];
+        if (blockClass == BlockData::BlockClass::air) {
           continue;
         }
 
         for (const auto& [ox, oy, oz]: offsetsToCheck) {
-          // todo fix the mesh generation between two loaded chunks
-          // todo fix the mesh generation issue between different transparency types
+          int32_t nx = x + ox;
+          int32_t ny = y + oy;
+          int32_t nz = z + oz;
 
-          if (isInBounds(x + ox, y + oy, z + oz) && data[x + ox][y + oy][z + oz].type != BlockData::BlockType::air &&
-              transparent == BlockData::isTransparent(data[x + ox][y + oy][z + oz].type)) {
-            continue;
+          if (ny >= 0 && ny < VerticalSize) {
+            if (nx >= 0 && nx < HorizontalSize && nz >= 0 && nz < HorizontalSize) {
+              if (blockClass == data[nx][ny][nz].blockClass) {
+                continue;
+              }
+            } else if (std::optional<BlockData> block =
+                          world.getBlockAtIfLoaded(glm::ivec3(nx + worldPosition.x, ny, nz + worldPosition.y))) {
+              if (blockClass == block->blockClass) {
+                continue;
+              }
+            }
           }
 
           for (const auto& vertex: BlockMesh::getVerticesFromDirection(ox, oy, oz)) {
-            vertices->at(vertexCount) = vertex;
-            vertices->at(vertexCount).offset(x, y, z);
-            vertices->at(vertexCount).setType(ox, oy, oz, type);
-            vertexCount++;
+            if (blockClass == BlockData::BlockClass::semiTransparent ||
+                blockClass == BlockData::BlockClass::transparent) {
+              semiTransparentVertices->at(semiTransparentVertexCount) = vertex;
+              semiTransparentVertices->at(semiTransparentVertexCount).offset(x, y, z);
+              semiTransparentVertices->at(semiTransparentVertexCount).setType(ox, oy, oz, type);
+              semiTransparentVertexCount++;
+            } else {
+              solidVertices->at(solidVertexCount) = vertex;
+              solidVertices->at(solidVertexCount).offset(x, y, z);
+              solidVertices->at(solidVertexCount).setType(ox, oy, oz, type);
+              solidVertexCount++;
+            }
           }
         }
       }
     }
   }
 
-  if (mesh) {
-    mesh->getVertexBuffer()->bufferDynamicVertexSubData(*vertices);
-    return mesh;
-  } else {
-    return std::make_shared<VertexArray>(*vertices, BlockVertex::vertexAttributes());
+  int32_t vertexCount = solidVertexCount + semiTransparentVertexCount;
+
+  if (!mesh) {
+    mesh = std::make_shared<VertexArray>();
+    mesh->addVertexAttributes(BlockVertex::vertexAttributes(), sizeof(BlockVertex));
   }
-}
 
-bool Chunk::isInBounds(int32_t x, int32_t y, int32_t z) 
-{
-  return x >= 0 && x < HorizontalSize && y >= 0 && y < VerticalSize && z >= 0 && z < HorizontalSize;
-}
+  SharedRef<VertexBuffer> buffer = mesh->getVertexBuffer();
+  if (buffer->getSize() < vertexCount) {
+    int32_t dataSize = glm::min(vertexCount + 1000, MaxVertexCount);
+    buffer->bufferDynamicData(*solidVertices, dataSize, 0);
+  } else {
+    buffer->bufferDynamicSubData(*solidVertices, solidVertexCount, 0, 0);
+  }
 
-void Chunk::placeBlock(BlockData block, const glm::ivec3& position) 
-{
-  assert(isInBounds(position.x, position.y, position.z));
-
-  renderState = RenderState::dirty;
-  data[position.x][position.y][position.z] = block;
-}
-
-BlockData Chunk::getBlockAt(const glm::ivec3& position) const {
-  return data[position.x][position.y][position.z];
-}
-
-bool Chunk::isValidPosition(glm::ivec3 position) 
-{
-  return position.y >= 0 && position.y < VerticalSize;
+  buffer->bufferDynamicSubData(*semiTransparentVertices, semiTransparentVertexCount, 0, solidVertexCount);
 }
 
 glm::ivec3 Chunk::toChunkCoordinates(const glm::ivec3& globalPosition) 
 {
   return {Math::positiveMod(globalPosition.x, HorizontalSize), globalPosition.y,
           Math::positiveMod(globalPosition.z, HorizontalSize)};
-}
-
-glm::ivec2 Chunk::getPosition() 
-{
-  return worldPosition;
 }

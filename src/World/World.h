@@ -15,14 +15,15 @@ public:
   };
 };
 
-class World 
-{
+class World {
   std::unordered_map<glm::ivec2, SharedRef<Chunk>, HashVec2> chunks;
   SharedRef<const Texture> textureAtlas;
-  SharedRef<const ShaderProgram> defaultShader;
+  SharedRef<const ShaderProgram> shader;
   WorldGenerator generator;
 
-  int32_t viewDistance = 5;
+  int32_t viewDistance = 10;
+  float textureAnimation = 0;
+  static constexpr float TextureAnimationSpeed = 2;
 
   SharedRef<Chunk> generateOrLoadChunk(glm::ivec2 position);
 
@@ -34,9 +35,11 @@ public:
   [[nodiscard]] static glm::ivec2 getChunkIndex(glm::ivec3 position);
 
   [[nodiscard]] BlockData getBlockAt(glm::ivec3 position);
+  [[nodiscard]] std::optional<BlockData> getBlockAtIfLoaded(glm::ivec3 position) const;
+  [[nodiscard]] bool isChunkLoaded(glm::ivec2 position) const;
   bool placeBlock(BlockData block, glm::ivec3 position);
 
-  void update(const glm::vec3& playerPosition);
+  void update(const glm::vec3& playerPosition, float deltaTime);
   void render(glm::vec3 playerPos, glm::mat4 transform);
 
   static bool isValidBlockPosition(glm::ivec3 position);

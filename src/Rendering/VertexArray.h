@@ -34,61 +34,61 @@ class VertexArray {
   SharedRef<IndexBuffer> indexBuffer;
 
 public:
+  explicit VertexArray() {
+    glGenVertexArrays(1, &id);
+    bind();
+
+    vertexBuffer = VertexBuffer::createRef();
+    vertexBuffer->bind();
+
+    unbind();
+  }
 
   template<typename VertexT>
-  explicit VertexArray(const std::vector<VertexT> &vertices, bool dynamic = false)
-  {
-      glGenVertexArrays(1, &id);
-      bind();
+  explicit VertexArray(const std::vector<VertexT> &vertices, bool dynamic = false) {
+    glGenVertexArrays(1, &id);
+    bind();
 
-      vertexBuffer = VertexBuffer::createRef();
+    vertexBuffer = VertexBuffer::createRef();
+    if (dynamic) {
+      vertexBuffer->bufferDynamicData<VertexT>(vertices);
+    } else {
+      vertexBuffer->bufferStaticData<VertexT>(vertices);
+    }
 
-      if (dynamic) {
-        vertexBuffer->bufferDynamicVertexData<VertexT>(vertices);
-      } else {
-        vertexBuffer->bufferStaticVertexData<VertexT>(vertices);
-      }
-
-      unbind();
-    };
-
-    template<typename VertexT, typename IndexT>
-    VertexArray(const std::vector<VertexT> &vertices, const std::vector<IndexT> &indices, bool dynamic = false)
-        : VertexArray(vertices, dynamic) 
-    {
-      bind();
-      indexBuffer = IndexBuffer::createRef();
-
-       if (dynamic) 
-       {
-        indexBuffer->bufferDynamicIndexData<IndexT>(indices);
-      } else {
-        indexBuffer->bufferStaticIndexData<IndexT>(indices);
-      }
-
-      unbind();
-    };
-
-    template<typename VertexT>
-    explicit VertexArray(const std::vector<VertexT> &vertices,
-                         const std::vector<VertexAttribute> &vertexAttributes,
-                         bool dynamic = false)
-        : VertexArray(vertices, dynamic) 
-    {
-      addVertexAttributes(vertexAttributes, sizeof(VertexT));
-    };
+    unbind();
+  };
 
 
+  template<typename VertexT, typename IndexT>
+  VertexArray(const std::vector<VertexT> &vertices, const std::vector<IndexT> &indices, bool dynamic = false)
+      : VertexArray(vertices, dynamic) {
+    bind();
+    indexBuffer = IndexBuffer::createRef<IndexT>();
+
+    if (dynamic) {
+      indexBuffer->bufferDynamicData<IndexT>(indices);
+    } else {
+      indexBuffer->bufferStaticData<IndexT>(indices);
+    }
+    unbind();
+  };
+
+  template<typename VertexT>
+  explicit VertexArray(const std::vector<VertexT> &vertices,
+                       const std::vector<VertexAttribute> &vertexAttributes,
+                       bool dynamic = false)
+      : VertexArray(vertices, dynamic) {
+    addVertexAttributes(vertexAttributes, sizeof(VertexT));
+  };
 
   template<typename VertexT, typename IndexT>
   VertexArray(const std::vector<VertexT> &vertices,
               const std::vector<VertexAttribute> &vertexAttributes,
-                const std::vector<IndexT> &indices,
-                bool dynamic = false)
-        : VertexArray(vertices, indices, dynamic) 
-  {
+              const std::vector<IndexT> &indices,
+              bool dynamic = false)
+      : VertexArray(vertices, indices, dynamic) {
     addVertexAttributes(vertexAttributes, sizeof(VertexT));
-    unbind();
   };
 
   VertexArray(const VertexArray &) = delete;
@@ -98,7 +98,7 @@ public:
   void bind();
   void addVertexAttributes(const std::vector<VertexAttribute> &vector, int32_t defaultVertexSize);
   void renderIndexed(int32_t type = GL_TRIANGLES);
-  void renderVertexSubStream(int32_t size, int32_t type = GL_TRIANGLES);
+  void renderVertexSubStream(int32_t size, int32_t startOffset, int32_t type = GL_TRIANGLES);
   void renderVertexStream(int32_t type = GL_TRIANGLES);
   void unbind();
 

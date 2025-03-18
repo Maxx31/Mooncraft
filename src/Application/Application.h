@@ -7,7 +7,6 @@
 
 class Application 
 {
-private:
   using TimePoint = std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>;
   using Clock = std::chrono::steady_clock;
 
@@ -40,10 +39,8 @@ public:
   };
 
   void setScene(SharedRef<Scene> &newScene) { scene = newScene; };
-
   int32_t getWindowWidth() { return window.getWindowWidth(); }
   int32_t getWindowHeight() { return window.getWindowHeight(); }
-
   Window &getWindow() { return window; };
-  int run();
+  int32_t run();
 };

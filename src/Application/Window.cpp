@@ -29,9 +29,9 @@ Window::Window()
   setupCallbacks();
 }
 
-void Window::onWindowError(int errorCode, const char *description) 
+void Window::onWindowError(int32_t errorCode, const char *description) 
 {
-  std::cerr << "Wandows error with code: " << errorCode << " description: " << description << std::endl;
+  std::cerr << "GLFW: **ERROR** error=" << errorCode << " description=" << description << std::endl;
 }
 
 void Window::onKeyEvent(GLFWwindow *, int32_t key, int32_t scancode, int32_t action, int32_t mode) 
@@ -75,7 +75,7 @@ void Window::setupCallbacks()
   glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
   glDebugMessageCallback(onOpenGlMessage, nullptr);
   glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
-  glfwSwapInterval(2);
+  glfwSwapInterval(2);  // note: maybe change this later
 
   glfwSetWindowRefreshCallback(window, onRefreshWindow);
   glfwSetErrorCallback(Window::onWindowError);
@@ -94,15 +94,18 @@ bool Window::setupGlad()
   return true;
 }
 
-void Window::lockMouse() {
+void Window::lockMouse() 
+{
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
-void Window::unlockMouse() {
+void Window::unlockMouse() 
+{
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
-void Window::pollEvents() {
+void Window::pollEvents() 
+{
   glfwPollEvents();
 }
 
@@ -216,6 +219,7 @@ glm::dvec2 Window::getCursorPosition()
   return pos;
 }
 
-Window::~Window() {
+Window::~Window() 
+{
   glfwTerminate();
 }
