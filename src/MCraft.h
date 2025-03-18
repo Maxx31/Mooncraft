@@ -22,6 +22,7 @@
 #include <chrono>
 #include <fstream>
 #include <iostream>
+#include <optional>
 #include <iterator>
 #include <memory>
 #include <random>

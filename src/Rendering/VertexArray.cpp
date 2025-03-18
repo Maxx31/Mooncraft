@@ -45,12 +45,24 @@ void VertexArray::addVertexAttributes(const std::vector<VertexAttribute> &vector
     const auto normalize = shouldBeNormalized ? GL_TRUE : GL_FALSE;
     const auto stride = vertexSize ? vertexSize : defaultVertexSize;
 
-    glVertexAttribPointer(i, componentCount, type, normalize, stride, reinterpret_cast<void *>(offset));
+     switch (type) 
+     {
+      case VertexAttribute::UShort:
+      case VertexAttribute::Int:
+      case VertexAttribute::UInt:
+        glVertexAttribIPointer(i, componentCount, type, stride, reinterpret_cast<void *>(offset));
+        break;
+      case VertexAttribute::Float:
+        glVertexAttribPointer(i, componentCount, type, normalize, stride, reinterpret_cast<void *>(offset));
+        break;
+     }
+
     glEnableVertexAttribArray(i);
   }
   unbind();
 }
 
-VertexArray::~VertexArray() {
+VertexArray::~VertexArray()
+{
   if (isValid()) { glDeleteVertexArrays(1, &id); }
 }

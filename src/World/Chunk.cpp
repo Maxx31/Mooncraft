@@ -3,7 +3,10 @@
 #include "../AssetManager/AssetManager.h"
 #include "../Util/Math.h"
 
-Chunk::Chunk(const glm::ivec2& worldPosition) : worldPosition(worldPosition) {}
+Chunk::Chunk(const glm::ivec2& worldPosition) : worldPosition(worldPosition) 
+{
+  shader = AssetManager::instance().loadShaderProgram("assets/shaders/default");
+}
 
 void Chunk::render(const glm::mat4& transform) 
 {
