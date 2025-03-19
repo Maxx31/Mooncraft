@@ -9,14 +9,6 @@ Scene::Scene()
   onResized(Application::instance().getWindowWidth(), Application::instance().getWindowHeight());
 }
 
-void Scene::init() 
-{
-  assert(!initialized && "The scene has been already initialized");
-  initialized = true;
-
-  updateMouse();
-}
-
 void Scene::update(float deltaTime) 
 {
   player.update(deltaTime);

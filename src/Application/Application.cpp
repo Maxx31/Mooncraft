@@ -8,8 +8,6 @@ int32_t Application::run()
   {
     return -1;
   }
-
-  scene->init();
   lastTick = Clock::now();
 
   while (!window.shouldClose()) 

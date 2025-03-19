@@ -14,7 +14,6 @@
 
 class Scene 
 {
-  bool initialized = false;
   bool isMenuOpen = false;
 
   SharedRef<World> world = std::make_shared<World>();
@@ -33,7 +32,6 @@ class Scene
 public:
   Scene();
 
-  void init();
   void update(float deltaTime);
 
   void render();
