@@ -3,6 +3,7 @@
 #include "../Rendering/Shader.h"
 #include "../Rendering/ShaderProgram.h"
 #include "../MCraft.h"
+
 #include "AssetRegistry.h"
 #include "CubeMapRegistry.h"
 #include "ImageRegistry.h"
@@ -13,6 +14,8 @@
 
 class AssetManager 
 {
+  static AssetManager *instancePtr;
+
   TextRegistry textRegistry;
   ImageRegistry imageRegistry;
   TextureRegistry textureRegistry;
@@ -20,18 +23,11 @@ class AssetManager
   ShaderRegistry shaderRegistry;
   ShaderProgramRegistry shaderProgramRegistry;
 
-  AssetManager() = default;
-
 public:
-  AssetManager(const AssetManager &) = delete;
-  AssetManager(AssetManager &) = delete;
-  AssetManager(AssetManager &&) = delete;
+  AssetManager();
+  ~AssetManager();
 
-  static AssetManager &instance() 
-  {
-    static AssetManager manager;
-    return manager;
-  };
+  static AssetManager &instance() { return *instancePtr; };
 
   void removeTextFromRegistry(const std::string &name) { textRegistry.remove(name); }
   void removeImageFromRegistry(const std::string &name) { imageRegistry.remove(name); }
@@ -46,7 +42,12 @@ public:
 
   /// the expected input format: right;left;top;bottom;front;back
   SharedRef<const Texture> loadCubeMap(const std::string &name) { return cubeMapRegistry.get(name); };
-
   SharedRef<const Shader> loadShader(const std::string &name) { return shaderRegistry.get(name); };
   SharedRef<const ShaderProgram> loadShaderProgram(const std::string &name) { return shaderProgramRegistry.get(name); };
+
+  AssetManager(const AssetManager &) = delete;
+  AssetManager(AssetManager &) = delete;
+  AssetManager(AssetManager &&) noexcept = delete;
+  AssetManager &operator=(AssetManager &) = delete;
+  AssetManager &operator=(AssetManager &&) noexcept = delete;
 };

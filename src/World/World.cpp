@@ -1,27 +1,22 @@
 #include "World.h"
 
-#include "../Util/Math.h"
+#include "../Util/Util.h"
 
-World::World(int32_t seed) : generator(seed) 
+World::World(const SharedRef<Persistence>& persistence, int32_t seed) : persistence(persistence), generator(seed) 
 {
   shader = AssetManager::instance().loadShaderProgram("assets/shaders/default");
   setTextureAtlas(AssetManager::instance().loadTexture("assets/textures/default_texture.png"));
 }
 
-SharedRef<Chunk> World::generateOrLoadChunk(glm::ivec2 position)
+SharedRef<Chunk> World::generateOrLoadChunk(glm::ivec2 position) 
 {
-  SharedRef<Chunk> chunk = std::make_shared<Chunk>(position);
-  generator.populateChunk(chunk);
-
-  std::array<glm::ivec2, 4> chunksAround = {{{0, 16}, {16, 0}, {0, -16}, {-16, 0}}};
-  for (const glm::ivec2& offset: chunksAround) {
-    glm::ivec2 neighborPosition = position + offset;
-
-    if (!isChunkLoaded(neighborPosition))
-      continue;
-
-    chunks[neighborPosition]->setDirty();
+  SharedRef<Chunk> chunk = persistence->getChunk(position);
+  if (chunk != nullptr) {
+    return chunk;
   }
+  chunk = std::make_shared<Chunk>(position);
+  generator.populateChunk(chunk);
+  persistence->commitChunk(chunk);
 
   return chunk;
 }
@@ -50,13 +45,13 @@ void World::update(const glm::vec3& playerPosition, float deltaTime)
 
       float distance = glm::abs(glm::distance(glm::vec2(position), playerChunkPosition));
       if (distance <= loadDistance) {
-        chunks[position] = generateOrLoadChunk(position);
+        addChunk(position, generateOrLoadChunk(position));
       }
     }
   }
 }
 
-void World::render(glm::vec3 playerPos, glm::mat4 transform) 
+void World::render(glm::vec3 playerPos, glm::mat4 transform, float rotation) 
 {
   static auto sortedChunkIndices = std::make_shared<std::vector<std::pair<glm::vec2, float>>>();
   sortedChunkIndices->clear();
@@ -64,17 +59,25 @@ void World::render(glm::vec3 playerPos, glm::mat4 transform)
     sortedChunkIndices->reserve(chunks.size());
   }
 
+  std::array<glm::ivec2, 4> chunkCoordinateOffsets = {{{0, 16}, {16, 0}, {16, 16}}};
+
   glm::vec2 playerChunk = glm::vec2(playerPos.x, playerPos.z);
   for (const auto& [key, value]: chunks) {
-    sortedChunkIndices->push_back({
-       key,
-       glm::distance(playerChunk, glm::vec2(key) + glm::vec2(Chunk::HorizontalSize / 2.0f)),
-    });
+    float maxDistance = glm::distance(playerChunk, glm::vec2(key));
+
+    for (const auto& offset: chunkCoordinateOffsets) {
+      float distance = glm::distance(playerChunk, glm::vec2(key + offset));
+
+      if (distance > maxDistance) {
+        maxDistance = distance;
+      }
+    }
+
+    sortedChunkIndices->push_back({key, maxDistance});
   }
 
-  std::sort(
-     sortedChunkIndices->begin(), sortedChunkIndices->end(),
-     [&playerChunk](std::pair<glm::vec2, float> a, std::pair<glm::vec2, float> b) { return b.second < a.second; });
+  std::sort(sortedChunkIndices->begin(), sortedChunkIndices->end(),
+            [](const auto& a, const auto& b) { return b.second < a.second; });
 
   glm::vec2 animation{0};
   int32_t animationProgress = static_cast<int32_t>(textureAnimation) % 5;
@@ -82,15 +85,14 @@ void World::render(glm::vec3 playerPos, glm::mat4 transform)
   if (animationProgress != 0) 
   {
     animation = glm::vec2(2 - (animationProgress % 2), (animationProgress - 1) / 2);
-    std::cout << "animation x = " << animation.x << "animation.y = " << animation.y << std::endl;
   }
 
   shader->setVec2("textureAnimation", animation);
+  shader->setVec3("lightDirection", glm::vec3{0, glm::cos(rotation), glm::sin(rotation)});
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  for (const auto& index: *sortedChunkIndices) 
-  {
+  for (const auto& index: *sortedChunkIndices) {
     chunks[index.first]->render(transform, *this);
   }
 
@@ -127,8 +129,8 @@ bool World::placeBlock(BlockData block, glm::ivec3 position)
   return true;
 }
 glm::ivec2 World::getChunkIndex(glm::ivec3 position) {
-  return {position.x - Math::positiveMod(position.x, Chunk::HorizontalSize),
-          position.z - Math::positiveMod(position.z, Chunk::HorizontalSize)};
+  return {position.x - Util::positiveMod(position.x, Chunk::HorizontalSize),
+          position.z - Util::positiveMod(position.z, Chunk::HorizontalSize)};
 }
 
 
@@ -141,14 +143,25 @@ SharedRef<Chunk> World::getChunk(glm::ivec2 position)
   return chunks.at(position);
 }
 
-void World::setTextureAtlas(const SharedRef<const Texture>& texture)
-{
+void World::addChunk(glm::ivec2 position, const SharedRef<Chunk>& chunk) {
+  chunks[position] = chunk;
+  std::array<glm::ivec2, 4> chunksAround = {{{0, 16}, {16, 0}, {0, -16}, {-16, 0}}};
+  for (const glm::ivec2& offset: chunksAround) {
+    glm::ivec2 neighborPosition = position + offset;
+
+    if (!isChunkLoaded(neighborPosition))
+      continue;
+
+    chunks[neighborPosition]->setDirty();
+  }
+}
+
+void World::setTextureAtlas(const SharedRef<const Texture>& texture) {
   textureAtlas = texture;
   shader->setTexture("atlas", textureAtlas, 0);
 }
 
-std::optional<BlockData> World::getBlockAtIfLoaded(glm::ivec3 position) const 
-{
+std::optional<BlockData> World::getBlockAtIfLoaded(glm::ivec3 position) const {
   glm::ivec2 index = getChunkIndex(position);
   if (!isChunkLoaded(index)) {
     return {};
@@ -156,8 +169,6 @@ std::optional<BlockData> World::getBlockAtIfLoaded(glm::ivec3 position) const
 
   return chunks.at(index)->getBlockAt(Chunk::toChunkCoordinates(position));
 }
-
-bool World::isChunkLoaded(glm::ivec2 position) const 
-{
+bool World::isChunkLoaded(glm::ivec2 position) const {
   return chunks.contains(position);
 }

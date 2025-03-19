@@ -2,15 +2,15 @@
 
 #include "../MCraft.h"
 
-class Window 
+class Window
 {
-  const char *name = "Moon Craft";
-  int32_t windowWidth = 800;
-  int32_t windowHeight = 600;
+  static Window *instancePtr;
+
+  const char *name = "MoonCraft";
+  int32_t windowWidth = 1200;
+  int32_t windowHeight = 900;
   GLFWwindow *window = nullptr;
   glm::vec4 clearColor = {0, 0, 0, 1};
-
-  Window();
 
   void setupCallbacks();
   static bool setupGlad();
@@ -31,9 +31,10 @@ class Window
                               const void *userParam);
 
 public:
-  Window(const Window &) = delete;
-  Window(Window &) = delete;
-  Window(Window &&) = delete;
+  Window();
+  ~Window();
+
+  static Window &instance() { return *instancePtr; }
 
   [[nodiscard]] inline int32_t getWindowWidth() const { return windowWidth; }
   void setWindowWidth(int32_t width) { windowWidth = width; }
@@ -43,19 +44,19 @@ public:
 
   [[nodiscard]] inline GLFWwindow *getContext() { return window; };
 
-  static Window &instance()
-  {
-    static Window window;
-    return window;
-  }
   bool isValid() { return window != nullptr; };
   [[nodiscard]] inline bool shouldClose() const { return glfwWindowShouldClose(window); };
   void update();
   void finalizeFrame();
 
-  ~Window();
   void pollEvents();
   void unlockMouse();
   void lockMouse();
   glm::dvec2 getCursorPosition();
+
+  Window(const Window &) = delete;
+  Window(Window &) = delete;
+  Window(Window &&) noexcept = delete;
+  Window &operator=(Window &) = delete;
+  Window &operator=(Window &&) noexcept = delete;
 };

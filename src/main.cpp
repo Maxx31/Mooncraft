@@ -1,12 +1,11 @@
-
 #include "Application/Application.h"
 #include "MCraft.h"
 
-int main() 
+int main(int argc, char **argv) 
 {
-  Application &app = Application::instance();
+  std::string savePath = argc > 1 ? argv[1] : "default.glc";
 
-  app.setScene(std::make_shared<Scene>());
-
+  Application app;
+  app.setScene(std::make_shared<Scene>(savePath));
   return app.run();
 }

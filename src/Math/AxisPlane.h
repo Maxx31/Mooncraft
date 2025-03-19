@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../MCraft.h"
+#include "../MCraft.h"
 
 class AxisPlane 
 {

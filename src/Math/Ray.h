@@ -1,13 +1,12 @@
 #pragma once
 
-#include "../../MCraft.h"
-#include "../World.h"
+#include "../World/World.h"
+#include "../MCraft.h"
 
-struct HitTarget
+struct HitTarget 
 {
   glm::vec3 position;
   BlockData block;
-
   glm::vec3 neighbor;
   bool hasNeighbor = false;
 };

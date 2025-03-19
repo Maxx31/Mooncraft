@@ -1,15 +1,24 @@
 #include "Chunk.h"
 
 #include "../AssetManager/AssetManager.h"
-#include "../Util/Math.h"
+#include "../Util/Util.h"
 #include "World.h"
 
 Chunk::Chunk(const glm::ivec2& worldPosition) : worldPosition(worldPosition) 
 {
+  init();
+}
+
+void Chunk::init() 
+{
+  solidVertexCount = 0;
+  semiTransparentVertexCount = 0;
+  mesh = nullptr;
+  renderState = RenderState::initial;
   shader = AssetManager::instance().loadShaderProgram("assets/shaders/default");
 }
 
-void Chunk::render(const glm::mat4& transform, const World& world)
+void Chunk::render(const glm::mat4& transform, const World& world) 
 {
   if (!mesh || renderState != RenderState::ready) {
     createMesh(world);
@@ -105,8 +114,8 @@ void Chunk::createMesh(const World& world)
   buffer->bufferDynamicSubData(*semiTransparentVertices, semiTransparentVertexCount, 0, solidVertexCount);
 }
 
-glm::ivec3 Chunk::toChunkCoordinates(const glm::ivec3& globalPosition) 
+glm::ivec3 Chunk::toChunkCoordinates(const glm::ivec3& globalPosition)
 {
-  return {Math::positiveMod(globalPosition.x, HorizontalSize), globalPosition.y,
-          Math::positiveMod(globalPosition.z, HorizontalSize)};
+  return {Util::positiveMod(globalPosition.x, HorizontalSize), globalPosition.y,
+          Util::positiveMod(globalPosition.z, HorizontalSize)};
 }

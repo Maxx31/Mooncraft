@@ -7,7 +7,8 @@
 
 struct VertexAttribute 
 {
-  enum ComponentType {
+  enum ComponentType 
+  {
     UShort = GL_UNSIGNED_SHORT,
     Int = GL_INT,
     UInt = GL_UNSIGNED_INT,
@@ -28,21 +29,15 @@ struct VertexAttribute
         offset(offset) {}
 };
 
-class VertexArray {
+class VertexArray 
+{
   uint32_t id = 0;
   SharedRef<VertexBuffer> vertexBuffer;
   SharedRef<IndexBuffer> indexBuffer;
 
 public:
-  explicit VertexArray() {
-    glGenVertexArrays(1, &id);
-    bind();
-
-    vertexBuffer = VertexBuffer::createRef();
-    vertexBuffer->bind();
-
-    unbind();
-  }
+  explicit VertexArray();
+  ~VertexArray();
 
   template<typename VertexT>
   explicit VertexArray(const std::vector<VertexT> &vertices, bool dynamic = false) {
@@ -91,9 +86,6 @@ public:
     addVertexAttributes(vertexAttributes, sizeof(VertexT));
   };
 
-  VertexArray(const VertexArray &) = delete;
-  VertexArray(VertexArray &) = delete;
-  VertexArray(VertexArray &&) = delete;
 
   void bind();
   void addVertexAttributes(const std::vector<VertexAttribute> &vector, int32_t defaultVertexSize);
@@ -106,5 +98,9 @@ public:
 
   [[nodiscard]] bool isValid() const { return id != 0; };
 
-  ~VertexArray();
+  VertexArray(const VertexArray &) = delete;
+  VertexArray(VertexArray &) = delete;
+  VertexArray(VertexArray &&) noexcept = delete;
+  VertexArray &operator=(VertexArray &) = delete;
+  VertexArray &operator=(VertexArray &&) noexcept = delete;
 };

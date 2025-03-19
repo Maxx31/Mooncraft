@@ -3,7 +3,7 @@
 #include "../AssetManager/AssetManager.h"
 #include "Image.h"
 
-Texture::Texture(uint32_t image_type) : type(image_type) 
+Texture::Texture(uint32_t image_type, int32_t maxLod) : type(image_type) 
 {
   assert(type == GL_TEXTURE_2D || type == GL_TEXTURE_CUBE_MAP);
   glGenTextures(1, &id);
@@ -15,10 +15,18 @@ Texture::Texture(uint32_t image_type) : type(image_type)
     glTexParameteri(type, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
   }
 
-  glTexParameteri(type, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+  glTexParameteri(type, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
   glTexParameteri(type, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri(type, GL_TEXTURE_MAX_LOD, maxLod);
 
   unbind();
+}
+
+Texture::~Texture() 
+{
+  if (isValid()) {
+    glDeleteTextures(1, &id);
+  }
 }
 
 void Texture::buffer2DRGBAData(const Image& image) 
@@ -31,13 +39,12 @@ void Texture::buffer2DRGBAData(const Image& image)
   unbind();
 }
 
-void Texture::bufferCubeMapRGBAData(const std::array<SharedRef<const Image>, 6>& images)
+void Texture::bufferCubeMapRGBAData(const std::array<SharedRef<const Image>, 6>& images) 
 {
   assert(type == GL_TEXTURE_CUBE_MAP);
   bind();
 
-  for (size_t i = 0; i < images.size(); i++) 
-  {
+  for (size_t i = 0; i < images.size(); i++) {
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, static_cast<int32_t>(images[i]->width),
                  static_cast<int32_t>(images[i]->height), 0, GL_RGBA, GL_UNSIGNED_BYTE, &images[i]->data[0]);
   }
@@ -62,13 +69,6 @@ void Texture::unbind() const
   glBindTexture(type, 0);
 }
 
-Texture::~Texture() 
-{
-  if (isValid()) {
-    glDeleteTextures(1, &id);
-  }
-}
-
 SharedRef<const Texture> Texture::loadTexture2D(const std::string& name) 
 {
   SharedRef<const Image> image = AssetManager::instance().loadImage(name);
@@ -76,7 +76,7 @@ SharedRef<const Texture> Texture::loadTexture2D(const std::string& name)
     return nullptr;
   }
 
-  SharedRef<Texture> texture = std::make_shared<Texture>(GL_TEXTURE_2D);
+  SharedRef<Texture> texture = std::make_shared<Texture>(GL_TEXTURE_2D, 4);
   texture->buffer2DRGBAData(*image);
   return texture;
 }
@@ -88,6 +88,7 @@ SharedRef<const Texture> Texture::loadCubeMapTexture(const std::string& name)
   std::array<SharedRef<const Image>, 6> images{};
   std::string imageName;
   AssetManager& assetManager = AssetManager::instance();
+
   for (int32_t i = 0; i < 6; i++) {
     if (!std::getline(parts, imageName, ';')) {
       std::cerr << "Invalid cube map name format" << std::endl;

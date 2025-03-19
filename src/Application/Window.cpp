@@ -2,8 +2,12 @@
 
 #include "Application.h"
 
+Window *Window::instancePtr = nullptr;
+
 Window::Window() 
 {
+  assert(instancePtr == nullptr && "The window is already instantiated");
+  instancePtr = this;
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
@@ -34,7 +38,7 @@ void Window::onWindowError(int32_t errorCode, const char *description)
   std::cerr << "GLFW: **ERROR** error=" << errorCode << " description=" << description << std::endl;
 }
 
-void Window::onKeyEvent(GLFWwindow *, int32_t key, int32_t scancode, int32_t action, int32_t mode) 
+void Window::onKeyEvent(GLFWwindow *, int32_t key, int32_t scancode, int32_t action, int32_t mode)
 {
   Application::instance().onKeyEvent(key, scancode, action, mode);
 }
@@ -59,7 +63,7 @@ void Window::onCursorPosition(GLFWwindow *, double x, double y)
   Application::instance().onCursorPositionEvent(x, y);
 }
 
-void Window::onRefreshWindow(GLFWwindow *) 
+void Window::onRefreshWindow(GLFWwindow *)
 {
   Application::instance().onRefreshWindow();
 }
@@ -75,7 +79,7 @@ void Window::setupCallbacks()
   glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
   glDebugMessageCallback(onOpenGlMessage, nullptr);
   glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
-  glfwSwapInterval(2);  // note: maybe change this later
+  glfwSwapInterval(1);
 
   glfwSetWindowRefreshCallback(window, onRefreshWindow);
   glfwSetErrorCallback(Window::onWindowError);
@@ -116,8 +120,7 @@ void Window::update()
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Window::finalizeFrame() 
-{
+void Window::finalizeFrame() {
   glfwSwapBuffers(window);
 }
 
@@ -212,8 +215,7 @@ void GLAPIENTRY Window::onOpenGlMessage(GLenum source,
   std::cerr << std::endl;
 }
 
-glm::dvec2 Window::getCursorPosition() 
-{
+glm::dvec2 Window::getCursorPosition() {
   glm::dvec2 pos;
   glfwGetCursorPos(window, &pos.x, &pos.y);
   return pos;
@@ -221,5 +223,6 @@ glm::dvec2 Window::getCursorPosition()
 
 Window::~Window() 
 {
+  instancePtr = nullptr;
   glfwTerminate();
 }

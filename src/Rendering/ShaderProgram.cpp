@@ -29,6 +29,7 @@ ShaderProgram::ShaderProgram(const std::string &name)
     shaderProgram = 0;
   }
 }
+
 int32_t ShaderProgram::getUniformLocation(const std::string &location) const 
 {
   return glGetUniformLocation(shaderProgram, location.c_str());

@@ -1,24 +1,28 @@
 #include "Application.h"
 
-Application::Application() : gui(Gui::instance()) {}
+Application* Application::instancePtr = nullptr;
+
+Application::Application() 
+{
+  assert(instancePtr == nullptr && "The application is already instantiated");
+  instancePtr = this;
+}
 
 int32_t Application::run() 
 {
-  if (!scene || !window.isValid()) 
-  {
+  if (!scene || !window.isValid()) {
     return -1;
   }
-  lastTick = Clock::now();
 
-  while (!window.shouldClose()) 
-  {
+  lastTick = Clock::now();
+  while (!window.shouldClose()) {
     window.pollEvents();
     updateAndRender();
   }
   return 0;
 }
 
-void Application::updateAndRender() 
+void Application::updateAndRender()
 {
   TimePoint now = Clock::now();
   float deltaTime = static_cast<float>((now - lastTick).count()) / 1000000000.0f;
@@ -40,7 +44,7 @@ void Application::onKeyEvent(int32_t key, int32_t scancode, int32_t action, int3
   scene->onKeyEvent(key, scancode, action, mode);
 }
 
-void Application::onMouseButtonEvent(int32_t button, int32_t action, int32_t mods)
+void Application::onMouseButtonEvent(int32_t button, int32_t action, int32_t mods) 
 {
   scene->onMouseButtonEvent(button, action, mods);
 }
@@ -50,7 +54,7 @@ void Application::onResized(int32_t width, int32_t height)
   scene->onResized(width, height);
 }
 
-void Application::onRefreshWindow()
+void Application::onRefreshWindow() 
 {
   updateAndRender();
 }
@@ -58,4 +62,8 @@ void Application::onRefreshWindow()
 void Application::onCursorPositionEvent(double x, double y)
 {
   scene->onCursorPositionEvent(x, y);
+}
+
+Application::~Application() {
+  instancePtr = nullptr;
 }

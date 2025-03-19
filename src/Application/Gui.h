@@ -1,21 +1,24 @@
 #pragma once
+
 #include "../MCraft.h"
 
-class Gui {
-  Gui();
+class Gui 
+{
+private:
+  static Gui *instancePtr;
 
 public:
-  Gui(const Gui &) = delete;
-  Gui(Gui &&) = delete;
-  Gui(Gui &) = delete;
-
-  static Gui &instance() {
-    static Gui gui;
-    return gui;
-  }
-
-   void update();
-   void finalizeFrame();
-
+  Gui();
   ~Gui();
+
+  static Gui &instance() { return *instancePtr; }
+
+  void update();
+  void finalizeFrame();
+
+  Gui(const Gui &) = delete;
+  Gui(Gui &&) noexcept = delete;
+  Gui(Gui &) = delete;
+  Gui &operator=(Gui &) = delete;
+  Gui &operator=(Gui &&) noexcept = delete;
 };

@@ -14,9 +14,11 @@ protected:
   Buffer(uint32_t type) : type(type) { glGenBuffers(1, &id); }
 
 public:
-  Buffer(const Buffer &) = delete;
-  Buffer(Buffer &) = delete;
-  Buffer(Buffer &&) = delete;
+  ~Buffer()
+  {
+    if (isValid())
+      glDeleteBuffers(1, &id);
+  };
 
   void bind() { glBindBuffer(type, id); }
 
@@ -32,12 +34,14 @@ public:
   }
 
   template<typename T>
-  void bufferStaticData(const std::vector<T> &data) {
+  void bufferStaticData(const std::vector<T> &data)
+  {
     bufferStaticData(data, data.size());
   }
 
   template<typename T>
-  void bufferDynamicData(const std::vector<T> &data, int32_t dataSize, int32_t dataOffset = 0) {
+  void bufferDynamicData(const std::vector<T> &data, int32_t dataSize, int32_t dataOffset = 0)
+  {
     assert(isValid() && "Cannot write data to an invalid buffer");
     assert(dataOffset + dataSize <= data.size() && "Data is out of bounds");
 
@@ -47,7 +51,8 @@ public:
   }
 
   template<typename T>
-  void bufferDynamicData(const std::vector<T> &data) {
+  void bufferDynamicData(const std::vector<T> &data)
+  {
     bufferDynamicData(data, data.size());
   }
 
@@ -55,7 +60,8 @@ public:
   void bufferDynamicSubData(const std::vector<T> &data,
                             int32_t dataSize,
                             int32_t dataOffset = 0,
-                            int32_t bufferOffset = 0) {
+                            int32_t bufferOffset = 0) 
+  {
     assert(isValid() && "Cannot write data to an invalid buffer");
     assert(dataOffset + dataSize <= data.size() && "Data is out of bounds");
     assert(dataOffset + dataSize <= size && "Buffer is out of bounds");
@@ -69,27 +75,26 @@ public:
   [[maybe_unused]] [[nodiscard]] uint32_t getId() const { return id; };
   [[nodiscard]] bool isValid() const { return id != 0; };
 
-  ~Buffer() {
-    if (isValid())
-      glDeleteBuffers(1, &id);
-  };
+
+  Buffer(const Buffer &) = delete;
+  Buffer(Buffer &) = delete;
+  Buffer(Buffer &&) noexcept = delete;
+  Buffer &operator=(Buffer &) = delete;
+  Buffer &operator=(Buffer &&) noexcept = delete;
 };
 
-class VertexBuffer : public Buffer 
-{
+class VertexBuffer : public Buffer {
 public:
   VertexBuffer() : Buffer(GL_ARRAY_BUFFER) {}
   static SharedRef<VertexBuffer> createRef() { return std::make_shared<VertexBuffer>(); }
 };
 
 
-class IndexBuffer : public Buffer 
-{
+class IndexBuffer : public Buffer {
   uint32_t type = 0;
 
   template<typename T>
-  int32_t getSizeType() 
-  {
+  int32_t getSizeType() {
     switch (sizeof(T)) {
       case 1:
         return GL_UNSIGNED_BYTE;
@@ -98,6 +103,9 @@ class IndexBuffer : public Buffer
       case 4:
         return GL_UNSIGNED_INT;
     }
+
+    assert(false);
+    return 0;
   }
 
 public:

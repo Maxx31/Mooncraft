@@ -2,10 +2,17 @@
 
 #include "Window.h"
 
+Gui *Gui::instancePtr = nullptr;
+
 Gui::Gui() 
 {
+  assert(instancePtr == nullptr && "The GUI is already instantiated");
+  instancePtr = this;
+
   const auto context = Window::instance().getContext();
-  if (context == nullptr) return;
+  if (context == nullptr) {
+    return;
+  }
 
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
@@ -27,8 +34,9 @@ void Gui::finalizeFrame()
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-Gui::~Gui() 
+Gui::~Gui()
 {
+  instancePtr = nullptr;
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
   ImGui::DestroyContext();
