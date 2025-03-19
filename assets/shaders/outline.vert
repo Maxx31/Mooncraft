@@ -2,7 +2,7 @@
 
 layout(location = 0) in uint vertexData;
 
-uniform mat4 CamMatrix = mat4(1);
+uniform mat4 MVP = mat4(1);
 
 flat out uint animated;
 out vec3 vert_pos;
@@ -37,5 +37,5 @@ void main()
     uint yUv = (uvCoords & 0xf0u) >> 4;
     vert_uv = vec2(xUv, yUv);
 
-    gl_Position = CamMatrix * vec4(vert_pos, 1);
+    gl_Position = MVP * vec4(vert_pos, 1);
 }

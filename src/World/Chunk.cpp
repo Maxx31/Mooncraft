@@ -17,7 +17,7 @@ void Chunk::render(const glm::mat4& transform, const World& world)
   }
 
   shader->bind();
-  shader->setMat4("CamMatrix", transform * glm::translate(glm::vec3(worldPosition.x, 0, worldPosition.y)));
+  shader->setMat4("MVP", transform * glm::translate(glm::vec3(worldPosition.x, 0, worldPosition.y)));
 
   mesh->renderVertexSubStream(solidVertexCount, 0);
   mesh->renderVertexSubStream(semiTransparentVertexCount, solidVertexCount);

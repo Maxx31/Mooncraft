@@ -23,7 +23,7 @@ BlockOutline::BlockOutline()
 
 void BlockOutline::render(const glm::mat4& transform) 
 {
-  outlinedBlockShader->setMat4("CamMatrix", transform);
+  outlinedBlockShader->setMat4("MVP", transform);
   outlinedBlockShader->bind();
   outlinedBlockVertexArray->renderVertexStream();
 }

@@ -79,15 +79,18 @@ void World::render(glm::vec3 playerPos, glm::mat4 transform)
   glm::vec2 animation{0};
   int32_t animationProgress = static_cast<int32_t>(textureAnimation) % 5;
 
-  if (textureAnimation != 0) {
+  if (animationProgress != 0) 
+  {
     animation = glm::vec2(2 - (animationProgress % 2), (animationProgress - 1) / 2);
+    std::cout << "animation x = " << animation.x << "animation.y = " << animation.y << std::endl;
   }
 
   shader->setVec2("textureAnimation", animation);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  for (const auto& index: *sortedChunkIndices) {
+  for (const auto& index: *sortedChunkIndices) 
+  {
     chunks[index.first]->render(transform, *this);
   }
 
