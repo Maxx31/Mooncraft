@@ -23,20 +23,26 @@ void Player::update(float deltaTime)
 
   glm::vec3 position = camera.getPosition();
 
-  if (isSurvivalMovement) {
+  if (isSurvivalMovement) 
+  {
     std::array<glm::vec3, 3> axes = {{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}};
 
-    for (const auto& axis: axes) {
+    for (const auto& axis: axes) 
+    {
       glm::vec3 movementInAxis = movement * axis;
-      if (MovementSimulation::canMove(position, position + movementInAxis, *world)) {
+      if (MovementSimulation::canMove(position, position + movementInAxis, *world)) //Check, if we can move towards given direction
+      {
         position += movementInAxis;
       }
     }
 
-    glm::vec3 positionWithGravity = position + gravity * deltaTime;
-    if (MovementSimulation::canMove(position, positionWithGravity, *world)) {
+    glm::vec3 positionWithGravity = position + gravity * deltaTime; //Apply gravity to position
+    if (MovementSimulation::canMove(position, positionWithGravity, *world)) //Check, if we hit any block or not
+    {
       position = positionWithGravity;
-    } else {
+    } 
+    else 
+    {
       canJump = true;
       gravity = glm::vec3(0);
     }

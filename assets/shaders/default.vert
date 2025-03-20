@@ -13,9 +13,9 @@ out vec2 vert_uv;
 
 vec3 normals[6] = { vec3(0, 1, 0), vec3(1, 0, 0), vec3(-1, 0, 0), vec3(0, 0, -1), vec3(0, 0, 1), vec3(0, -1, 0) };
 
-uint extractByte(uint data, uint offset)
+uint extractByte(uint data, uint offset) 
 {
-    return (data & (0xffu << offset)) >> offset;
+    return (data & (0xffu << offset)) >> offset; //0xffu is 1111 1111, so we devide data by 4 bytes, and extract each of them
 }
 
 uint useValueIfFlag(uint originalValue, uint flagValue, uint flags, uint offset)
@@ -26,6 +26,8 @@ uint useValueIfFlag(uint originalValue, uint flagValue, uint flags, uint offset)
 
 void main() 
 {
+    //extract all the info from 32bit integer
+
     uint xzPos = extractByte(vertexData, 8);
     uint uvCoords = extractByte(vertexData, 16);
     uint flags = extractByte(vertexData, 24);

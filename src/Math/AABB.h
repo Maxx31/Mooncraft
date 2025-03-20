@@ -4,7 +4,7 @@
 
 struct AABB 
 {
-  // The player is 0.6 blocks wide and 1.8 blocks tall, the eyes are approximately 0.3 units from the top
+  // Determine the size of player in each direction
   static constexpr std::array<glm::vec3, 8> PlayerBoxOffsets = {{
      {0.3, 0.3, 0.3},
      {0.3, 0.3, -0.3},

@@ -16,8 +16,8 @@ class Player {
 
   glm::vec3 gravity{0};
 
-  float walkingSpeed = 4.317;
-  float runningSpeed = 5.612;
+  float walkingSpeed = 5;
+  float runningSpeed = 8;
   float mouseSensitivity = .5;
   bool canJump = false;
   bool isRunning = false;

@@ -15,8 +15,8 @@ SharedRef<Chunk> World::generateOrLoadChunk(glm::ivec2 position)
     return chunk;
   }
   chunk = std::make_shared<Chunk>(position);
-  generator.populateChunk(chunk);
-  persistence->commitChunk(chunk);
+  generator.populateChunk(chunk);  //Populate chunk with blocks, if chunk does not exist in persistence
+  persistence->commitChunk(chunk); //Save chunk info
 
   return chunk;
 }
@@ -128,7 +128,8 @@ bool World::placeBlock(BlockData block, glm::ivec3 position)
 
   return true;
 }
-glm::ivec2 World::getChunkIndex(glm::ivec3 position) {
+glm::ivec2 World::getChunkIndex(glm::ivec3 position) 
+{
   return {position.x - Util::positiveMod(position.x, Chunk::HorizontalSize),
           position.z - Util::positiveMod(position.z, Chunk::HorizontalSize)};
 }
@@ -143,7 +144,8 @@ SharedRef<Chunk> World::getChunk(glm::ivec2 position)
   return chunks.at(position);
 }
 
-void World::addChunk(glm::ivec2 position, const SharedRef<Chunk>& chunk) {
+void World::addChunk(glm::ivec2 position, const SharedRef<Chunk>& chunk) 
+{
   chunks[position] = chunk;
   std::array<glm::ivec2, 4> chunksAround = {{{0, 16}, {16, 0}, {0, -16}, {-16, 0}}};
   for (const glm::ivec2& offset: chunksAround) {
