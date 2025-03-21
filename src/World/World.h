@@ -1,27 +1,14 @@
 #pragma once
 
 #include "../AssetManager/AssetManager.h"
+#include "../MCraft.h"
 #include "../Persistence/Persistence.h"
 #include "../Rendering/ShaderProgram.h"
 #include "../Rendering/Texture.h"
-#include "../MCraft.h"
 #include "Chunk.h"
 #include "WorldGenerator.h"
 
-class World 
-{
-  std::unordered_map<glm::ivec2, SharedRef<Chunk>, Util::HashVec2> chunks;
-  SharedRef<const Texture> textureAtlas;
-  SharedRef<const ShaderProgram> shader;
-  SharedRef<Persistence> persistence;
-  WorldGenerator generator;
-
-  int32_t viewDistance = 10;
-  float textureAnimation = 0;
-  static constexpr float TextureAnimationSpeed = 2;
-
-  SharedRef<Chunk> generateOrLoadChunk(glm::ivec2 position);
-
+class World {
 public:
   explicit World(const SharedRef<Persistence>& persistence, int32_t seed = 1337);
 
@@ -39,4 +26,17 @@ public:
 
   static bool isValidBlockPosition(glm::ivec3 position);
   void setTextureAtlas(const SharedRef<const Texture>& texture);
+
+private:
+  std::unordered_map<glm::ivec2, SharedRef<Chunk>, Util::HashVec2> chunks;
+  SharedRef<const Texture> textureAtlas;
+  SharedRef<const ShaderProgram> shader;
+  SharedRef<Persistence> persistence;
+  WorldGenerator generator;
+
+  int32_t viewDistance = 10;
+  float textureAnimation = 0;
+  static constexpr float TextureAnimationSpeed = 2;
+
+  SharedRef<Chunk> generateOrLoadChunk(glm::ivec2 position);
 };

@@ -5,9 +5,6 @@
 
 class Texture 
 {
-  uint32_t id = 0;
-  uint32_t type;
-
 public:
   Texture(uint32_t type, int32_t maxLod = 1000);
   ~Texture();
@@ -29,4 +26,8 @@ public:
   Texture(Texture&&) noexcept = delete;
   Texture& operator=(Texture&) = delete;
   Texture& operator=(Texture&&) noexcept = delete;
+
+private:
+  uint32_t id = 0;
+  uint32_t type;
 };

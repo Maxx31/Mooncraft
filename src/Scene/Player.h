@@ -1,29 +1,11 @@
 #pragma once
 
+#include "../MCraft.h"
 #include "../Physics/MovementSimulation.h"
 #include "../World/World.h"
-#include "../MCraft.h"
 #include "Camera.h"
 
 class Player {
-  static constexpr float GravityConstant = 46.62f;
-
-  Camera camera;
-
-  SharedRef<World> world;
-  SharedRef<Persistence> persistence;
-  BlockData::BlockType blockToPlace = BlockData::BlockType::grass;
-
-  glm::vec3 gravity{0};
-
-  float walkingSpeed = 5;
-  float runningSpeed = 8;
-  float mouseSensitivity = .5;
-  bool canJump = false;
-  bool isRunning = false;
-  bool isSurvivalMovement = false;
-  bool resetMouse = true;
-
 public:
   static constexpr float reach = 4.5f;
 
@@ -49,4 +31,23 @@ public:
   void resetMousePosition();
 
   ~Player();
+
+private:
+  static constexpr float GravityConstant = 46.62f;
+
+  Camera camera;
+
+  SharedRef<World> world;
+  SharedRef<Persistence> persistence;
+  BlockData::BlockType blockToPlace = BlockData::BlockType::grass;
+
+  glm::vec3 gravity{0};
+
+  float walkingSpeed = 5;
+  float runningSpeed = 8;
+  float mouseSensitivity = .5;
+  bool canJump = false;
+  bool isRunning = false;
+  bool isSurvivalMovement = false;
+  bool resetMouse = true;
 };

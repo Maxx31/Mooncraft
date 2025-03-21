@@ -10,25 +10,6 @@ struct MovementDirection
 
 class Camera 
 {
-  glm::mat4 view = calcView();
-  glm::vec3 position = {14, 100, 17};
-  glm::vec3 cameraUp = {0, 1, 0};
-
-  MovementDirection forward = {false, {1, 0, 0}};
-  MovementDirection backward = {false, {-1, 0, 0}};
-  MovementDirection left = {false, {0, 0, 1}};
-  MovementDirection right = {false, {0, 0, -1}};
-  MovementDirection up = {false, {0, 1, 0}};
-  MovementDirection down = {false, {0, -1, 0}};
-  glm::vec3 lookDirection = forward.direction;
-
-  float yaw = 0;
-  float pitch = 0.5;
-
-  glm::mat4 calcView() const;
-  const glm::mat4& updateView();
-
-
 public:
   const glm::mat4& lookAt(glm::vec3 eye, glm::vec3 center);
 
@@ -51,4 +32,23 @@ public:
   void setIsMovingUp(bool isMoving) { up.isMoving = isMoving; };
   void setIsMovingDown(bool isMoving) { down.isMoving = isMoving; };
   glm::vec3 getMoveDirection();
+
+private:
+  glm::mat4 view = calcView();
+  glm::vec3 position = {14, 100, 17};
+  glm::vec3 cameraUp = {0, 1, 0};
+
+  MovementDirection forward = {false, {1, 0, 0}};
+  MovementDirection backward = {false, {-1, 0, 0}};
+  MovementDirection left = {false, {0, 0, 1}};
+  MovementDirection right = {false, {0, 0, -1}};
+  MovementDirection up = {false, {0, 1, 0}};
+  MovementDirection down = {false, {0, -1, 0}};
+  glm::vec3 lookDirection = forward.direction;
+
+  float yaw = 0;
+  float pitch = 0.5;
+
+  glm::mat4 calcView() const;
+  const glm::mat4& updateView();
 };

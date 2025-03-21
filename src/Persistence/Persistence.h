@@ -7,10 +7,6 @@
 
 class Persistence 
 {
-  std::string path;
-  Camera camera;
-  std::unordered_map<glm::ivec2, SharedRef<Chunk>, Util::HashVec2> chunks;
-
 public:
   explicit Persistence(std::string path);
 
@@ -28,4 +24,9 @@ public:
   [[nodiscard]] const Camera& getCamera() const { return camera; };
 
   ~Persistence();
+
+private:
+    std::string path;
+    Camera camera;
+    std::unordered_map<glm::ivec2, SharedRef<Chunk>, Util::HashVec2> chunks;
 };

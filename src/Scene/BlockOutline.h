@@ -6,11 +6,12 @@
 
 class BlockOutline 
 {
-  SharedRef<const ShaderProgram> outlinedBlockShader;
-  SharedRef<VertexArray> outlinedBlockVertexArray;
-
 public:
   BlockOutline();
 
   void render(const glm::mat4& transform);
+
+private:
+  SharedRef<const ShaderProgram> outlinedBlockShader;
+  SharedRef<VertexArray> outlinedBlockVertexArray;
 };

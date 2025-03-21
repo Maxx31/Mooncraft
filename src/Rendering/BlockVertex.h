@@ -17,11 +17,7 @@ public:
   BlockVertex() = default;
   BlockVertex(const glm::ivec3& position, const glm::ivec2& uv, uint8_t normalIndex);
 
-  /**
-   * This is maybe one of the worst hacks in my life ever, but this is how the offset method works:
-   * All the vertex coordinates are between 0 and 256, the problem is that the number 256 does not fit
-   * into a 8 bit integer. The easiest solution was to set flags when an overflow happens
-   */
+  //If number doesn't fit inside 8bit integer, we set flag, that overload happened
   void offset(uint32_t x, uint32_t y, uint32_t z) 
   {
     if (yPosition + y > 0xffu) {

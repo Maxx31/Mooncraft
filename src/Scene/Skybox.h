@@ -1,11 +1,22 @@
 #pragma once
 
+#include "../MCraft.h"
 #include "../Rendering/ShaderProgram.h"
 #include "../Rendering/VertexArray.h"
-#include "../MCraft.h"
 
-class Skybox
-{
+class Skybox {
+public:
+  Skybox();
+
+  [[nodiscard]] float getRotationSpeed() const { return rotationSpeed; };
+  void setRotationSpeed(float speed) { rotationSpeed = speed; };
+
+  [[nodiscard]] float getRotation() const { return rotation; };
+
+  void update(const glm::mat4& projection, const glm::mat4& cameraView, float deltaTime);
+  void render();
+
+private:
   glm::mat4 transform{1};
   VertexArray vertexArray{
      std::vector<glm::vec3>{
@@ -27,15 +38,4 @@ class Skybox
 
   float rotation = 0;
   float rotationSpeed = 0.01;
-
-public:
-  Skybox();
-
-  [[nodiscard]] float getRotationSpeed() const { return rotationSpeed; };
-  void setRotationSpeed(float speed) { rotationSpeed = speed; };
-
-  [[nodiscard]] float getRotation() const { return rotation; };
-
-  void update(const glm::mat4& projection, const glm::mat4& cameraView, float deltaTime);
-  void render();
 };

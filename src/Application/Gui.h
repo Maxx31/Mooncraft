@@ -4,9 +4,6 @@
 
 class Gui 
 {
-private:
-  static Gui *instancePtr;
-
 public:
   Gui();
   ~Gui();
@@ -21,4 +18,7 @@ public:
   Gui(Gui &) = delete;
   Gui &operator=(Gui &) = delete;
   Gui &operator=(Gui &&) noexcept = delete;
+
+private:
+  static Gui *instancePtr;
 };

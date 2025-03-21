@@ -46,6 +46,7 @@ void Window::onKeyEvent(GLFWwindow *, int32_t key, int32_t scancode, int32_t act
 void Window::onResized(GLFWwindow *, int32_t width, int32_t height) 
 {
   Application &app = Application::instance();
+
   Window &window = app.getWindow();
   window.setWindowHeight(height);
   window.setWindowWidth(width);

@@ -8,14 +8,39 @@ Application::Application()
   instancePtr = this;
 }
 
+Application::~Application()
+{
+  instancePtr = nullptr;
+}
+
+Application& Application::CreateOrGetApplication() 
+{
+  if (instancePtr == nullptr) instancePtr = new Application();
+
+  return *instancePtr;
+}
+
+void Application::DestroyApplication() 
+{ 
+  if (instancePtr != nullptr) 
+  {
+    delete instancePtr;
+    instancePtr = nullptr;
+  }
+}
+
+
 int32_t Application::run() 
 {
-  if (!scene || !window.isValid()) {
+  if (!scene || !window.isValid()) 
+  {
     return -1;
   }
 
   lastTick = Clock::now();
-  while (!window.shouldClose()) {
+
+  while (!window.shouldClose())
+  {
     window.pollEvents();
     updateAndRender();
   }
@@ -62,8 +87,4 @@ void Application::onRefreshWindow()
 void Application::onCursorPositionEvent(double x, double y)
 {
   scene->onCursorPositionEvent(x, y);
-}
-
-Application::~Application() {
-  instancePtr = nullptr;
 }

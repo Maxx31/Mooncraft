@@ -4,8 +4,6 @@
 
 class Shader 
 {
-  uint32_t id;
-
 public:
   explicit Shader(const std::string &name);
   ~Shader();
@@ -18,4 +16,7 @@ public:
   Shader(Shader &&) noexcept = delete;
   Shader &operator=(Shader &) = delete;
   Shader &operator=(Shader &&) noexcept = delete;
+
+private:
+  uint32_t id;
 };

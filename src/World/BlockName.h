@@ -3,10 +3,9 @@
 #include "../MCraft.h"
 #include "BlockData.h"
 
-struct BlockName 
-{
+struct BlockName {
 private:
-  using Name = std::pair<BlockData::BlockType, const char*>;
+     using Name = std::pair<BlockData::BlockType, const char*>;
 
 public:
   static constexpr size_t BlockCount = 17;
@@ -31,8 +30,7 @@ public:
      {BlockData::BlockType::sponge, "Sponge"},
   }};
 
-  static consteval NameArray getBlockNames() 
-  {
+  static consteval NameArray getBlockNames() {
     NameArray names{};
     for (int32_t i = 0; i < BlockCount; ++i) {
       names[i] = BlockNames[i].second;

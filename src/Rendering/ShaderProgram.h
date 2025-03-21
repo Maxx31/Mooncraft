@@ -6,10 +6,6 @@
 
 class ShaderProgram 
 {
-  uint32_t shaderProgram = 0;
-
-  [[nodiscard]] int32_t getUniformLocation(const std::string &location) const;
-
 public:
   explicit ShaderProgram(const std::string &name);
   ~ShaderProgram();
@@ -29,4 +25,8 @@ public:
   ShaderProgram(ShaderProgram &&) noexcept = delete;
   ShaderProgram &operator=(ShaderProgram &) = delete;
   ShaderProgram &operator=(ShaderProgram &&) noexcept = delete;
+
+private:
+  uint32_t shaderProgram = 0;
+  [[nodiscard]] int32_t getUniformLocation(const std::string &location) const;
 };

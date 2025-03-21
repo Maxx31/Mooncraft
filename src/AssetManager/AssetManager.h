@@ -14,15 +14,6 @@
 
 class AssetManager 
 {
-  static AssetManager *instancePtr;
-
-  TextRegistry textRegistry;
-  ImageRegistry imageRegistry;
-  TextureRegistry textureRegistry;
-  CubeMapRegistry cubeMapRegistry;
-  ShaderRegistry shaderRegistry;
-  ShaderProgramRegistry shaderProgramRegistry;
-
 public:
   AssetManager();
   ~AssetManager();
@@ -50,4 +41,14 @@ public:
   AssetManager(AssetManager &&) noexcept = delete;
   AssetManager &operator=(AssetManager &) = delete;
   AssetManager &operator=(AssetManager &&) noexcept = delete;
+
+private:
+	static AssetManager *instancePtr;
+
+    TextRegistry textRegistry;
+    ImageRegistry imageRegistry;
+    TextureRegistry textureRegistry;
+    CubeMapRegistry cubeMapRegistry;
+    ShaderRegistry shaderRegistry;
+    ShaderProgramRegistry shaderProgramRegistry;
 };

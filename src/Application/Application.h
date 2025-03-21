@@ -5,8 +5,28 @@
 #include "Gui.h"
 #include "Window.h"
 
-class Application 
-{
+class Application {
+
+public:
+  Application();
+  ~Application();
+
+  static Application &CreateOrGetApplication();
+  static void DestroyApplication();
+  static Application &instance() { return *instancePtr; };
+
+  void setScene(const SharedRef<Scene> &newScene) { scene = newScene; };
+  int32_t getWindowWidth() { return window.getWindowWidth(); }
+  int32_t getWindowHeight() { return window.getWindowHeight(); }
+  Window &getWindow() { return window; };
+  int32_t run();
+
+  Application(const Application &) = delete;
+  Application(Application &) = delete;
+  Application(Application &&) noexcept = delete;
+  Application &operator=(Application &) = delete;
+  Application &operator=(Application &&) noexcept = delete;
+
 private:
   using TimePoint = std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>;
   using Clock = std::chrono::steady_clock;
@@ -28,22 +48,4 @@ private:
   void updateAndRender();
 
   friend Window;
-
-public:
-  Application();
-  ~Application();
-
-  static Application &instance() { return *instancePtr; };
-
-  void setScene(const SharedRef<Scene> &newScene) { scene = newScene; };
-  int32_t getWindowWidth() { return window.getWindowWidth(); }
-  int32_t getWindowHeight() { return window.getWindowHeight(); }
-  Window &getWindow() { return window; };
-  int32_t run();
-
-  Application(const Application &) = delete;
-  Application(Application &) = delete;
-  Application(Application &&) noexcept = delete;
-  Application &operator=(Application &) = delete;
-  Application &operator=(Application &&) noexcept = delete;
 };
