@@ -56,36 +56,43 @@ void Player::update(float deltaTime)
 
 void Player::onKeyEvent(int32_t key, int32_t, int32_t action, int32_t) 
 {
-  if (action == 2) {
+  if (action == 2) 
+  {
     return;  // don't respond to repeatedly pressed buttons
   }
 
   bool isButtonPressed = action == 1;
 
-  if (key == 87 || key == 265) {  // forward
+  if (key == GLFW_KEY_W) { 
     camera.setIsMovingForward(isButtonPressed);
-  } else if (key == 83 || key == 264) {  // backward
+  } else if (key == GLFW_KEY_S) {
     camera.setIsMovingBackward(isButtonPressed);
-  } else if (key == 65 || key == 263) {  // left
+  } else if (key == GLFW_KEY_A) {
     camera.setIsMovingLeft(isButtonPressed);
-  } else if (key == 68 || key == 262) {  // right
+  } else if (key == GLFW_KEY_D) {
     camera.setIsMovingRight(isButtonPressed);
-  } else if (key == 32) {  // space
-    if (isSurvivalMovement) {
+  } else if (key == GLFW_KEY_SPACE) 
+  { 
+    if (isSurvivalMovement) 
+    {
       camera.setIsMovingUp(false);
       if (canJump && isButtonPressed) {
         gravity = glm::vec3(0, GravityConstant / 4.5, 0);
       }
-    } else {
+    } else 
+    {
       camera.setIsMovingUp(isButtonPressed);
     }
-  } else if (key == 340) {  // shift
+  } else if (key == GLFW_KEY_LEFT_CONTROL) 
+  { 
     if (isSurvivalMovement) {
       camera.setIsMovingDown(false);
     } else {
       camera.setIsMovingDown(isButtonPressed);
     }
-  } else if (key == 341) {  // ctrl
+  } 
+  else if (key == GLFW_KEY_LEFT_SHIFT) 
+  {  
     isRunning = isButtonPressed;
   }
 }

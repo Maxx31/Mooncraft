@@ -42,6 +42,7 @@ private:
   BlockData::BlockType blockToPlace = BlockData::BlockType::grass;
 
   glm::vec3 gravity{0};
+  glm::vec3 velocity{0};
 
   float walkingSpeed = 5;
   float runningSpeed = 8;

@@ -171,6 +171,8 @@ std::optional<BlockData> World::getBlockAtIfLoaded(glm::ivec3 position) const {
 
   return chunks.at(index)->getBlockAt(Chunk::toChunkCoordinates(position));
 }
-bool World::isChunkLoaded(glm::ivec2 position) const {
+
+bool World::isChunkLoaded(glm::ivec2 position) const 
+{
   return chunks.contains(position);
 }
