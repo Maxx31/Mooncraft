@@ -34,6 +34,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <span>
 #include <tuple>
 #include <unordered_map>
 #include <utility>

@@ -5,6 +5,9 @@
 
 class Texture 
 {
+  uint32_t id = 0;
+  uint32_t type;
+
 public:
   Texture(uint32_t type, int32_t maxLod = 1000);
   ~Texture();
@@ -16,9 +19,11 @@ public:
   void unbind() const;
 
   void buffer2DRGBAData(const Image& image);
-  void bufferCubeMapRGBAData(const std::array<SharedRef<const Image>, 6>& images);
+  void buffer2DArrayRGBAData(std::span<const Image> images);
+  void bufferCubeMapRGBAData(std::span<SharedRef<const Image>, 6> images);
 
   static SharedRef<const Texture> loadTexture2D(const std::string& name);
+  static SharedRef<const Texture> loadTexture2DArray(const std::string& name);
   static SharedRef<const Texture> loadCubeMapTexture(const std::string& name);
 
   Texture(const Texture&) = delete;
@@ -26,8 +31,4 @@ public:
   Texture(Texture&&) noexcept = delete;
   Texture& operator=(Texture&) = delete;
   Texture& operator=(Texture&&) noexcept = delete;
-
-private:
-  uint32_t id = 0;
-  uint32_t type;
 };

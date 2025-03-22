@@ -3,7 +3,7 @@
 
 int main(int argc, char **argv) 
 {
-  std::string savePath = argc > 1 ? argv[1] : "default.glc";
+  std::string savePath = argc > 1 ? argv[1] : "savefile.glc";
 
   Application &app = Application::CreateOrGetApplication();
   app.setScene(std::make_shared<Scene>(savePath));

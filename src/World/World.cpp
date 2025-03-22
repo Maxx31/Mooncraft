@@ -2,10 +2,10 @@
 
 #include "../Util/Util.h"
 
-World::World(const SharedRef<Persistence>& persistence, int32_t seed) : persistence(persistence), generator(seed) 
+World::World(const SharedRef<Persistence>& persistence, int32_t seed) : persistence(persistence), generator(seed)
 {
   shader = AssetManager::instance().loadShaderProgram("assets/shaders/default");
-  setTextureAtlas(AssetManager::instance().loadTexture("assets/textures/default_texture.png"));
+  setTextureAtlas(AssetManager::instance().loadTextureArray("assets/textures/default_texture.png"));
 }
 
 SharedRef<Chunk> World::generateOrLoadChunk(glm::ivec2 position) 
@@ -15,8 +15,8 @@ SharedRef<Chunk> World::generateOrLoadChunk(glm::ivec2 position)
     return chunk;
   }
   chunk = std::make_shared<Chunk>(position);
-  generator.populateChunk(chunk);  //Populate chunk with blocks, if chunk does not exist in persistence
-  persistence->commitChunk(chunk); //Save chunk info
+  generator.populateChunk(chunk);
+  persistence->commitChunk(chunk);
 
   return chunk;
 }
@@ -51,7 +51,7 @@ void World::update(const glm::vec3& playerPosition, float deltaTime)
   }
 }
 
-void World::render(glm::vec3 playerPos, glm::mat4 transform, float rotation) 
+void World::render(glm::vec3 playerPos, glm::mat4 transform) 
 {
   static auto sortedChunkIndices = std::make_shared<std::vector<std::pair<glm::vec2, float>>>();
   sortedChunkIndices->clear();
@@ -79,37 +79,37 @@ void World::render(glm::vec3 playerPos, glm::mat4 transform, float rotation)
   std::sort(sortedChunkIndices->begin(), sortedChunkIndices->end(),
             [](const auto& a, const auto& b) { return b.second < a.second; });
 
-  glm::vec2 animation{0};
-  int32_t animationProgress = static_cast<int32_t>(textureAnimation) % 5;
+  const int32_t animationProgress = static_cast<int32_t>(textureAnimation) % 5;
 
-  if (animationProgress != 0) 
-  {
-    animation = glm::vec2(2 - (animationProgress % 2), (animationProgress - 1) / 2);
-  }
+  // animation offsets for water and lava
+  const static int32_t animationOffsets[] = {0, 1, 2, 17, 18};
 
-  shader->setVec2("textureAnimation", animation);
-  shader->setVec3("lightDirection", glm::vec3{0, glm::cos(rotation), glm::sin(rotation)});
+  const int32_t animationOffset = animationOffsets[animationProgress];
+
+  shader->setUInt("textureAnimation", animationOffset);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  for (const auto& index: *sortedChunkIndices) {
+  for (const auto& index: *sortedChunkIndices) 
+  {
+    chunks[index.first]->setUseAmbientOcclusion(useAmbientOcclusion);
     chunks[index.first]->render(transform, *this);
   }
 
   glDisable(GL_BLEND);
 }
 
-BlockData World::getBlockAt(glm::ivec3 position)
+const BlockData* World::getBlockAt(glm::ivec3 position) 
 {
   return getChunk(getChunkIndex(position))->getBlockAt(Chunk::toChunkCoordinates(position));
 }
 
-bool World::isValidBlockPosition(glm::ivec3 position)
+bool World::isValidBlockPosition(glm::ivec3 position) 
 {
   return Chunk::isValidPosition(position);
 }
 
-bool World::placeBlock(BlockData block, glm::ivec3 position)
+bool World::placeBlock(BlockData block, glm::ivec3 position) 
 {
   if (!Chunk::isValidPosition(position)) {
     return false;
@@ -144,8 +144,7 @@ SharedRef<Chunk> World::getChunk(glm::ivec2 position)
   return chunks.at(position);
 }
 
-void World::addChunk(glm::ivec2 position, const SharedRef<Chunk>& chunk) 
-{
+void World::addChunk(glm::ivec2 position, const SharedRef<Chunk>& chunk) {
   chunks[position] = chunk;
   std::array<glm::ivec2, 4> chunksAround = {{{0, 16}, {16, 0}, {0, -16}, {-16, 0}}};
   for (const glm::ivec2& offset: chunksAround) {
@@ -163,16 +162,15 @@ void World::setTextureAtlas(const SharedRef<const Texture>& texture) {
   shader->setTexture("atlas", textureAtlas, 0);
 }
 
-std::optional<BlockData> World::getBlockAtIfLoaded(glm::ivec3 position) const {
+const BlockData* World::getBlockAtIfLoaded(glm::ivec3 position) const {
   glm::ivec2 index = getChunkIndex(position);
   if (!isChunkLoaded(index)) {
-    return {};
+    return nullptr;
   }
 
   return chunks.at(index)->getBlockAt(Chunk::toChunkCoordinates(position));
 }
 
-bool World::isChunkLoaded(glm::ivec2 position) const 
-{
+bool World::isChunkLoaded(glm::ivec2 position) const {
   return chunks.contains(position);
 }

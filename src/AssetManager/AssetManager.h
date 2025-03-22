@@ -11,6 +11,7 @@
 #include "ShaderRegistry.h"
 #include "TextRegistry.h"
 #include "TextureRegistry.h"
+#include "TextureArrayRegistry.h"
 
 class AssetManager 
 {
@@ -30,6 +31,7 @@ public:
   SharedRef<const std::string> loadText(const std::string &name) { return textRegistry.get(name); };
   SharedRef<const Image> loadImage(const std::string &name) { return imageRegistry.get(name); };
   SharedRef<const Texture> loadTexture(const std::string &name) { return textureRegistry.get(name); };
+  SharedRef<const Texture> loadTextureArray(const std::string &name) { return textureArrayRegistry.get(name); }
 
   /// the expected input format: right;left;top;bottom;front;back
   SharedRef<const Texture> loadCubeMap(const std::string &name) { return cubeMapRegistry.get(name); };
@@ -48,6 +50,7 @@ private:
     TextRegistry textRegistry;
     ImageRegistry imageRegistry;
     TextureRegistry textureRegistry;
+    TextureArrayRegistry textureArrayRegistry;
     CubeMapRegistry cubeMapRegistry;
     ShaderRegistry shaderRegistry;
     ShaderProgramRegistry shaderProgramRegistry;
