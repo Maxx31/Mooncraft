@@ -2,7 +2,7 @@
 
 #include "../Scene/Scene.h"
 #include "../MCraft.h"
-#include "Gui.h"
+#include "../GUI/Gui.h"
 #include "Window.h"
 
 class Application {

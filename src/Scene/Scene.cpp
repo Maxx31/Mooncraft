@@ -1,8 +1,8 @@
 #include "Scene.h"
 
-#include "../Application/Application.h"
+#include "../Core/Application.h"
 #include "../Math/Ray.h"
-#include "../World/BlockName.h"
+#include "../Core/BlockName.h"
 
 Scene::Scene(const std::string& savePath)
     : persistence(std::make_shared<Persistence>(savePath)),

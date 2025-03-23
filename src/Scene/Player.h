@@ -2,7 +2,7 @@
 
 #include "../MCraft.h"
 #include "../Physics/MovementSimulation.h"
-#include "../World/World.h"
+#include "../Core/World.h"
 #include "Camera.h"
 
 class Player {

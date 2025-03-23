@@ -1,6 +1,6 @@
 #include "Gui.h"
 
-#include "Window.h"
+#include "../Core/Window.h"
 
 Gui *Gui::instancePtr = nullptr;
 

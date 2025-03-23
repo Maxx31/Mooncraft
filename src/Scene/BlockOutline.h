@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Rendering/ShaderProgram.h"
-#include "../Rendering/VertexArray.h"
+#include "../Renderer/ShaderProgram.h"
+#include "../Renderer/VertexArray.h"
 #include "../MCraft.h"
 
 class BlockOutline 

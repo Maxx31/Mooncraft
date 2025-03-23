@@ -1,8 +1,8 @@
 #include "BlockOutline.h"
 
 #include "../AssetManager/AssetManager.h"
-#include "../Rendering/BlockMesh.h"
-#include "../Rendering/BlockVertex.h"
+#include "../Renderer/BlockMesh.h"
+#include "../Renderer/BlockVertex.h"
 
 BlockOutline::BlockOutline() 
 {

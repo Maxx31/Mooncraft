@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Rendering/Image.h"
+#include "../Renderer/Image.h"
 #include "AssetRegistry.h"
 
 class ImageRegistry : public AssetRegistry<Image> 

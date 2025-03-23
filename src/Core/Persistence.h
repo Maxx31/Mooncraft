@@ -2,7 +2,7 @@
 
 #include "../Scene/Camera.h"
 #include "../Util/Util.h"
-#include "../World/Chunk.h"
+#include "../Core/Chunk.h"
 #include "../MCraft.h"
 
 class Persistence 

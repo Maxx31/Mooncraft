@@ -3,11 +3,11 @@
 #include <utility>
 
 #include "../MCraft.h"
-#include "../Persistence/Persistence.h"
-#include "../Rendering/ShaderProgram.h"
-#include "../Rendering/Texture.h"
-#include "../Rendering/VertexArray.h"
-#include "../World/World.h"
+#include "../Core/Persistence.h"
+#include "../Renderer/ShaderProgram.h"
+#include "../Renderer/Texture.h"
+#include "../Renderer/VertexArray.h"
+#include "../Core/World.h"
 #include "BlockOutline.h"
 #include "Crosshair.h"
 #include "Player.h"

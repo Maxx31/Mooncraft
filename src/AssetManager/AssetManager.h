@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Rendering/Shader.h"
-#include "../Rendering/ShaderProgram.h"
+#include "../Renderer/Shader.h"
+#include "../Renderer/ShaderProgram.h"
 #include "../MCraft.h"
 
 #include "AssetRegistry.h"

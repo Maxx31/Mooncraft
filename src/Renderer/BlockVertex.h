@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../World/BlockData.h"
+#include "../Core/BlockData.h"
 #include "../MCraft.h"
 #include "VertexArray.h"
 

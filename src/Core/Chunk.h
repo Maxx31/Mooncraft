@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../Rendering/BlockMesh.h"
-#include "../Rendering/BlockVertex.h"
-#include "../Rendering/ShaderProgram.h"
-#include "../Rendering/VertexArray.h"
+#include "../Renderer/BlockMesh.h"
+#include "../Renderer/BlockVertex.h"
+#include "../Renderer/ShaderProgram.h"
+#include "../Renderer/VertexArray.h"
 #include "../MCraft.h"
 #include "BlockData.h"
 

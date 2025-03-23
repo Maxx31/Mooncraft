@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../MCraft.h"
-#include "../Rendering/ShaderProgram.h"
-#include "../Rendering/VertexArray.h"
+#include "../Renderer/ShaderProgram.h"
+#include "../Renderer/VertexArray.h"
 
 class Crosshair {
 public:

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../Rendering/ShaderProgram.h"
-#include "../Rendering/Texture.h"
+#include "../Renderer/ShaderProgram.h"
+#include "../Renderer/Texture.h"
 
-#include "../Persistence/Persistence.h"
+#include "../Core/Persistence.h"
 #include "../AssetManager/AssetManager.h"
 
 #include "../MCraft.h"

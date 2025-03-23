@@ -2,7 +2,7 @@
 
 #include "../MCraft.h"
 #include "Shader.h"
-#include "Texture.h"
+#include "../Renderer/Texture.h"
 
 class ShaderProgram 
 {

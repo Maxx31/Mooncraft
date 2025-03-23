@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Rendering/Texture.h"
+#include "../Renderer/Texture.h"
 #include "AssetRegistry.h"
 
 class TextureRegistry : public AssetRegistry<Texture> 

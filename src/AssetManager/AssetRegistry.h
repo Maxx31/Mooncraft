@@ -1,5 +1,5 @@
 #pragma once
-#include "../Rendering/ShaderProgram.h"
+#include "../Renderer/ShaderProgram.h"
 #include "../MCraft.h"
 
 template<typename T>

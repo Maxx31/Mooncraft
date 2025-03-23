@@ -1,5 +1,5 @@
 #pragma once
-#include "../Rendering/Shader.h"
+#include "../Renderer/Shader.h"
 #include "AssetRegistry.h"
 
 class ShaderRegistry : public AssetRegistry<Shader> {
