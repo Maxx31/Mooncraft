@@ -46,7 +46,8 @@ private:
 
   int32_t viewDistance = 8;
   float textureAnimation = 0;
-  static constexpr float TextureAnimationSpeed = 2;
+  float currentTime = 0;
+  static constexpr float TextureAnimationSpeed = 0.1f;
 
   SharedRef<Chunk> generateOrLoadChunk(glm::ivec2 position);
 };

@@ -23,13 +23,13 @@ SharedRef<Chunk> World::generateOrLoadChunk(glm::ivec2 position)
 
 void World::update(const glm::vec3& playerPosition, float deltaTime) 
 {
-  textureAnimation += deltaTime * TextureAnimationSpeed;
-
+  currentTime += deltaTime;
   glm::vec2 playerChunkPosition = getChunkIndex(playerPosition);
 
   auto chunksCopy = chunks;
   float unloadDistance = static_cast<float>(viewDistance + 1) * 16 + 8.0f;
-  for (const auto& [chunkPosition, chunk]: chunksCopy) {
+  for (const auto& [chunkPosition, chunk]: chunksCopy) 
+  {
     if (glm::abs(glm::distance(glm::vec2(chunkPosition), playerChunkPosition)) > unloadDistance) {
       chunks.erase(chunkPosition);
     }
@@ -79,14 +79,10 @@ void World::render(glm::vec3 playerPos, glm::mat4 transform)
   std::sort(sortedChunkIndices->begin(), sortedChunkIndices->end(),
             [](const auto& a, const auto& b) { return b.second < a.second; });
 
-  const int32_t animationProgress = static_cast<int32_t>(textureAnimation) % 5;
 
-  // animation offsets for water and lava
-  const static int32_t animationOffsets[] = {0, 1, 2, 17, 18};
+  const float animationProgress = fmod(currentTime * TextureAnimationSpeed, 1.0f);
+  shader->setFloat("textureAnimation", animationProgress);
 
-  const int32_t animationOffset = animationOffsets[animationProgress];
-
-  shader->setUInt("textureAnimation", animationOffset);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

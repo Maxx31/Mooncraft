@@ -4,7 +4,7 @@ layout(location = 0) in uint vertexData;
 
 uniform mat4 MVP = mat4(1);
 uniform vec3 lightDirection = vec3(1, 1, 1);
-uniform uint textureAnimation = 0u;
+uniform float textureAnimation = 0u;
 
 flat out uint textureIndex;
 
@@ -15,8 +15,7 @@ out vec2 vert_uv;
 void main() 
 {
     uint animated = bitfieldExtract(vertexData, 28, 1);
-
-    textureIndex = bitfieldExtract(vertexData, 20, 8) + textureAnimation * animated;
+    textureIndex = bitfieldExtract(vertexData, 20, 8);
 
     uint yPos = bitfieldExtract(vertexData,  0, 9);
     uint xPos = bitfieldExtract(vertexData,  9, 5);
@@ -25,7 +24,9 @@ void main()
 
     uint xUv = bitfieldExtract(vertexData, 19, 1);
     uint yUv = bitfieldExtract(vertexData, 20, 1);
+
     vert_uv = vec2(xUv, yUv);
+    vert_uv.y = mix(vert_uv.y, fract(vert_uv.y + textureAnimation), animated);
 
     uint occlusionLevel = bitfieldExtract(vertexData, 29, 2);
     vert_lighting = 0.75f + 0.08f * occlusionLevel;

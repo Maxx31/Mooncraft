@@ -12,7 +12,6 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
 file(GLOB_RECURSE MCraftSources src/*.cpp src/*.h)
  add_executable(MCraft ${MCraftSources})
  target_precompile_headers(MCraft PRIVATE src/MCraft.h)
- 
 
 # glfw
 add_subdirectory(third_party/glfw EXCLUDE_FROM_ALL)
