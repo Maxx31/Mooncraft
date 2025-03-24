@@ -83,7 +83,16 @@ void Player::onKeyEvent(int32_t key, int32_t, int32_t action, int32_t)
     {
       camera.setIsMovingUp(isButtonPressed);
     }
-  } else if (key == GLFW_KEY_LEFT_CONTROL) 
+  } else if (key == GLFW_KEY_P) {
+    if (isButtonPressed) {
+      if (isSurvivalMovement)
+        setSurvivalMovement(false);
+      else 
+        setSurvivalMovement(true);
+    }
+  } 
+  
+  else if (key == GLFW_KEY_LEFT_CONTROL) 
   { 
     if (isSurvivalMovement) {
       camera.setIsMovingDown(false);

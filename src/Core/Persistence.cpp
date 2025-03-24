@@ -7,7 +7,6 @@ Persistence::Persistence(std::string newPath) : path(std::move(newPath))
   std::ifstream file(path, std::ios::in | std::ios::binary);
   if (!file) 
   {
-    std::cerr << "Failed to open the file: " << path << std::endl;
     return;
   }
 

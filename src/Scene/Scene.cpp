@@ -59,22 +59,6 @@ void Scene::renderGui()
 
   if (ImGui::Begin("Menu"))
   {
-    glm::vec3 position = player.getCamera().getPosition();
-    ImGui::Text("Player position: x:%f, y:%f, z:%f", position.x, position.y, position.z);
-    glm::vec3 lookDirection = player.getCamera().getLookDirection();
-    ImGui::Text("Player direction: x:%f, y:%f, z:%f", lookDirection.x, lookDirection.y, lookDirection.z);
-
-    ImGui::Spacing();
-    ImGui::Spacing();
-
-    bool isSurvival = player.getIsSurvivalMovement();
-    if (ImGui::Checkbox("Enable \"physics\"", &isSurvival)) {
-      player.setSurvivalMovement(isSurvival);
-    }
-
-    ImGui::Spacing();
-    ImGui::Spacing();
-
     BlockData::BlockType blockToPlace = player.getBlockToPlace();
     ImGui::Text("Selected Block: %s", BlockName::blockTypeToName(blockToPlace));
 
@@ -99,8 +83,8 @@ void Scene::renderGui()
     ImGui::Spacing();
 
     static char textureAtlasPath[256] = "";
-    ImGui::InputText("Custom texture atlas path", textureAtlasPath, 256);
-    if (ImGui::Button("Load texture atlas")) {
+    ImGui::InputText("Set custom texture atlas path", textureAtlasPath, 256);
+    if (ImGui::Button("Load texture atlas:")) {
       SharedRef<const Texture> atlas = AssetManager::instance().loadTexture(textureAtlasPath);
       if (atlas != nullptr) {
         world->setTextureAtlas(atlas);

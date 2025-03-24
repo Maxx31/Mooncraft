@@ -14,7 +14,8 @@ public:
   void update(float deltaTime);
 
   [[nodiscard]] bool getIsSurvivalMovement() const { return isSurvivalMovement; };
-  void setSurvivalMovement(bool isSurvival) {
+  void setSurvivalMovement(bool isSurvival) 
+  {
     gravity = glm::vec3(0);
     isSurvivalMovement = isSurvival;
   };
