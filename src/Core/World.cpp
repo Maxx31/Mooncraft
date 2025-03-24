@@ -80,8 +80,14 @@ void World::render(glm::vec3 playerPos, glm::mat4 transform)
             [](const auto& a, const auto& b) { return b.second < a.second; });
 
 
-  const float animationProgress = fmod(currentTime * TextureAnimationSpeed, 1.0f);
-  shader->setFloat("textureAnimation", animationProgress);
+const int32_t animationProgress = static_cast<int32_t>(currentTime) % 5;
+
+  // animation offsets for water and lava
+  const static int32_t animationOffsets[] = {0, 1, 2, 17, 18};
+
+  const int32_t animationOffset = animationOffsets[animationProgress];
+
+    shader->setUInt("textureAnimation", animationOffset);
 
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
