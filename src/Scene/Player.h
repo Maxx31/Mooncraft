@@ -34,7 +34,8 @@ public:
   ~Player();
 
 private:
-  static constexpr float GravityConstant = 46.62f;
+  static constexpr float GravityConstant = 38.00f;
+  static constexpr float JumpForce = 11.00f;
 
   Camera camera;
 

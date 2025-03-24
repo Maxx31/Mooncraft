@@ -23,7 +23,8 @@ Persistence::Persistence(std::string newPath) : path(std::move(newPath))
   file.read(reinterpret_cast<char*>(&camera), sizeof(camera));
   size_t chunkCount = (length - sizeof(Camera)) / (sizeof(glm::ivec2) + sizeof(Chunk::data));
 
-  for (size_t i = 0; i < chunkCount; i++) 
+  //Setup world from a save file
+ /* for (size_t i = 0; i < chunkCount; i++) 
   {
     glm::ivec2 worldPosition;
     file.read(reinterpret_cast<char*>(&worldPosition[0]), sizeof(glm::ivec2));
@@ -32,7 +33,7 @@ Persistence::Persistence(std::string newPath) : path(std::move(newPath))
     file.read(reinterpret_cast<char*>(&chunk->data[0]), sizeof(Chunk::data));
 
     chunks[worldPosition] = chunk;
-  }
+  }*/
 }
 
 Persistence::~Persistence()

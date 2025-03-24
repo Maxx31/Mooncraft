@@ -10,25 +10,27 @@ WorldGenerator::WorldGenerator(int32_t seed) : seed(seed), noise(seed)
 
 void WorldGenerator::populateChunk(const SharedRef<Chunk>& chunkRef) 
 {
-  Chunk& chunk = *chunkRef;
+ /* Chunk& chunk = *chunkRef;
 
   glm::ivec2 worldPosition = chunk.getPosition();
   glm::vec2 position = worldPosition;
-
 
   for (int32_t x = 0; x < Chunk::HorizontalSize; x++) {
     for (int32_t z = 0; z < Chunk::HorizontalSize; z++) {
       float noiseX = (position.x + static_cast<float>(x));
       float noiseY = (position.y + static_cast<float>(z));
-      float noiseValue = noise.GetNoise(noiseX, noiseY) / 2.0f + 0.5f;
-      int32_t height = 45 + static_cast<int32_t>(noiseValue * 45);
+      float noiseValue = noise.GetNoise(noiseX, noiseY) / 1.9f + 0.5f;
+      int32_t height = 48 + static_cast<int32_t>(noiseValue * 48);
 
       for (int32_t y = 0; y < height; y++) {
         int32_t dy = height - y;
         BlockData::BlockType blockToPlace = BlockData::BlockType::stone;
 
         if (dy == 1) {
-          if (y <= 64 && y >= 63) {
+          if(height > 85) {
+            blockToPlace = BlockData::BlockType::stone;
+          }
+          else if (y <= 64 && y >= 63) {
             blockToPlace = BlockData::BlockType::sand;
           } else if (y < 63) {
             blockToPlace = BlockData::BlockType::stone;
@@ -36,7 +38,10 @@ void WorldGenerator::populateChunk(const SharedRef<Chunk>& chunkRef)
             blockToPlace = BlockData::BlockType::grass;
           }
         } else if (dy < 5) {
-          if (y < 64) {
+          if (height > 75) {
+            blockToPlace = BlockData::BlockType::stone;
+          }
+          else if (y < 64) {
             blockToPlace = BlockData::BlockType::stone;
           } else {
             blockToPlace = BlockData::BlockType::dirt;
@@ -51,5 +56,5 @@ void WorldGenerator::populateChunk(const SharedRef<Chunk>& chunkRef)
       }
       chunk.placeBlock(BlockData::BlockType::bedrock, x, 0, z);
     }
-  }
+  }*/
 }

@@ -77,7 +77,7 @@ void Player::onKeyEvent(int32_t key, int32_t, int32_t action, int32_t)
     {
       camera.setIsMovingUp(false);
       if (canJump && isButtonPressed) {
-        gravity = glm::vec3(0, GravityConstant / 4.5, 0);
+        gravity = glm::vec3(0, JumpForce, 0);
       }
     } else 
     {
