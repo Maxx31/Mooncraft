@@ -3,11 +3,13 @@
 #include "../AssetManager/AssetManager.h"
 #include "World.h"
 
-Chunk::Chunk(const glm::ivec2& worldPosition) : worldPosition(worldPosition) {
+Chunk::Chunk(const glm::ivec2& worldPosition) : worldPosition(worldPosition) 
+{
   init();
 }
 
-void Chunk::init() {
+void Chunk::init() 
+{
   solidVertexCount = 0;
   semiTransparentVertexCount = 0;
   mesh = nullptr;

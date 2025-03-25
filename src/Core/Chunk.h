@@ -13,35 +13,6 @@ class World;
 class Chunk 
 {
 public:
-  static constexpr int32_t HorizontalSize = 16;
-  static constexpr int32_t VerticalSize = 256;
-
-  static constexpr int32_t BlockCount = HorizontalSize * HorizontalSize * VerticalSize;
-  static constexpr int32_t MaxVertexCount = BlockCount * 8;
-
-private:
-  enum class RenderState 
-  {
-    initial,
-    ready,
-    dirty
-  };
-  int32_t solidVertexCount;
-  int32_t semiTransparentVertexCount;
-  SharedRef<VertexArray> mesh;
-  SharedRef<const ShaderProgram> shader;
-
-  bool useAmbientOcclusion = true;
-
-  RenderState renderState;
-  glm::ivec2 worldPosition;
-
-  BlockData data[HorizontalSize][VerticalSize][HorizontalSize];
-
-  void createMesh(const World& world);
-  void init();
-
-public:
   explicit Chunk(const glm::ivec2& worldPosition);
   void render(const glm::mat4& transform, const World& world);
 
@@ -80,4 +51,33 @@ public:
 
   glm::ivec2 getPosition() { return worldPosition; }
   friend Persistence;
+
+public:
+  static constexpr int32_t HorizontalSize = 16;
+  static constexpr int32_t VerticalSize = 256;
+
+  static constexpr int32_t BlockCount = HorizontalSize * HorizontalSize * VerticalSize;
+  static constexpr int32_t MaxVertexCount = BlockCount * 8;
+
+
+private:
+  enum class RenderState {
+      initial,
+      ready,
+      dirty
+  };
+  int32_t solidVertexCount;
+  int32_t semiTransparentVertexCount;
+  SharedRef<VertexArray> mesh;
+  SharedRef<const ShaderProgram> shader;
+
+  bool useAmbientOcclusion = true;
+
+  RenderState renderState;
+  glm::ivec2 worldPosition;
+
+  BlockData data[HorizontalSize][VerticalSize][HorizontalSize];
+
+  void createMesh(const World &world);
+  void init();
 };

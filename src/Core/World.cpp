@@ -11,13 +11,15 @@ World::World(const SharedRef<Persistence>& persistence, int32_t seed) : persiste
 SharedRef<Chunk> World::generateOrLoadChunk(glm::ivec2 position) 
 {
   SharedRef<Chunk> chunk = persistence->getChunk(position);
+
   if (chunk != nullptr) {
     return chunk;
   }
-  chunk = std::make_shared<Chunk>(position);
+
+  chunk = std::make_shared<Chunk>(position); //Bottleneck
+
   generator.populateChunk(chunk);
   persistence->commitChunk(chunk);
-
   return chunk;
 }
 
