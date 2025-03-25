@@ -25,12 +25,14 @@
 #include <chrono>
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <iterator>
 #include <map>
 #include <memory>
 #include <optional>
 #include <random>
+#include <queue>
 #include <set>
 #include <sstream>
 #include <string>

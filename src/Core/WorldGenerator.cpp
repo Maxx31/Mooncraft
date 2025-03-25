@@ -1,6 +1,6 @@
 #include "WorldGenerator.h"
 
-WorldGenerator::WorldGenerator(int32_t seed) : seed(seed), noise(seed) 
+WorldGenerator::WorldGenerator(int32_t seed) : seed(seed), noise(seed)
 {
   noise.SetFractalOctaves(5);
   noise.SetFractalLacunarity(1.75);
@@ -10,51 +10,67 @@ WorldGenerator::WorldGenerator(int32_t seed) : seed(seed), noise(seed)
 
 void WorldGenerator::populateChunk(const SharedRef<Chunk>& chunkRef) 
 {
- /* Chunk& chunk = *chunkRef;
+    threadPool.EnqueueJob(std::bind(&WorldGenerator::populateChunkMultithreaded, this, chunkRef));
+}
 
-  glm::ivec2 worldPosition = chunk.getPosition();
-  glm::vec2 position = worldPosition;
+void WorldGenerator::populateChunkMultithreaded(const SharedRef<Chunk> &chunkRef) 
+{
+    Chunk &chunk = *chunkRef;
 
-  for (int32_t x = 0; x < Chunk::HorizontalSize; x++) {
-    for (int32_t z = 0; z < Chunk::HorizontalSize; z++) {
-      float noiseX = (position.x + static_cast<float>(x));
-      float noiseY = (position.y + static_cast<float>(z));
-      float noiseValue = noise.GetNoise(noiseX, noiseY) / 1.9f + 0.5f;
-      int32_t height = 48 + static_cast<int32_t>(noiseValue * 48);
+    glm::ivec2 worldPosition = chunk.getPosition();
+    glm::vec2 position = worldPosition;
 
-      for (int32_t y = 0; y < height; y++) {
-        int32_t dy = height - y;
-        BlockData::BlockType blockToPlace = BlockData::BlockType::stone;
+    for (int32_t x = 0; x < Chunk::HorizontalSize; x++)
+    {
+        for (int32_t z = 0; z < Chunk::HorizontalSize; z++)
+        {
+            float noiseX = (position.x + static_cast<float>(x));
+            float noiseY = (position.y + static_cast<float>(z));
+            float noiseValue = noise.GetNoise(noiseX, noiseY) / 1.9f + 0.5f;
+            int32_t height = 48 + static_cast<int32_t>(noiseValue * 48);
 
-        if (dy == 1) {
-          if(height > 85) {
-            blockToPlace = BlockData::BlockType::stone;
-          }
-          else if (y <= 64 && y >= 63) {
-            blockToPlace = BlockData::BlockType::sand;
-          } else if (y < 63) {
-            blockToPlace = BlockData::BlockType::stone;
-          } else {
-            blockToPlace = BlockData::BlockType::grass;
-          }
-        } else if (dy < 5) {
-          if (height > 75) {
-            blockToPlace = BlockData::BlockType::stone;
-          }
-          else if (y < 64) {
-            blockToPlace = BlockData::BlockType::stone;
-          } else {
-            blockToPlace = BlockData::BlockType::dirt;
-          }
+            for (int32_t y = 0; y < height; y++)
+            {
+                int32_t dy = height - y;
+                BlockData::BlockType blockToPlace = BlockData::BlockType::stone;
+
+                if (dy == 1)
+                {
+                    if (height > 85)
+                    {
+                        blockToPlace = BlockData::BlockType::stone;
+                    } else if (y <= 64 && y >= 63)
+                    {
+                        blockToPlace = BlockData::BlockType::sand;
+                    } else if (y < 63)
+                    {
+                        blockToPlace = BlockData::BlockType::stone;
+                    } else
+                    {
+                        blockToPlace = BlockData::BlockType::grass;
+                    }
+                } else if (dy < 5)
+                {
+                    if (height > 85)
+                    {
+                        blockToPlace = BlockData::BlockType::stone;
+                    } else if (y < 64)
+                    {
+                        blockToPlace = BlockData::BlockType::stone;
+                    } else
+                    {
+                        blockToPlace = BlockData::BlockType::dirt;
+                    }
+                }
+
+                chunk.placeBlock(blockToPlace, x, y, z);
+            }
+
+            for (int32_t y = 64; y >= height; y--)
+            {
+                chunk.placeBlock(BlockData::BlockType::water, x, y, z);
+            }
+            chunk.placeBlock(BlockData::BlockType::bedrock, x, 0, z);
         }
-
-        chunk.placeBlock(blockToPlace, x, y, z);
-      }
-
-      for (int32_t y = 64; y >= height; y--) {
-        chunk.placeBlock(BlockData::BlockType::water, x, y, z);
-      }
-      chunk.placeBlock(BlockData::BlockType::bedrock, x, 0, z);
     }
-  }*/
 }
