@@ -15,7 +15,11 @@ public:
   explicit World(const SharedRef<Persistence>& persistence, int32_t seed = 1337);
 
   SharedRef<Chunk> getChunk(glm::ivec2 position);
+
   void addChunk(glm::ivec2 position, const SharedRef<Chunk>& chunk);
+  void addChunkAsync(glm::ivec2 position);
+  void addChunkWorker(glm::ivec2 position);
+
   [[nodiscard]] static glm::ivec2 getChunkIndex(glm::ivec3 position);
 
   [[nodiscard]] int32_t getViewDistance() const { return viewDistance; };
@@ -36,6 +40,9 @@ public:
   void setTextureAtlas(const SharedRef<const Texture>& texture);
 
 private:
+  //ThreadPool threadPool;
+  std::mutex chunkMutex;// Mutex for protecting chunk data
+
   std::unordered_map<glm::ivec2, SharedRef<Chunk>, Util::HashVec2> chunks;
   SharedRef<const Texture> textureAtlas;
   SharedRef<const ShaderProgram> shader;

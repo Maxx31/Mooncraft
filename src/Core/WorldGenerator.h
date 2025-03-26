@@ -15,7 +15,6 @@ public:
 private:
   void populateChunkMultithreaded(const SharedRef<Chunk> &chunkRef);
 
-
   ThreadPool threadPool;
 
   int32_t seed;

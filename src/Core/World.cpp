@@ -46,8 +46,10 @@ void World::update(const glm::vec3& playerPosition, float deltaTime)
       }
 
       float distance = glm::abs(glm::distance(glm::vec2(position), playerChunkPosition));
-      if (distance <= loadDistance) {
-        addChunk(position, generateOrLoadChunk(position));
+      if (distance <= loadDistance) 
+      {
+          //addChunkAsync(position);
+          addChunk(position, generateOrLoadChunk(position));
       }
     }
   }
@@ -141,14 +143,16 @@ glm::ivec2 World::getChunkIndex(glm::ivec3 position)
 
 SharedRef<Chunk> World::getChunk(glm::ivec2 position) 
 {
-  if (!isChunkLoaded(position)) {
+  if (!isChunkLoaded(position)) 
+  {
     addChunk(position, generateOrLoadChunk(position));
   }
 
   return chunks.at(position);
 }
 
-void World::addChunk(glm::ivec2 position, const SharedRef<Chunk>& chunk) {
+void World::addChunk(glm::ivec2 position, const SharedRef<Chunk>& chunk) 
+{
   chunks[position] = chunk;
   std::array<glm::ivec2, 4> chunksAround = {{{0, 16}, {16, 0}, {0, -16}, {-16, 0}}};
   for (const glm::ivec2& offset: chunksAround) {
@@ -160,6 +164,30 @@ void World::addChunk(glm::ivec2 position, const SharedRef<Chunk>& chunk) {
     chunks[neighborPosition]->setDirty();
   }
 }
+//
+//void World::addChunkAsync(glm::ivec2 position) 
+//{
+//    threadPool.EnqueueJob(std::bind(&World::addChunkWorker, this, position));
+//}
+//
+//void World::addChunkWorker(glm::ivec2 position)
+//{
+//    SharedRef<Chunk> chunk = generateOrLoadChunk(position);
+//
+//    std::scoped_lock lock(chunkMutex); //Protects data
+//
+//    chunks[position] = chunk;
+//    //std::array<glm::ivec2, 4> chunksAround = {{{0, 16}, {16, 0}, {0, -16}, {-16, 0}}};
+//    //for (const glm::ivec2 &offset: chunksAround)
+//    //{
+//    //    glm::ivec2 neighborPosition = position + offset;
+//
+//    //    if (!isChunkLoaded(neighborPosition))
+//    //        continue;
+//
+//    //    chunks[neighborPosition]->setDirty();
+//    //}
+//}
 
 void World::setTextureAtlas(const SharedRef<const Texture>& texture) {
   textureAtlas = texture;

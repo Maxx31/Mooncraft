@@ -10,6 +10,7 @@ WorldGenerator::WorldGenerator(int32_t seed) : seed(seed), noise(seed)
 
 void WorldGenerator::populateChunk(const SharedRef<Chunk>& chunkRef) 
 {
+    //populateChunkMultithreaded(chunkRef);
     threadPool.EnqueueJob(std::bind(&WorldGenerator::populateChunkMultithreaded, this, chunkRef));
 }
 
