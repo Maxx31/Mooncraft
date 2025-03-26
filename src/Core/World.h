@@ -17,8 +17,8 @@ public:
   SharedRef<Chunk> getChunk(glm::ivec2 position);
 
   void addChunk(glm::ivec2 position, const SharedRef<Chunk>& chunk);
-  void addChunkAsync(glm::ivec2 position);
-  void addChunkWorker(glm::ivec2 position);
+ // void addChunkAsync(glm::ivec2 position);
+ // void addChunkWorker(glm::ivec2 position);
 
   [[nodiscard]] static glm::ivec2 getChunkIndex(glm::ivec3 position);
 
